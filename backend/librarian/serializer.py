@@ -22,13 +22,21 @@ class UserRegisterSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Patron
-        fields = ['email','first_name','last_name','password','password2']
+        fields = ['email','first_name','last_name','password','password2','phone_number']
 
     def validate(self,attrs):
         password = attrs.get('password','')
         password2 = attrs.get('password2','')
         if password != password2:
             raise serializers.ValidationError('password dosn\'t match')
+        
+        phone_number = attrs.get('phone_number','')
+        if len(str(phone_number))!= 10:
+            raise serializers.ValidationError('Phone number should be 10 digits long')
+        
+        if not phone_number.isdigit():
+            raise serializers.ValidationError('Phone number should contain only digits')
+            
         return attrs
     
     def create(self,validated_data):
@@ -36,7 +44,8 @@ class UserRegisterSerializer(serializers.ModelSerializer):
             email = validated_data['email'],
             first_name = validated_data.get('first_name'),
             last_name = validated_data.get('last_name'),
-            password = validated_data.get('password')
+            password = validated_data.get('password'),
+            phone_number = validated_data.get('phone_number')
         )
         return user
 
