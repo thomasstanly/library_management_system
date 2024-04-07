@@ -19,6 +19,7 @@ class Manager(BaseUserManager):
         other_field.setdefault('is_active',True)
         other_field.setdefault('is_superuser',True)
         other_field.setdefault('is_staff',True)
+        other_field.setdefault('is_email_verified',True)
         return self.create_user(email,first_name,last_name,password, **other_field)
  
 class Patron(AbstractBaseUser,PermissionsMixin):
@@ -27,13 +28,16 @@ class Patron(AbstractBaseUser,PermissionsMixin):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=30)
     is_superuser = models.BooleanField(default=False)
-    is_active = models.BooleanField(default=True)
+    is_active = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
     date_joined = models.DateTimeField(auto_now_add=True)
     last_login = models.DateTimeField(auto_now_add=True)
     phone_number = models.BigIntegerField(unique=True,null=True)
     membership_id = models.OneToOneField(Membership_plan,null=True,on_delete=models.SET_NULL,related_name='membership')
     mebership_date = models.DateField(null=True)
+    otp = models.IntegerField(null=True)
+    otp_expire = models.DateTimeField(null=True)
+    is_email_verified = models.BooleanField(default=False)
 
 
     objects = Manager()

@@ -2,6 +2,7 @@ from rest_framework import serializers
 from django.contrib.auth import authenticate
 from rest_framework.exceptions import AuthenticationFailed
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework_simplejwt.views import TokenObtainPairView
 from .models import Patron,UserProfile
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
@@ -11,7 +12,8 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         token = super().get_token(user)
 
         # Add custom claims
-        token['firstname'] = user.first_name
+        token['email'] = user.email
+        token['librarian'] = user.is_superuser
         # ...
 
         return token
@@ -34,7 +36,7 @@ class UserRegisterSerializer(serializers.ModelSerializer):
         if len(str(phone_number))!= 10:
             raise serializers.ValidationError('Phone number should be 10 digits long')
         
-        if not phone_number.isdigit():
+        if not str(phone_number).isdigit():
             raise serializers.ValidationError('Phone number should contain only digits')
             
         return attrs
