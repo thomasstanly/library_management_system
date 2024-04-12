@@ -30,13 +30,13 @@ const PatronHeader = () => {
   return (
     <div className='header'>
       <div className='left'>
-        {isAuthenticated ? <div class="dropdown" style={{ marginLeft: '10px' }}>
+        {isAuthenticated ? <div className="dropdown" style={{ marginLeft: '10px' }}>
           <button className='profile dropdown-toggle' type="button" data-bs-toggle="dropdown" aria-expanded="false">
             <img className='profile' src="/images/user.png" alt="netflix logo" />
           </button>
-          <ul class="dropdown-menu" >
-            <li><a class="dropdown-item" href="#">profile</a></li>
-            <li><a class="dropdown-item" onClick={logout}>logout</a></li>
+          <ul className="dropdown-menu" >
+            <li><a className="dropdown-item" href="#">profile</a></li>
+            <li><a className="dropdown-item" href="#" onClick={logout}>logout</a></li>
           </ul>
         </div> :
           <img className='profile' src="/images/user.png" alt="netflix logo" />}

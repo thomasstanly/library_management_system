@@ -12,22 +12,12 @@ from rest_framework.exceptions import NotFound
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.filters import SearchFilter
-from rest_framework_simplejwt.views import TokenRefreshView
-from rest_framework_simplejwt.serializers import TokenRefreshSerializer
 from rest_framework_simplejwt.tokens import RefreshToken, TokenError
 from rest_framework.parsers import MultiPartParser, FormParser
 from .models import Patron
 
 from .serializer import UserRegisterSerializer,LoginSerializer
 
-class MyRefreshTokenObtainPairSerializer(TokenRefreshSerializer):
-    def __init__(self, *args, **kwargs):
-        request = kwargs.pop('request', None)
-        print(request)
-        super().__init__(*args, **kwargs)
-
-class MyRefreshTokenObtainPairView(TokenRefreshView):
-    serializer_class = MyRefreshTokenObtainPairSerializer
 
 class SignUp(GenericAPIView):
 
@@ -77,7 +67,7 @@ class OTPverfication(GenericAPIView):
     
 
 class LoginView(GenericAPIView):
-    
+    serializer_class =  LoginSerializer
     def post(self,request):
         serializer = LoginSerializer(data=request.data,context={'request':request})
         serializer.is_valid(raise_exception=True)

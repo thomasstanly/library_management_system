@@ -1,76 +1,79 @@
-import React from 'react'
+import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
+import { siderbarData } from './siderbarData';
+import  SidebarContext from '../../../Context/sidebartoggle';
+import SubMenu from './SidebarMenu'
+import MenuOpenIcon from '@mui/icons-material/MenuOpen';
+import MenuIcon from '@mui/icons-material/Menu';
+import SearchIcon from '@mui/icons-material/Search';
+import style from './SideBarLibrarian.module.scss';
 
 const SideBarLibrarian = () => {
-  return (
-    <aside className="navbar-aside" id="offcanvas_aside">
-            <div className="aside-top">
-                <Link to="/admin/dashboard" className="brand-wrap">
-                    <img className="logo" src={require('../../static/admin_assets/imgs/theme/logo.png').default} alt="Evara Dashboard" />
-                </Link>
-                <div>
-                    <button className="btn btn-icon btn-aside-minimize">
-                        <i className="text-muted material-icons md-menu_open"></i>
-                    </button>
-                </div>
-            </div>
-            <nav>
-                <ul className="menu-aside">
-                    <li className="menu-item active">
-                        <Link to="/admin/dashboard" className="menu-link">
-                            <i className="icon material-icons md-home"></i>
-                            <span className="text">Dashboard</span>
-                        </Link>
-                    </li>
-                    <li className="menu-item has-submenu">
-                        <Link to="/admin/products" className="menu-link">
-                            <i className="icon material-icons md-shopping_bag"></i>
-                            <span className="text">Products</span>
-                        </Link>
-                        <div className="submenu">
-                            <Link to="/admin/products/list">Product List</Link>
-                            <Link to="/admin/products/attributes">Attributes</Link>
-                            <Link to="/admin/products/brands">Brand</Link>
-                            <Link to="/admin/categories">Categories</Link>
-                        </div>
-                    </li>
-                    <li className="menu-item">
-                        <Link to="/admin/orders" className="menu-link">
-                            <i className="icon material-icons md-shopping_cart"></i>
-                            <span className="text">Orders</span>
-                        </Link>
-                    </li>
-                    <li className="menu-item has-submenu">
-                        <Link to="/admin/offers" className="menu-link">
-                            <i className="icon material-icons md-shopping_bag"></i>
-                            <span className="text">Offers</span>
-                        </Link>
-                        <div className="submenu">
-                            <Link to="/admin/offers/category">Category Offer</Link>
-                            <Link to="/admin/offers/brand">Brand Offer</Link>
-                        </div>
-                    </li>
-                    <li className="menu-item">
-                        <Link to="/admin/coupons" className="menu-link">
-                            <i className="icon material-icons md-stars"></i>
-                            <span className="text">Coupon</span>
-                        </Link>
-                    </li>
-                    <li className="menu-item">
-                        <Link to="/admin/customers" className="menu-link">
-                            <i className="icon material-icons md-person"></i>
-                            <span className="text">Customer</span>
-                        </Link>
-                    </li>
-                    <li className="menu-item">
-                        <Link to="/admin/sales-report" className="menu-link">
-                            <i className="icon material-icons md-pie_chart"></i>
-                            <span className="text">Sales report</span>
-                        </Link>
-                    </li>
-                </ul>
-            </nav>
-        </aside>
-  )
-}
+   const {sidebar, showSidebar} = useContext(SidebarContext)
 
-export default SideBarLibrarian
+   return (
+      <div className={style.sidebarContainer}>
+         <div className={style.Nav}>
+            <Link className={style.navIcon} >
+               <MenuIcon onClick={showSidebar} style={{ fontSize: '2rem' }} />
+            </Link>
+            <div className={style.SearchContainer}>
+               <input type="text" placeholder="Search..." className={style.SearchInput} />
+               <button><SearchIcon style={{ fontSize: '2.25rem', color: '#8B8E99' }} /></button>
+               <button className={style.checkin}><Link className={style.link}>Check In</Link></button>
+            </div>
+            <img className='profile' src="/images/user.png" alt="netflix logo" />
+         </div>
+         {sidebar && <div className={`${style.sidebarnav} ${sidebar ? style.showSidebar : ''}`}>
+            <div className={style.sidebarWrap}>
+               < Link className={style.Icon} >
+                  <MenuOpenIcon onClick={showSidebar} style={{ fontSize: '2rem' }} />
+               </Link>
+               {siderbarData.map((item, index) => {
+                  return (
+                     <SubMenu item={item} key={index} />
+                  )
+               })}
+            </div>
+         </div>}
+      </div>
+   )
+};
+
+export default SideBarLibrarian;
+
+{/* <div>
+   <div className={style.sidebar}>
+      <ul className={style.SideBarList}>
+         {siderbarData.map((val, key) => (
+            <li
+               className={style.row}
+               key={key}
+               onClick={() => {
+                  if (val.link == null) {
+                     handleClick(key);
+                  } else {
+                     window.location.pathname = val.link;
+                  }
+               }}
+               id={window.location.pathname === val.link ? 'active' : 'inactive'}
+            >
+               <div id={style.icon}>{val.icon}</div>
+               <div id={style.title}>{val.title}</div>
+               <div id={style.arrow}>{val.arrow}</div>
+               {dropDown === key && (
+                  <div className={style.submenu}>
+                     <ul>
+                        {val.sub.map((res, index) => (
+                           <li key={index} onClick={() => { window.location.pathname = res.sub_link }}>
+                              <div>{res.sub_title}</div>
+                           </li>
+                        ))}
+                     </ul>
+                  </div>
+               )}
+            </li>
+         ))}
+      </ul>
+   </div>
+</div> */}

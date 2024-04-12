@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react'
+import React, { useState } from 'react'
 import {useNavigate} from 'react-router-dom'
 import {useSelector,useDispatch} from 'react-redux'
 import {toast} from 'react-toastify'
@@ -22,12 +22,6 @@ const LibrarianLogin = () => {
         password: ''
     })
     const [error, setError] = useState(null)
-    // useEffect(()=>{
-    //     if (isAdmin){
-    //        navigate('home')
-    //     }
-    //  })
-
 
     const handleOnChange = (e) => {
         setLogindata({ ...loginData, [e.target.name]: e.target.value })
@@ -61,7 +55,7 @@ const LibrarianLogin = () => {
                         })
                     )
                     console.log(res)
-                    navigate('home')
+                    navigate('dashboard')
                 }
             } catch (error) {
                 console.log(error.response.data.detail)

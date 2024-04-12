@@ -1,0 +1,20 @@
+.header{
+    display:flex;
+    justify-content:space-between;
+    align-items: center;
+    margin: 20px;
+    div{
+        .link{
+            button{
+                border: none;
+                border-radius: .5em;
+                padding: .5em 1em;
+                background-color: #362727;
+                color: white;
+            }
+        }
+    }
+    .title{
+        width: 50vw;
+    }
+}

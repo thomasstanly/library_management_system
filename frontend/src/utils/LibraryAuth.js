@@ -14,7 +14,7 @@ const createNewToken = async () =>{
           localStorage.setItem('refresh', JSON.stringify(res.data.refresh))
           console.log('admin access:',res.data.access)
           let decoded = jwtDecode(res.data.access);
-          return {'name':decoded.first_name,
+          return {'name':decoded.firstname,
           isAuthenticated:true}
         }
     }catch(error){
@@ -54,7 +54,7 @@ const LibraryAuth = async ()=>{
     let decode = jwtDecode(token);
 
     if (decode.exp > remainTime){
-        console.log('admin access:',token)
+        // console.log('admin access:',token)
         return{
             first_name:decode.first_name,
             isAuthenticated:true,
@@ -65,8 +65,9 @@ const LibraryAuth = async ()=>{
         if (result){
             const token = JSON.parse(localStorage.getItem('access'));
             let decode = jwtDecode(token);
+            console.log(decode.firstname,decode.librarian)
             return{
-                first_name:decode.first_name,
+                first_name:decode.firstname,
                 isAuthenticated:true,
                 isAdmin:decode.librarian
             }

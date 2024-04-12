@@ -1,7 +1,7 @@
-import React, { useState,useEffect } from 'react'
+import React, { useState } from 'react'
 import { FaEye, FaEyeSlash } from 'react-icons/fa'
 import { useNavigate } from 'react-router-dom'
-import {useDispatch,useSelector} from 'react-redux'
+import {useDispatch} from 'react-redux'
 import {toast} from 'react-toastify'
 import {jwtDecode} from 'jwt-decode'
 import {set_Authenticate} from '../../../Redux/Auth/LibrarySlice'
@@ -36,6 +36,7 @@ const PatronLogin = () => {
 
       if (!loginData.email || !loginData.password) {
          setError('All fields required')
+         console.log(loginData)
       } else {
          try {
             const res = await axios.post("login/", loginData)
@@ -44,6 +45,7 @@ const PatronLogin = () => {
                localStorage.setItem('user', JSON.stringify(res.data.email))
                localStorage.setItem('access', JSON.stringify(res.data.access_token))
                localStorage.setItem('refresh', JSON.stringify(res.data.refresh_token))
+               console.log('acess',res.data.access_token)
 
                dispatch(
                   set_Authenticate({

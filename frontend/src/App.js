@@ -6,19 +6,20 @@ import PatronWrapper from './pages/PatronWrapper'
 import LibrarianWrapper from './pages/LibrarianWrapper'
 import 'react-toastify/dist/ReactToastify.css';
 
+
 import './style/global.scss'
 
 function App() {
   return (
     <div>
-      <ToastContainer/>
-        <Provider store={store}>
-          <Routes>
-            <Route path='/*' element={<PatronWrapper />} />
-            <Route path='library/*' element={<LibrarianWrapper />} />
-          </Routes>
-        </Provider>
-  
+      <ToastContainer />
+      <Provider store={store}>
+        <Routes>
+          <Route path='/*' element={<PatronWrapper />} />
+          <Route path='library/*' element={<LibrarianWrapper />} />
+        </Routes>
+      </Provider>
+
     </div>
   )
 }

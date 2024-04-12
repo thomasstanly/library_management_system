@@ -51,7 +51,9 @@ class Patron(AbstractBaseUser,PermissionsMixin):
     
     def tokens(self):
         refresh = RefreshToken.for_user(self)
-        refresh["first_name"] = str(self.first_name)
+        refresh["firstname"] = str(self.first_name)
+        refresh["librarian"] = str(self.is_superuser)
+        refresh["email"] = str(self.email)
         return {
             'refresh': str(refresh),
             'access': str((refresh.access_token))
