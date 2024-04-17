@@ -15,7 +15,7 @@ const UpdateUserToken = async () => {
           localStorage.setItem('refresh', JSON.stringify(res.data.refresh))
           let decoded = jwtDecode(res.data.access);
           console.log('user access',res.data.access)
-          return {'name':decoded.firstname,
+          return {'name':decoded.first_name,
           isAuthenticated:true}
         }
         else
@@ -41,7 +41,7 @@ const isAuthUser = async () => {
     const currentTime = Date.now() / 1000;
     let decoded = jwtDecode(accessToken);
     if (decoded.exp > currentTime) {
-        return {name:decoded.firstname,isAuthenticated:true}
+        return {name:decoded.first_name,isAuthenticated:true}
       } else {
         const updateSuccess = await UpdateUserToken();
         return updateSuccess;

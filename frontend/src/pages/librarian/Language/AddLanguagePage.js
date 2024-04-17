@@ -1,11 +1,11 @@
 import React from 'react'
 import AddLanguage from '../../../components/librarian/Language/AddLanguage/AddLanguage'
-import SideBarLibrarian from '../../../components/librarian/Sidebar/SideBarLibrarian'
+import Header from '../../../components/librarian/Sidebar/Header'
 
 const AddLanguagePage = () => {
     return (
         <div>
-            <SideBarLibrarian />
+           <Header />
             <AddLanguage />
         </div>
     )

@@ -40,11 +40,11 @@ class OTPverfication(GenericAPIView):
 
     def post(self,request):
         recived_otp = self.request.data.get('otpvalue')
-        print(recived_otp)
+       
         recived_email = self.request.data.get('email')
-        print(recived_email)
+       
         patron = Patron.objects.get(email=recived_email)
-        print(timezone.now()-patron.otp_expire)
+       
         if timezone.now()-patron.otp_expire > timedelta(seconds=20):
             return Response({'message':'time expire'},status=status.HTTP_400_BAD_REQUEST)
         if patron.otp == int(recived_otp):

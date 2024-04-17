@@ -70,7 +70,7 @@ const LibrarianLogin = () => {
         <>
             <div className='Container'>
                 <div className='row'>
-                    <span>Login</span>
+                    <span>Librarian Login</span>
                     <form action="" onSubmit={handleSubmit}>
                         <div className='email'>
                             <label className='label' htmlFor="">Email</label>

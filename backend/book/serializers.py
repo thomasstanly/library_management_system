@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import *
+import json
 
 class CategorySerializer(serializers.ModelSerializer):
     
@@ -21,23 +22,23 @@ class PublisherSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class AuthorSerializer(serializers.ModelSerializer):
+    firstname = serializers.CharField(max_length=20)
+    lastname = serializers.CharField(max_length=20)
 
     class Meta:
         model = Author
-        fields = '__all__'
+        fields = ['id', 'firstname', 'lastname']
 
-class Bookserializer(serializers.ModelSerializer):
-    authors = AuthorSerializer(many=True, required=False)
+class BookVariantSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = Book
-        fields = '__all__'
-    
-    def create(self,data):
-        authors_name = data.pop('authors',[])
-        book = Book.objects.create(**data)
-        for author_name in authors_name:
-            author,_ = Author.objects.get_or_create(**author_name)
-            book.authors.add(author)
-        return book
+        model = Book_variant
+        fields = "__all__"
+        depth = 1
         
+class Bookserializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Book
+        fields = ['id', 'title', 'call_number', 'category', 'genre', 'description', 'author', 'cover']
+        depth = 1

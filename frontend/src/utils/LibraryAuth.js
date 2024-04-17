@@ -1,23 +1,25 @@
-import {jwtDecode} from 'jwt-decode'
+import { jwtDecode } from 'jwt-decode'
 import axios from '../Axios'
 
-const createNewToken = async () =>{
+const createNewToken = async () => {
     const refreshToken = JSON.parse(localStorage.getItem('refresh'))
-    console.log('admin refresh:',refreshToken)
-    try{
-        const res = await axios.post('token/refresh/', 
-        {
-          "refresh":refreshToken
-        })
-        if(res.status === 200){
-          localStorage.setItem('access', JSON.stringify(res.data.access))
-          localStorage.setItem('refresh', JSON.stringify(res.data.refresh))
-          console.log('admin access:',res.data.access)
-          let decoded = jwtDecode(res.data.access);
-          return {'name':decoded.firstname,
-          isAuthenticated:true}
+    try {
+        const res = await axios.post('token/refresh/',
+            {
+                "refresh": refreshToken
+            })
+        if (res.status === 200) {
+            localStorage.setItem('access', JSON.stringify(res.data.access))
+            localStorage.setItem('refresh', JSON.stringify(res.data.refresh))
+            console.log('admin access:', res.data.access)
+            console.log('admin refresh:', res.data.refresh)
+            return true
         }
-    }catch(error){
+        else{
+            return false
+        }
+    } catch (error) {
+        console.log(error.message)
         return false;
     }
 }
@@ -40,42 +42,43 @@ const createNewToken = async () =>{
 // }
 
 
-const LibraryAuth = async ()=>{
+const LibraryAuth = async () => {
     const token = JSON.parse(localStorage.getItem('access'));
 
-    if (!token){
+    if (!token) {
+        console.log("Please log in to continue.")
         return {
-            first_name:null,
-            isAuthenticated:false,
-            isAdmin:false
+            first_name: null,
+            isAuthenticated: false,
+            isAdmin: false
         }
     }
     const remainTime = Date.now() / 1000;
     let decode = jwtDecode(token);
 
-    if (decode.exp > remainTime){
+    if (decode.exp > remainTime) {
         // console.log('admin access:',token)
-        return{
-            first_name:decode.first_name,
-            isAuthenticated:true,
-            isAdmin:decode.librarian
+        return {
+            first_name: decode.first_name,
+            isAuthenticated: true,
+            isAdmin: decode.is_superuser
         }
-    }else{
-        const result =await createNewToken()
-        if (result){
+    } else {
+        const result = await createNewToken()
+        if (result) {
             const token = JSON.parse(localStorage.getItem('access'));
             let decode = jwtDecode(token);
-            console.log(decode.firstname,decode.librarian)
-            return{
-                first_name:decode.firstname,
-                isAuthenticated:true,
-                isAdmin:decode.librarian
+            console.log(decode.first_name, decode.is_superuser)
+            return {
+                first_name: decode.first_name,
+                isAuthenticated: true,
+                isAdmin: decode.is_superuser
             }
-        }else{
-            return{
-                first_name:null,
-                isAuthenticated:false,
-                isAdmin:false
+        } else {
+            return {
+                first_name: null,
+                isAuthenticated: false,
+                isAdmin: false
             }
         }
     }

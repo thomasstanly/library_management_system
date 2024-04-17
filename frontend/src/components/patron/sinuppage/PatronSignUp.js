@@ -63,6 +63,11 @@ const PatronSignUp = () => {
                console.log(otp)
                console.log(res.data)
                toast.warning(res.data.message)
+               
+            }
+            if (res.status === 201){
+               toast.warning(res.data.message)
+               navigate('/login')
             }
          } catch (error) {
             if (error.response.status === 400) {
@@ -70,10 +75,15 @@ const PatronSignUp = () => {
                if (error.response.data.email?.[0] && error.response.data.phone_number?.[0]){
                   toast.warning(error.response.data.email[0])
                   toast.warning(error.response.data.phone_number[0])
+               }else if(error.response.data.email?.[0] && error.response.data.non_field_errors?.[0]){
+                  toast.warning(error.response.data.email[0])
+                  toast.warning(error.response.data.non_field_error[0])
                }else if(error.response.data.email?.[0]){
                   toast.warning(error.response.data.email[0])
                }else if(error.response.data.phone_number?.[0]){
                   toast.warning(error.response.data.phone_number[0])
+               }else{
+                  toast.warning(error.response.data.non_field_errors[0])
                }
               
             }

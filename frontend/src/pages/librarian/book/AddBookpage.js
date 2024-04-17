@@ -1,11 +1,11 @@
 import React from 'react'
 import AddBook from '../../../components/librarian/Book/AddBook/AddBook'
-import SideBarLibrarian from '../../../components/librarian/Sidebar/SideBarLibrarian'
+import Header from '../../../components/librarian/Sidebar/Header'
 
 const AddBookpage = () => {
     return (
         <div>
-            <SideBarLibrarian />
+            <Header />
             <AddBook />
         </div>
     )

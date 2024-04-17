@@ -10,7 +10,7 @@ const LanguageHeader = () => {
 
 
     const breadcrumbs = [
-        <Link underline="hover" key="1" color="inherit" href="/library/dashboard" style={{}}>
+        <Link underline="hover" key="1" color="inherit" to="/library/dashboard" style={{}}>
             Dashboard
         </Link>,
         <Typography key="3" color="text.primary">
@@ -32,7 +32,7 @@ const LanguageHeader = () => {
                     </Stack>
                 </div>
                 <div>
-                    <Link className={style.link} href='/library/language/add_language'><button>+ Add New Language</button></Link>
+                    <Link className={style.link} to='/library/language/add_language'><button>+ Add New Language</button></Link>
                 </div>
             </div>
         </>

@@ -13,7 +13,7 @@ const SideBarLibrarian = () => {
 
    return (
       <div className={style.sidebarContainer}>
-         <div className={style.Nav}>
+         {/* <div className={style.Nav}>
             <Link className={style.navIcon} >
                <MenuIcon onClick={showSidebar} style={{ fontSize: '2rem' }} />
             </Link>
@@ -23,7 +23,7 @@ const SideBarLibrarian = () => {
                <button className={style.checkin}><Link className={style.link}>Check In</Link></button>
             </div>
             <img className='profile' src="/images/user.png" alt="netflix logo" />
-         </div>
+         </div> */}
          {sidebar && <div className={`${style.sidebarnav} ${sidebar ? style.showSidebar : ''}`}>
             <div className={style.sidebarWrap}>
                < Link className={style.Icon} >

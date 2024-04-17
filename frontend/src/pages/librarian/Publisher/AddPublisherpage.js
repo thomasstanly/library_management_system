@@ -1,11 +1,11 @@
 import React from 'react'
 import AddPublisher from '../../../components/librarian/Publisher/AddPublisher/AddPublisher'
-import SideBarLibrarian from '../../../components/librarian/Sidebar/SideBarLibrarian'
+import Header from '../../../components/librarian/Sidebar/Header'
 
 const AddPublisherpage = () => {
     return (
         <div>
-            <SideBarLibrarian />
+            <Header />
             <AddPublisher />
         </div>
     )

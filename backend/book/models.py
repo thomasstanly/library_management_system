@@ -5,6 +5,7 @@ from django.utils.text import slugify
 class Category(models.Model):
     category_name = models.CharField(max_length=20,unique=True)
     category_code = models.CharField(max_length=10,unique=True)
+    created_at = models.DateTimeField(auto_now_add=True,null=True)
 
     def __str__(self):
         return self.category_name
@@ -12,6 +13,7 @@ class Category(models.Model):
 
 class Language(models.Model):
     language = models.CharField(max_length=20,unique=True)
+    created_at = models.DateTimeField(auto_now_add=True,null=True)
 
     def __str__(self):
         return self.language
@@ -20,6 +22,7 @@ class Language(models.Model):
 class Publisher(models.Model):
     publisher_name = models.CharField(max_length=30,unique=True)
     publisher_place = models.CharField(max_length=30)
+    created_at = models.DateTimeField(auto_now_add=True,null=True)
 
     def __str__(self):
         return self.publisher_name
@@ -27,7 +30,7 @@ class Publisher(models.Model):
 
 class Author(models.Model):
     firstname = models.CharField(max_length=20)
-    lastname = models.CharField(max_length=20) 
+    lastname = models.CharField(max_length=20,null=True,blank=True) 
 
     class meta:
         unique_together = ('firstname','lastname') #integrity error
@@ -40,8 +43,10 @@ class Book(models.Model):
     author = models.ManyToManyField(Author,related_name="related_author")
     genre = models.CharField(max_length=30)
     description = models.CharField(max_length=250)
+    cover = models.ImageField(upload_to='covers',blank=True,null=True)
     call_number = models.CharField(max_length=15)
     category = models.ForeignKey(Category,related_name="related_category",on_delete=models.SET_DEFAULT, default="Select")
+    created_at = models.DateTimeField(auto_now_add=True,null=True)
 
     def __str__(self):
         return self.title
@@ -53,6 +58,8 @@ class Book_variant(models.Model):
     language = models.ForeignKey(Language,related_name="related_language",on_delete=models.SET_DEFAULT, default="Select")
     publisher = models.ForeignKey(Publisher,related_name="related_publisher",on_delete=models.SET_DEFAULT, default="Select")
     publishing_year = models.DateField(null=True)
+    created_at = models.DateTimeField(auto_now_add=True,null=True)
+    isbn = models.BigIntegerField(null=True)
     slug = models.SlugField(unique=True, blank=True)
 
     def __str__(self):

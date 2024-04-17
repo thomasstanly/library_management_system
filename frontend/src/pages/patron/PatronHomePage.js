@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Banner from '../../components/patron/banner/Banner'
 import PatronHeader from '../../components/patron/header/PatronHeader'
 import PatronMobileHeader from '../../components/patron/header/PatronMobileHeader'
+import HomePage from '../../components/patron/HomePage/HomePage'
 
 function PatronHomePage() {
   const [isSmallScreen, setIsSmallScreen] = useState(false);
@@ -20,9 +21,10 @@ function PatronHomePage() {
 
   return (
     <div>
-       {isSmallScreen ? <PatronMobileHeader /> : <PatronHeader />}
-      
+      {isSmallScreen ? <PatronMobileHeader /> : <PatronHeader />}
+
       <Banner />
+      <HomePage />
     </div>
   )
 }

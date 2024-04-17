@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import PatronAuth from '../utils/PatronAuth'
+import PatronAuth from '../../utils/PatronAuth'
 // import PatronRouter from './PatronRouter'
-import PatronHomePage from './patron/PatronHomePage'
-import PatronSingUp from './patron/PatronSingUp'
-import PatronLogin from './patron/PatronLogin'
-import { set_Authenticate } from '../Redux/Auth/LibrarySlice'
+import PatronHomePage from '../../pages/patron/PatronHomePage'
+import PatronSingUp from '../../pages/patron/PatronSingUp'
+import PatronLogin from '../../pages/patron/PatronLogin'
+import { set_Authenticate } from '../../Redux/Auth/LibrarySlice'
+import PatronLoginRouter from '../../Router/Patron/PatronLoginRouter'
 
 function PatronWrapper() {
   const { name } = useSelector((state) => state.Auth_store)
@@ -27,13 +28,11 @@ function PatronWrapper() {
   })
   return (
     <div>
-  
       <Routes>
         <Route path='/' element={<PatronHomePage />} />
-        <Route path='/signup' element={<PatronSingUp />} />
-        <Route path='/login' element={<PatronLogin />} />
+        <Route path='/signup' element={<PatronLoginRouter><PatronSingUp /></PatronLoginRouter>} />
+        <Route path='/login' element={<PatronLoginRouter><PatronLogin /></PatronLoginRouter>} />
       </Routes>
-
     </div>
   )
 }

@@ -1,0 +1,16 @@
+.list {
+   display: flex;
+   justify-content: space-between;
+   margin-top: 10vh;
+   margin-right: 5vw;
+   margin-left: 19vw;
+
+    .scroller::-webkit-scrollbar {
+        display: none;
+    }
+
+    .scroller {
+        overflow-y: auto;
+        
+    }
+}

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Navigate } from 'react-router-dom';
-import LibraryAuth from '../utils/LibraryAuth'
+import LibraryAuth from '../../utils/LibraryAuth'
+import Loader from '../../components/Loader';
 
 const LibraryRouter = ({ children }) => {
    const [isLoading, setLoading] = useState(true)
@@ -17,23 +18,19 @@ const LibraryRouter = ({ children }) => {
             isAuth: library.isAuthenticated,
             isAdmin: library.isAdmin
          })
+         setLoading(false)
       }
       fetchlibrary()
-      setLoading(false)
+
 
    }, [])
 
    if (isLoading) {
-      return (<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', }}>
-         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'baseline', }}>
-            <div className="spinner-border" role="status">
-               <span className="visually-hidden">Loading...</span>
-            </div>
-            <div style={{ paddingLeft: '10px' }}>
-               <p style={{ fontFamily: 'monospace', fontSize: '30px', marginTop: '2px', paddingLeft: '2px' }}>Loading....</p>
-            </div>
-         </div>
-      </div>)
+      return <Loader />
+   }
+   if (isAuth.isAdmin === false &&  isAuth.isAuth === true) {
+      console.log('isAuth.isAdmin')
+      return (<Navigate to="/" />)
    }
 
    if (isAuth.isAdmin === false) {

@@ -40,6 +40,7 @@
             .link {
                 text-decoration: none;
                 color: #8B8E99;
+
             }
         }
     }
@@ -107,5 +108,63 @@
 
     .sidebarlabel {
         margin-left: 16px;
+    }
+}
+
+
+@media (max-width: 768px) {
+    .Nav {
+        height: 60px;
+        padding: 0 10px;
+        border-bottom: 1px solid #E4E7E9;
+
+        .SearchContainer {
+            width: 100%;
+
+            .SearchInput {
+                width: 60%;
+                height: 35px;
+            }
+
+            button {
+                height: 35px;
+            }
+
+            .checkin {
+                padding: 0 10px;
+                font-size: 14px;
+            }
+        }
+
+        img {
+            height: 30px;
+            margin: 5px 0;
+        }
+
+        .navIcon {
+            padding: 0;
+        }
+    }
+
+    .Icon {
+        font-size: 6rem;
+    }
+
+    .sidebarnav {
+        width: 200px;
+
+        .sidebarWrap {
+            width: 100%;
+        }
+    }
+
+    .sidebarlink {
+        height: 50px;
+        padding: 15px;
+
+        .sidebarlabel {
+            margin-left: 10px;
+            font-size: 16px;
+        }
     }
 }

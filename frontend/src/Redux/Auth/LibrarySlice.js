@@ -5,7 +5,7 @@ const LibrarySlice = createSlice({
     initialState:{
             name:null,
             isAuthenticated:false,
-            isAdmin:'False'
+            isAdmin:false
     },
     reducers:{
         set_Authenticate:(state,action) =>{

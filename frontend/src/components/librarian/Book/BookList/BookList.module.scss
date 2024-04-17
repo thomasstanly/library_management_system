@@ -1,0 +1,13 @@
+.list {
+    margin-left: 18vw;
+    margin-right: 2vw;
+
+    .scroller::-webkit-scrollbar {
+        display: none;
+    }
+
+    .scroller {
+        overflow-y: auto;
+        
+    }
+}

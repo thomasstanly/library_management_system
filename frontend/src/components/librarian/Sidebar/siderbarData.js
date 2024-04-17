@@ -74,6 +74,5 @@ export const siderbarData = [
     {
         title: "Logout",
         icon: <LogoutIcon />,
-        link: '/Logout'
     },
 ]
