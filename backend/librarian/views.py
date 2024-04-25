@@ -5,7 +5,7 @@ from django.utils import timezone
 from .tasks import emial_verification
 from rest_framework import status
 from rest_framework.views import APIView
-from rest_framework.generics import GenericAPIView, ListCreateAPIView, RetrieveAPIView, UpdateAPIView
+from rest_framework.generics import GenericAPIView, ListCreateAPIView, RetrieveAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.parsers import MultiPartParser,FormParser
 from rest_framework.response import Response
 from rest_framework.exceptions import NotFound
@@ -14,9 +14,9 @@ from rest_framework.pagination import PageNumberPagination
 from rest_framework.filters import SearchFilter
 from rest_framework_simplejwt.tokens import RefreshToken, TokenError
 from rest_framework.parsers import MultiPartParser, FormParser
-from .models import Patron
+from .models import Patron,UserProfile
 
-from .serializer import UserRegisterSerializer,LoginSerializer
+from .serializer import UserRegisterSerializer,LoginSerializer,PtronListCreateSerializer,UserProfileSerializer,PatronUpdateSerializer
 
 
 class SignUp(GenericAPIView):
@@ -86,3 +86,54 @@ class LogoutView(APIView):
           except Exception as e:
                content = {'message': 'refresh token invalid'}
                return Response(content,status=status.HTTP_400_BAD_REQUEST)
+
+
+class PatronList(ListCreateAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = PtronListCreateSerializer
+    queryset = Patron.objects.all().order_by("-id")
+
+class PatronRetrive(GenericAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = PtronListCreateSerializer
+    
+    def get(self,request):
+        patron = Patron.objects.get(email=request.user)
+        serializer = self.serializer_class(patron)
+        return Response(serializer.data)
+
+class PatronUpdate(RetrieveUpdateDestroyAPIView):
+    
+    queryset = Patron.objects.all()
+    serializer_class = PatronUpdateSerializer
+    lookup_field='id'
+
+class PatronStatus(APIView):
+
+    def get(self,request,id):
+        patron = Patron.objects.get(id=id)
+        status = patron.is_active
+        if status == True :
+            patron.is_active = False
+            patron.save()
+            return Response({'message':'Deactivated'})
+        else:
+            patron.is_active = True
+            patron.save()
+            return Response({'message':'Activated'})
+        
+        
+
+class PatronProfileUpdateView(APIView):
+    permission_classes = [IsAuthenticated]
+    parser_classes = (MultiPartParser, FormParser)
+
+    def post(self, request, *args, **kwargs):
+
+        user_profile = UserProfile.objects.get_or_create(user=request.user)[0]
+        serializer = UserProfileSerializer(user_profile, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

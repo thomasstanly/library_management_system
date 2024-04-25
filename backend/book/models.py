@@ -45,7 +45,7 @@ class Book(models.Model):
     description = models.CharField(max_length=250)
     cover = models.ImageField(upload_to='covers',blank=True,null=True)
     call_number = models.CharField(max_length=15)
-    category = models.ForeignKey(Category,related_name="related_category",on_delete=models.SET_DEFAULT, default="Select")
+    category = models.ForeignKey(Category,related_name="related_category",on_delete=models.SET_NULL, null=True,blank=True)
     created_at = models.DateTimeField(auto_now_add=True,null=True)
 
     def __str__(self):
@@ -55,8 +55,8 @@ class Book(models.Model):
 class Book_variant(models.Model):
     stock_no = models.IntegerField(unique=True)
     book = models.ForeignKey(Book,related_name="related_book",on_delete=models.CASCADE)
-    language = models.ForeignKey(Language,related_name="related_language",on_delete=models.SET_DEFAULT, default="Select")
-    publisher = models.ForeignKey(Publisher,related_name="related_publisher",on_delete=models.SET_DEFAULT, default="Select")
+    language = models.ForeignKey(Language,related_name="related_language",on_delete=models.SET_NULL, null=True,blank=True)
+    publisher = models.ForeignKey(Publisher,related_name="related_publisher",on_delete=models.SET_NULL, null=True,blank=True)
     publishing_year = models.DateField(null=True)
     created_at = models.DateTimeField(auto_now_add=True,null=True)
     isbn = models.BigIntegerField(null=True)

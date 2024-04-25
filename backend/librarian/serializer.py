@@ -4,6 +4,7 @@ from rest_framework.exceptions import AuthenticationFailed
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from .models import Patron,UserProfile
+from membership.serializers import MemberSerializer
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 
@@ -81,3 +82,48 @@ class LoginSerializer(serializers.ModelSerializer):
             'access_token':str(token.get('access')),
             'refresh_token':str(token.get('refresh')),
         }
+    
+class UserProfileSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = UserProfile
+        fields = ['profile_pic']
+
+class PtronListCreateSerializer(serializers.ModelSerializer):
+    Profile = UserProfileSerializer(required=True)
+
+    class Meta:
+        model = Patron
+        fields =['id','first_name','last_name','email','password','Profile','is_active','date_joined','phone_number','membership_id']
+        depth = 1
+
+class PatronUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Patron
+        fields =['first_name','last_name','email','is_active','phone_number']
+        
+        def validate_first_name(self, value):
+            if not value.isalpha():
+                raise serializers.ValidationError("First name should contain only characters.")
+            return value
+
+        def validate_last_name(self, value):
+            if not value.isalpha():
+                raise serializers.ValidationError("Last name should contain only characters.")
+            return value
+
+        def validate_email(self, value):
+            if "@" not in value or "." not in value:
+                raise serializers.ValidationError("Invalid email format.")
+            return value
+
+        def validate_phone_number(self, value):
+            if len(value) != 10 or not value.isdigit():
+                raise serializers.ValidationError("Phone number should be exactly 10 digits.")
+            return value
+
+        def update(self, instance, validated_data):
+            for attr, value in validated_data.items():
+                setattr(instance, attr, value)
+            instance.save()
+            return instance   

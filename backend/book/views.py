@@ -1,4 +1,4 @@
-from rest_framework.mixins import ListModelMixin,CreateModelMixin,UpdateModelMixin,RetrieveModelMixin
+from rest_framework.mixins import ListModelMixin,CreateModelMixin,UpdateModelMixin,RetrieveModelMixin,DestroyModelMixin
 from rest_framework.generics import GenericAPIView,ListCreateAPIView,RetrieveUpdateDestroyAPIView
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
@@ -16,6 +16,7 @@ class CategoryListCreate(ListModelMixin,CreateModelMixin,GenericAPIView):
     def perform_create(self, serializer):
         category_name = self.request.data.get('category_name', None)
         category_code = self.request.data.get('category_code', None)
+
         
         if category_name:
             serializer.validated_data['category_name'] = category_name.capitalize()
@@ -31,7 +32,7 @@ class CategoryListCreate(ListModelMixin,CreateModelMixin,GenericAPIView):
         return self.create(request,*args,**kwargs)
         
     
-class CaltegoryRetriveUpdate(RetrieveModelMixin,UpdateModelMixin,GenericAPIView):
+class CaltegoryRetriveUpdate(RetrieveUpdateDestroyAPIView,GenericAPIView):
     permission_classes = [IsAdminUser]
     serializer_class = CategorySerializer
     queryset = Category.objects.all()
@@ -45,14 +46,19 @@ class CaltegoryRetriveUpdate(RetrieveModelMixin,UpdateModelMixin,GenericAPIView)
             serializer.validated_data['category_name'] = category_name.capitalize()
         if category_code:
             serializer.validated_data['category_code'] = category_code.upper()
+
+        serializer.save()
         
-        return super().perform_update(serializer)
+        return super().perform_update(serializer)    
     
     def get(self, request, *args, **kwargs):
         return self.retrieve(request, *args, **kwargs)
 
     def put(self, request, *args, **kwargs):
         return self.update(request, *args, **kwargs)
+    
+    def delete(self, request, *args, **kwargs):
+        return self.destroy(request, *args, **kwargs)
     
 class LanguageListCreate(ListModelMixin,CreateModelMixin,GenericAPIView):
 
@@ -74,7 +80,7 @@ class LanguageListCreate(ListModelMixin,CreateModelMixin,GenericAPIView):
     def post(self,request,*args,**kwargs):
         return self.create(request,*args,**kwargs)
     
-class LanguageRetriveUpdate(RetrieveModelMixin,UpdateModelMixin,GenericAPIView):
+class LanguageRetriveUpdate(RetrieveModelMixin,UpdateModelMixin,DestroyModelMixin,GenericAPIView):
     permission_classes = [IsAdminUser]
     serializer_class = LanguageSerializer
     queryset = Language.objects.all()
@@ -93,6 +99,9 @@ class LanguageRetriveUpdate(RetrieveModelMixin,UpdateModelMixin,GenericAPIView):
     
     def put(self,request,*args,**kwargs):
         return self.update(request,*args,**kwargs)
+
+    def delete(self, request, *args, **kwargs):
+        return self.destroy(request, *args, **kwargs)
     
 class PublisherListCreate(ListCreateAPIView):
     permission_classes = [IsAdminUser]
@@ -141,7 +150,7 @@ class BookListCreate(GenericAPIView):
     def post(self, request, *args, **kwargs):
         data = request.data
         category = Category.objects.get(id=data["category"])
-        # print(data["cover"])
+ 
         try:
             book = Book.objects.create(title=data["title"],call_number=data["call_number"],
                                    category=category,genre=data["genre"],description=data["description"],
@@ -162,11 +171,57 @@ class BookListCreate(GenericAPIView):
         return Response(serlizer.data ,status=status.HTTP_201_CREATED)
 
 
-class BookRetriveUpdate(RetrieveUpdateDestroyAPIView,GenericAPIView):
+class BookRetriveUpdate(GenericAPIView):
     permission_classes = [IsAdminUser]
     serializer_class= Bookserializer
     queryset = Book.objects.all()
-    lookup_field = 'id'
+    lookup_field='id'
+
+    def get(self, request, *args, **kwargs):
+        try:
+            book = self.get_object()
+            serializer = Bookserializer(book)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except Book.DoesNotExist:
+            return Response({'error': 'Book not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    def put(self, request, *args, **kwargs):
+        data = request.data
+
+        try:
+            book = self.get_object()
+            if data['category']:
+                category = Category.objects.get(category_name=data["category"])
+                book.category = category
+            if "title" in data and data["title"]:
+                book.title = data["title"]
+            if "call_number" in data and data["call_number"]:
+                book.call_number = data["call_number"]
+            if "genre" in data and data["genre"]:
+                book.genre = data["genre"]
+            if "description" in data and data["description"]:
+                book.description = data["description"]
+            if "cover" in data and data["cover"]:
+                book.cover = data["cover"]
+
+            book.save()
+
+            authors_data_str = data.get("authors", [])
+            authors_data = json.loads(authors_data_str)
+
+            # Clear existing authors    
+            book.author.clear()
+
+            for author_data in authors_data:
+                author_obj, _ = Author.objects.get_or_create(firstname=author_data["firstname"], lastname=author_data["lastname"])
+                book.author.add(author_obj)
+
+            serializer = Bookserializer(book)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except Book.DoesNotExist:
+            return Response({'error': 'Book not found'}, status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 class BookVariantListCreate(ListCreateAPIView):
     permission_classes = [IsAdminUser]

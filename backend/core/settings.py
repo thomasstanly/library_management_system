@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'book',
     'librarian',
     'membership',
+    'razorpay_backend',
     'corsheaders',
     'rest_framework',
     'rest_framework_simplejwt.token_blacklist',
@@ -170,6 +171,10 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
       ],
 }
+
+#razorpay
+KEY= os.getenv("KEY")
+SECRET_KEY= os.getenv("SECRET_KEY")
 
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=10),

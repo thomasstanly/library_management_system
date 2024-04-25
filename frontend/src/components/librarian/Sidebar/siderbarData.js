@@ -6,6 +6,7 @@ import ReportIcon from '@mui/icons-material/Report';
 import PeopleIcon from '@mui/icons-material/People';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import CardMembershipIcon from '@mui/icons-material/CardMembership';
 import LogoutIcon from '@mui/icons-material/Logout';
 
 export const siderbarData = [
@@ -54,22 +55,27 @@ export const siderbarData = [
         subNav: [
             {
                 title: "Circulation report",
-                link: 'library/report/circulation_report',
+                link: '/library/report/circulation_report',
             },
             {
                 title: "fine report",
-                link: 'library/report/fine_report',
+                link: '/library/report/fine_report',
             },
             {
                 title: "category reportt",
-                link: 'report/category_report',
+                link: '/library/report/category_report',
             }
         ]
     },
     {
         title: "Patron",
         icon: <PeopleIcon />,
-        link: '/Patron'
+        link: '/library/patron'
+    },
+    {
+        title:"Membership Plan",
+        icon:<CardMembershipIcon/>,
+        link:'/library/membership'
     },
     {
         title: "Logout",

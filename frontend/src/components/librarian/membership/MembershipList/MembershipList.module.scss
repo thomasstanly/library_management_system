@@ -1,0 +1,49 @@
+.header {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 20px;
+
+    div {
+        .link {
+            button {
+                border: none;
+                border-radius: .5em;
+                margin: 10px;
+                padding: .5em 1em;
+                background-color: #362727;
+                color: white;
+            }
+        }
+
+        button {
+            border: none;
+            border-radius: .5em;
+            margin: 10px;
+            padding: .5em 1em;
+            background-color: #362727;
+            color: white;
+        }
+    }
+
+    .title {
+        width: 50vw;
+    }
+}
+
+.list {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10vh;
+    margin-right: 5vw;
+    margin-left: 19vw;
+ 
+     .scroller::-webkit-scrollbar {
+         display: none;
+     }
+ 
+     .scroller {
+         overflow-y: auto;
+         
+     }
+ }

@@ -6,3 +6,4 @@ class Membership_plan(models.Model):
     no_books = models.IntegerField(null=False,unique=True)
     return_period = models.IntegerField(null=False,unique=True)
     plan_rate = models.IntegerField(null=False,unique=True)
+

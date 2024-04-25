@@ -1,6 +1,7 @@
 import React from 'react'
 import SideBarLibrarian from '../../components/librarian/Sidebar/SideBarLibrarian'
 import Header from '../../components/librarian/Sidebar/Header'
+import Chart from '../../components/librarian/Dasboard/Dashboard'
 
 const LibrarainLanding = () => {
 
@@ -8,7 +9,8 @@ const LibrarainLanding = () => {
     <div>
       <Header />
       <SideBarLibrarian />
-      </div>
+      <Chart />
+    </div>
   )
 }
 

@@ -1,0 +1,11 @@
+.profile {
+    margin-top: 16vh;
+    margin-right: 10vw;
+    padding: 3vh 20vw 3vh 20vw;
+    background-color: aqua;
+    div {
+        display: flex;
+        flex-direction: column;
+        padding-bottom: 4vh;
+    }
+}

@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { useNavigate } from 'react-router-dom'
+import Swal from 'sweetalert2';
 import axios from '../../../../Axios'
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
@@ -23,6 +25,7 @@ const PublisherList = () => {
    const [page, setPage] = React.useState(0);
    const [rowsPerPage, setRowsPerPage] = React.useState(10);
    const [rows, setRows] = React.useState([]);
+   const navigate = useNavigate()
 
    const handleChangePage = (event, newPage) => {
       setPage(newPage);
@@ -33,22 +36,54 @@ const PublisherList = () => {
       setPage(0);
    };
 
-   React.useEffect(() => {
-      const fetch = async () => {
-         try {
-            const access_token = JSON.parse(localStorage.getItem('access'))
-            const res = await axios.get('publisher/',
-               {
+   const handleDelete = (id) => {
+      Swal.fire({
+         title: "Are you sure?",
+         text: "You won't be able to revert this!",
+         icon: "warning",
+         showCancelButton: true,
+         confirmButtonColor: "#3085d6",
+         cancelButtonColor: "#d33",
+         confirmButtonText: "Yes, delete it!"
+      }).then(async (result) => {
+         if (result.isConfirmed) {
+            try {
+               const access_token = JSON.parse(localStorage.getItem('access'))
+               await axios.delete(`publisher_edit/${id}/`, {
                   headers: {
                      Authorization: `Bearer ${access_token}`
                   }
                })
-            console.log(res)
-            setRows(res.data)
-         } catch (error) {
-            console.log(error.response)
+               Swal.fire({
+                  title: "Deleted!",
+                  text: "Your file has been deleted.",
+                  icon: "success"
+               });
+               fetch()
+            } catch (error) {
+               console.error(error)
+            }
          }
+      })
+   }
+
+   const fetch = async () => {
+      try {
+         const access_token = JSON.parse(localStorage.getItem('access'))
+         const res = await axios.get('publisher/',
+            {
+               headers: {
+                  Authorization: `Bearer ${access_token}`
+               }
+            })
+         console.log(res)
+         setRows(res.data)
+      } catch (error) {
+         console.log(error.response)
       }
+   }
+
+   React.useEffect(() => {
       fetch()
    }, [])
    return (
@@ -78,7 +113,8 @@ const PublisherList = () => {
                                  <TableCell align="left">{row.publisher_name}</TableCell>
                                  <TableCell align="left">{row.publisher_place}</TableCell>
                                  <TableCell align="left">{new Date(row.created_at).toLocaleDateString()}</TableCell>
-                                 <TableCell align="center"><EditIcon style={{ color: 'blue' }} /><DeleteIcon style={{ color: 'red' }} /></TableCell>
+                                 <TableCell align="center"><EditIcon style={{ color: 'blue' }} onClick={() => navigate(`/library/publisher/${row.id}`)} />
+                                    <DeleteIcon style={{ color: 'red' }} onClick={() => handleDelete(row.id)} /></TableCell>
                               </TableRow>
                            );
                         })}

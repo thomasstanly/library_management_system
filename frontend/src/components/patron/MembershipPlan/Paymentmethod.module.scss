@@ -1,0 +1,40 @@
+.container {
+    height: 100vh;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid #303030;
+
+    .field_name {
+
+        .row {
+            margin: 0px;
+            display: flex;
+            align-items: center;
+
+            p {
+                margin: 0px;
+                padding: 10px;
+            }
+
+            input {
+                outline: none;
+                border: none;
+                padding: 10px;
+            }
+
+        }
+    }
+
+    button {
+        position: absolute;
+        top:70%;
+        border: none;
+        border-radius: 10px;
+        padding: 10px 40px;
+        background-image: linear-gradient(to bottom, rgb(236, 31, 236),rgb(216, 216, 216));
+        
+
+    }
+}

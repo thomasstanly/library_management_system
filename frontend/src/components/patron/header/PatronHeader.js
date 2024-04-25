@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import axios from '../../../Axios'
@@ -6,8 +6,10 @@ import './PatronHeader.scss'
 
 const PatronHeader = () => {
   const { name, isAuthenticated } = useSelector((state) => state.Auth_store)
-  console.log('header', name)
+  const {plan,first_name} = useSelector((state)=> state.patron_detils)
+  console.log('header', name,first_name,plan)
   const navigate = useNavigate()
+
   const logout = async () => {
     const refresh_token = JSON.parse(localStorage.getItem('refresh'))
     const token = JSON.parse(localStorage.getItem('access'))
@@ -27,21 +29,22 @@ const PatronHeader = () => {
       console.log('logout not working', e)
     }
   }
+  
   return (
     <div className='header'>
       <div className='left'>
-        {isAuthenticated ? <div className="dropdown" style={{ marginLeft: '10px' }}>
+        {isAuthenticated ? <div className="dropdown" style={{ marginLeft: '10px'}}>
           <button className='profile dropdown-toggle' type="button" data-bs-toggle="dropdown" aria-expanded="false">
             <img className='profile' src="/images/user.png" alt="netflix logo" />
           </button>
-          <ul className="dropdown-menu" >
-            <li><a className="dropdown-item" href="#">profile</a></li>
+          <ul className="dropdown-menu">
+            <li><a className="dropdown-item" href='/profile'>profile</a></li>
             <li><a className="dropdown-item" href="#" onClick={logout}>logout</a></li>
           </ul>
         </div> :
           <img className='profile' src="/images/user.png" alt="netflix logo" />}
 
-        {isAuthenticated ? <button className='btn btn-primary' style={{ marginLeft: '20px' }}>Buy Plan</button> :
+        {isAuthenticated  ? plan ? '' :<button className='btn btn-primary' style={{ marginLeft: '20px' }} onClick={()=>{navigate('/plan')}}>Buy Plan</button>:
           <p onClick={() => { navigate('/login') }} style={{ cursor: 'pointer', marginLeft: '20px' }}>Login</p>}
       </div>
       <div className='right'>

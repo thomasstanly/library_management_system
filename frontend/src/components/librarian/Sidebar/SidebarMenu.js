@@ -16,7 +16,7 @@ const SidebarMenu = ({ item }) => {
 		if (title === "Logout") {
 			const refresh_token = JSON.parse(localStorage.getItem('refresh'));
 			const token = JSON.parse(localStorage.getItem('access'));
-	
+
 			try {
 				console.log(token);
 				const res = await axios.post('logout/', { refresh_token: refresh_token }, {

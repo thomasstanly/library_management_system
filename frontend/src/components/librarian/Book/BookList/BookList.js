@@ -1,5 +1,6 @@
 import * as React from 'react';
-import {useNavigate} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import Swal from 'sweetalert2'
 import axios from '../../../../Axios'
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
@@ -36,26 +37,54 @@ const BookList = () => {
       setPage(0);
    };
 
-   const navigation = (id) =>{
-      navigate(`/library/books/${id}/`)
-   }
-
-   React.useEffect(() => {
-      const fetch = async () => {
-         try {
-            const access_token = JSON.parse(localStorage.getItem('access'))
-            const res = await axios.get('book/',
-               {
+   const handleDelete = (id) => {
+      Swal.fire({
+         title: "Are you sure?",
+         text: "You won't be able to revert this!",
+         icon: "warning",
+         showCancelButton: true,
+         confirmButtonColor: "#3085d6",
+         cancelButtonColor: "#d33",
+         confirmButtonText: "Yes, delete it!"
+      }).then(async (result) => {
+         if (result.isConfirmed) {
+            try {
+               const access_token = JSON.parse(localStorage.getItem('access'))
+               await axios.delete(`book/${id}/`, {
                   headers: {
                      Authorization: `Bearer ${access_token}`
                   }
                })
-            console.log(res.data)
-            setRows(res.data)
-         } catch (error) {
-            console.log(error)
+               Swal.fire({
+                  title: "Deleted!",
+                  text: "Your file has been deleted.",
+                  icon: "success"
+               });
+               fetch()
+            } catch (error) {
+               console.error(error)
+            }
          }
+      })
+   }
+
+   const fetch = async () => {
+      try {
+         const access_token = JSON.parse(localStorage.getItem('access'))
+         const res = await axios.get('book/',
+            {
+               headers: {
+                  Authorization: `Bearer ${access_token}`
+               }
+            })
+         setRows(res.data)
+      } catch (error) {
+         console.log(error)
       }
+   }
+
+   React.useEffect(() => {
+
       fetch()
    }, [])
 
@@ -85,20 +114,21 @@ const BookList = () => {
                            let image = `http://127.0.0.1:8000${row.cover}`;
                            return (
                               <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
-                                 <TableCell align="left" onClick={()=>navigation(row.id)}>
+                                 <TableCell align="left" onClick={() => navigate(`/library/books/${row.id}/`)}>
                                     <img src={image} alt={row.title} style={{ width: '70px' }} />
                                     <span style={{ marginLeft: '2vw' }}>{row.title}</span>
                                  </TableCell>
                                  <TableCell align="left">
-                                 {row.author.map((auth, index) => (
-                                    <span key={index}>
-                                       {auth.firstname} {auth.lastname}
-                                       {index < row.author.length - 1 && ', '}
-                                    </span>
+                                    {row.author.map((auth, index) => (
+                                       <span key={index}>
+                                          {auth.firstname} {auth.lastname}
+                                          {index < row.author.length - 1 && ', '}
+                                       </span>
                                     ))}
                                  </TableCell>
                                  <TableCell align="left">{row.category.category_name}</TableCell>
-                                 <TableCell align="center"><EditIcon style={{ color: 'blue' }} /><DeleteIcon style={{ color: 'red' }} /></TableCell>
+                                 <TableCell align="center"><EditIcon style={{ color: 'blue' }} onClick={() => navigate(`/library/books/edit/${row.id}/`)} />
+                                    <DeleteIcon style={{ color: 'red' }} onClick={() => handleDelete(row.id)} /></TableCell>
                               </TableRow>
                            );
                         })}

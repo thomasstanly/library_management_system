@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
+import axios from '../../../Axios'
 import './PatronMobileHeader.scss'
 
 const PatronMobileHeader = () => {
@@ -12,6 +13,26 @@ const PatronMobileHeader = () => {
    const toggleForm = () => {
       setShowForm(!showForm);
    };
+   const logout = async () => {
+      const refresh_token = JSON.parse(localStorage.getItem('refresh'))
+      const token = JSON.parse(localStorage.getItem('access'))
+  
+      try {
+        console.log(token)
+        const res = await axios.post('logout/', { refresh_token: refresh_token }, {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        })
+        console.log(res.status)
+        localStorage.clear();
+        axios.defaults.headers.common['Authorization'] = null;
+        window.location.href = '/'
+      } catch (e) {
+        console.log('logout not working', e)
+      }
+    }
+  
    return (
       <>
          <div className='header'>
