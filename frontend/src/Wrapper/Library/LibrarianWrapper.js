@@ -27,6 +27,9 @@ import PatronListPage from '../../pages/librarian/Patron/PatronListPage'
 import LibraryAuth from '../../utils/LibraryAuth'
 import LibraryRouter from '../../Router/Library/LibraryRouter'
 import LibraryLoginRouter from '../../Router/Library/LibraryLoginRouter'
+import PatronDetailsPage from '../../pages/librarian/Patron/PatronDetailsPage/PatronDetailsPage'
+import PatronCheckoutPage from '../../pages/librarian/Patron/PatronCheckoutPage/PatronCheckoutPage'
+import CheckInPages from '../../pages/librarian/CheckIn/CheckInPages'
 
 
 function LibrarianWrapper() {
@@ -76,10 +79,13 @@ function LibrarianWrapper() {
             <Route path='/books/edit/:id' element={<LibraryRouter><EditBookpage /></LibraryRouter>} />
             <Route path='/books/:id' element={<LibraryRouter><BookDetailsPage /></LibraryRouter>} />
             <Route path='/books/:id/add' element={<LibraryRouter><BookAddCountPage /></LibraryRouter>} />
-            <Route path='/membership' element={<LibraryRouter><MembershipListPage/></LibraryRouter>} />
-            <Route path='/membership/:id' element={<LibraryRouter><MembershipEditPage/></LibraryRouter>} />
-            <Route path='/membership/add_plan' element={<LibraryRouter><MembershipAddPage/></LibraryRouter>} />
-            <Route path='/patron' element={<LibraryRouter><PatronListPage/></LibraryRouter>} />
+            <Route path='/membership' element={<LibraryRouter><MembershipListPage /></LibraryRouter>} />
+            <Route path='/membership/:id' element={<LibraryRouter><MembershipEditPage /></LibraryRouter>} />
+            <Route path='/membership/add_plan' element={<LibraryRouter><MembershipAddPage /></LibraryRouter>} />
+            <Route path='/patron' element={<LibraryRouter><PatronListPage /></LibraryRouter>} />
+            <Route path='/patron/:id' element={<LibraryRouter><PatronDetailsPage /></LibraryRouter>} />
+            <Route path='/patron/:id/checkout' element={<LibraryRouter><PatronCheckoutPage /></LibraryRouter>} />
+            <Route path='/checkin' element={<LibraryRouter><CheckInPages /></LibraryRouter>} />
          </Routes>
       </SidebarProvider>
 

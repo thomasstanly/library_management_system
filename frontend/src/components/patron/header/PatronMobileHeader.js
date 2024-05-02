@@ -4,9 +4,13 @@ import { useSelector } from 'react-redux'
 import axios from '../../../Axios'
 import './PatronMobileHeader.scss'
 
-const PatronMobileHeader = () => {
+const PatronMobileHeader = ({header}) => {
 
-   const { isAuthenticated } = useSelector((state) => state.Auth_store)
+   const { name, isAuthenticated } = useSelector((state) => state.Auth_store)
+   const profile_pic = header.profile_pic
+   const plan = header.plan
+   const url = `http://127.0.0.1:8000${profile_pic}`
+   console.log('mobile header', name,profile_pic,plan)
    const [showForm, setShowForm] = useState(false);
    const navigate = useNavigate()
 
@@ -39,15 +43,15 @@ const PatronMobileHeader = () => {
             <div className='left'>
                {isAuthenticated ? <div className="dropdown" style={{ marginLeft:'10px'}}>
                   <button className='profile dropdown-toggle' type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                     <img className='profile' src="/images/user.png" alt="netflix logo" />
+                     <img className='profile' src={(profile_pic ? url : null) || "/images/user.png"} alt="netflix logo" />
                   </button>
                   <ul className="dropdown-menu" >
-                     <li><a className="dropdown-item">profile</a></li>
-                     <li><a className="dropdown-item">logout</a></li>
+                     <li><a className="dropdown-item" href='/profile'>profile</a></li>
+                     <li><a className="dropdown-item" href="#" onClick={logout}>logout</a></li>
                   </ul>
                </div> :
                   <img className='profile' src="/images/user.png" alt="netflix logo" />}
-               {isAuthenticated ? <button className='btn btn-primary'style={{ marginLeft:'20px'}}>Buy Plan</button> :
+               {isAuthenticated  ? plan ? '' :<button className='btn btn-primary' style={{ marginLeft: '20px' }} onClick={()=>{navigate('/plan')}}>Buy Plan</button> :
                   <p onClick={() => { navigate('/login') }} style={{ cursor: 'pointer',marginLeft:'20px'}}>Login</p>}
             </div>
             <div className='right'>

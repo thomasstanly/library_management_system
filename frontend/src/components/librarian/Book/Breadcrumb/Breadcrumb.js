@@ -1,23 +1,12 @@
 import React, { useContext } from 'react'
 import {Link} from 'react-router-dom'
 import SidebarContext from '../../../../Context/sidebartoggle'
-import style from './BookHeader.module.scss'
+import style from './Breadcrumb.module.scss'
 import Breadcrumbs from '@mui/material/Breadcrumbs';
-import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
-import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 
-const BookHeader = () => {
-  const breadcrumbs = [
-    <Link underline="hover" key="1" color="inherit" to="/library/dashboard" style={{}}>
-      Dashboard
-    </Link>,
-    <Typography key="3" color="text.primary">
-      Books
-    </Typography>,
-  ];
-
+const Breadcrumb = ({breadcrumbs}) => {
   return (
     <>
       <div className={style.header}>
@@ -31,7 +20,7 @@ const BookHeader = () => {
             </Breadcrumbs>
           </Stack>
         </div>
-        <div>
+        <div className={style.button}>
           <Link className={style.link} to='/library/books/add_book'><button>+ Add New Book</button></Link>
         </div>
       </div>
@@ -39,4 +28,4 @@ const BookHeader = () => {
   )
 }
 
-export default BookHeader
+export default Breadcrumb

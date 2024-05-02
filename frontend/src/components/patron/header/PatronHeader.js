@@ -4,10 +4,12 @@ import { useSelector } from 'react-redux'
 import axios from '../../../Axios'
 import './PatronHeader.scss'
 
-const PatronHeader = () => {
+const PatronHeader = ({header}) => {
   const { name, isAuthenticated } = useSelector((state) => state.Auth_store)
-  const {plan,first_name} = useSelector((state)=> state.patron_detils)
-  console.log('header', name,first_name,plan)
+  const profile_pic = header.profile_pic
+  const plan = header.plan
+  const url = `http://127.0.0.1:8000${profile_pic}`
+  console.log('header', name,profile_pic,plan)
   const navigate = useNavigate()
 
   const logout = async () => {
@@ -35,7 +37,7 @@ const PatronHeader = () => {
       <div className='left'>
         {isAuthenticated ? <div className="dropdown" style={{ marginLeft: '10px'}}>
           <button className='profile dropdown-toggle' type="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <img className='profile' src="/images/user.png" alt="netflix logo" />
+            <img className='profile' src={(profile_pic ? url : null) || "/images/user.png"} alt="netflix logo" />
           </button>
           <ul className="dropdown-menu">
             <li><a className="dropdown-item" href='/profile'>profile</a></li>

@@ -10,11 +10,10 @@ import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
+import Typography from '@mui/material/Typography'
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Stack from '@mui/material/Stack';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
@@ -32,9 +31,12 @@ const columns = [
 
 ];
 const breadcrumbs = [
-   <Link underline="hover" key="1" color="inherit" to="/library/patron" style={{}}>
-      Dashboard
-   </Link>,
+   <Link underline="hover" key="1" color="inherit" href="/library/dashboard" style={{}}>
+   Dashboard
+</Link>,
+<Typography key="3" color="text.primary">
+   Patron
+</Typography>,
 ];
 const PatronList = () => {
    const [rows, setRows] = useState([])
@@ -50,6 +52,9 @@ const PatronList = () => {
       setRowsPerPage(+event.target.value);
       setPage(0);
    };
+   const navigatation = (id) => {
+      navigate(`/library/patron/${id}`)
+   }
 
    const handleStatus = async (id) => {
 
@@ -100,14 +105,14 @@ const PatronList = () => {
             <div>
             </div>
             <div className={style.title}>
-               <h3>Memebership</h3>
+               <h3>Patron</h3>
                <Stack spacing={2}>
                   <Breadcrumbs separator={<ArrowRightIcon />} aria-label="breadcrumb">
                      {breadcrumbs}
                   </Breadcrumbs>
                </Stack>
             </div>
-            <div>
+            <div className={style.button}>
                <Link className={style.link} to='/library/membership/add_plan'><button>+ Add New Plan</button></Link>
             </div>
          </div>
@@ -134,8 +139,10 @@ const PatronList = () => {
                            .map((row) => {
                               return (
                                  <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
-                                    <TableCell align="left"><img style={{ height: '60px' }} src={(row.Profile ? row.Profile.profile_pic : null) || "/images/user.png"} alt="profile logo" /></TableCell>
-                                    <TableCell align="left">{row.first_name + ' ' + row.last_name}</TableCell>
+                                    <TableCell align="left"><img style={{ height: '60px' }} src={(row.Profile ? row.Profile.profile_pic : null) || "/images/user.png"} alt="profile logo"
+                                    onClick={(event) => navigatation(row.id)}
+                                    /></TableCell>
+                                    <TableCell align="left" onClick={(event) => navigatation(row.id)}>{row.first_name + ' ' + row.last_name}</TableCell>
                                     <TableCell align="left">{row.email}</TableCell>
                                     <TableCell align="left">{row.phone_number}</TableCell>
                                     <TableCell align="left">{row.membership_id ? row.membership_id.plan_name : ''}</TableCell>

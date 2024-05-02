@@ -1,0 +1,53 @@
+@import '../../../../style/variable.scss';
+
+.container {
+
+    margin-top: 20vh;
+
+    .name {
+        display: inline-block;
+        padding: 0px 0px 30px 0px;
+    }
+
+    .details {
+        border: 2px solid $profileborderColor;
+        padding: 20px 20px 20px 0px;
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+
+        .personal {
+            padding-left: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .library {
+            margin-left: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+    }
+
+}
+
+@media screen and (max-width: 768px) {
+    .container {
+        margin-top: 0vh;
+
+        .name {
+            display: none;
+        }
+
+        .details {
+            flex-direction: column;
+
+            .personal .library {
+                margin-left: 0;
+                padding-left: 0;
+                margin-top: 10px;
+
+            }
+        }
+    }
+}

@@ -8,7 +8,7 @@ class Membership_payment(models.Model):
         ('UNPAID', 'Unpaid')
     )
     patron = models.ForeignKey(Patron,on_delete=models.CASCADE,related_name='user_id')
-    membership_plan = models.ForeignKey(Membership_plan, on_delete=models.SET_NULL, null=True,related_name= 'membership_plan_id')
+    membership_plan = models.ForeignKey(Membership_plan, on_delete=models.SET_NULL, null=True,related_name= 'membership_plan_id',unique=False)
     from_date = models.DateField()
     expiry_date = models.DateField()
     amount_paid = models.BigIntegerField()

@@ -29,7 +29,7 @@ const CategoryHeader = () => {
                   </Breadcrumbs>
                </Stack>
             </div>
-            <div>
+            <div className={style.button}>
                <Link className={style.link} to='/library/category/add_category'><button>+ Add New Category</button></Link>
             </div>
          </div>

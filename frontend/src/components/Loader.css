@@ -23,7 +23,7 @@
   width: 50%;
   height: auto;
   position: absolute;
-  animation: paging 0.15s linear infinite;
+  animation: paging 0.45s linear infinite;
   transform-origin: left;
 }
 

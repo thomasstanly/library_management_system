@@ -17,7 +17,7 @@ const Header = () => {
             <div className={style.SearchContainer}>
                <input type="text" placeholder="Search..." className={style.SearchInput} />
                <button><SearchIcon style={{ fontSize: '2.25rem', color: '#8B8E99' }} /></button>
-               <button className={style.checkin}><Link className={style.link}>Check In</Link></button>
+               <button className={style.checkin}><Link to={'/library/checkin'} className={style.link}>Check In</Link></button>
             </div>
             <img className='profile' src="/images/user.png" alt="netflix logo" />
          </div>

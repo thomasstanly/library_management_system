@@ -10,7 +10,8 @@ urlpatterns = [
 
     path('patron_list/',views.PatronList.as_view(),name='patron-list'),
     path('patron/',views.PatronRetrive.as_view(),name='patron'),
-    path('patron/<int:id>/',views.PatronUpdate.as_view(),name='patron-update'),
+    path('patron/<int:id>/',views.PatronRetriveUpdateAPIViews.as_view(),name='patron-update'),
     path('patron/status/<int:id>/',views.PatronStatus.as_view(),name='patron-status'),
     path('patron/profile_pic/',views.PatronProfileUpdateView.as_view(),name='patron-pic'),
+    path('patron/change_password/',views.PasswordChangeAPIView.as_view(),name='password-change'),
 ]

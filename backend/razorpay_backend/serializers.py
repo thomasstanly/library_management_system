@@ -7,8 +7,6 @@ class MembershipPaymentSerializer(serializers.ModelSerializer):
         model = Membership_payment
         fields = ['id','patron', 'membership_plan', 'from_date', 'expiry_date', 'amount_paid', 'status']
         
-
-    
 class CreateOrderSerializers(serializers.Serializer):
     amount = serializers.IntegerField()
     currency = serializers.CharField()

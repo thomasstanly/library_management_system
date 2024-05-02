@@ -1,20 +1,36 @@
 .header{
-    display:flex;
-    justify-content:space-between;
-    align-items: center;
-    margin: 20px;
-    div{
-        .link{
-            button{
+    display: flex;
+    justify-content: space-between;
+    padding: 80px 20px 20px 0px;
+
+    .button {
+        .link {
+            button {
                 border: none;
-                border-radius: 5px;
-                padding: 12px 15px;
+                border-radius: .5em;
+                padding: .5em 1em;
                 background-color: #362727;
                 color: white;
             }
         }
     }
-    .title{
+
+    .title {
         width: 50vw;
+    }
+}
+
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        align-items: stretch;
+        div{
+            .link button{
+                margin-top: 10px;
+            }
+        }
+        .title {
+            width: auto;
+        }
     }
 }

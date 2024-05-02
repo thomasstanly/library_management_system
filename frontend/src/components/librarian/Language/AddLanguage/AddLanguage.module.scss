@@ -4,9 +4,11 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin: 20px;
 
         div {
+            margin-top: 70px;
+            margin-right: 20px;
+
             .link {
                 button {
                     border: none;
@@ -17,6 +19,7 @@
                     color: white;
                 }
             }
+
             button {
                 border: none;
                 border-radius: .5em;
@@ -31,19 +34,22 @@
             width: 50vw;
         }
     }
-    .body{
+
+    .body {
         display: flex;
         justify-content: center;
         align-items: center;
-        .details{
+
+        .details {
             margin-top: 50px;
-            width: 50vw; 
-            p{
+            width: 50vw;
+
+            p {
                 font-weight: bold;
                 font-size: larger;
             }
         }
-       
+
     }
 }
 

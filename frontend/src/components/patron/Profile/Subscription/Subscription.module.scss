@@ -1,0 +1,78 @@
+@import '../../../../style/variable.scss';
+
+.subscription {
+    margin-top: 23vh;
+    padding: 3vh 10vw;
+    border: 2px solid $profileborderColor;
+
+    div {
+        position: relative;
+
+        h4 {
+            text-align: center;
+        }
+
+        .table {
+            margin-top: 7vh;
+            margin-bottom: 16.5vh;
+            padding: 5vh 0vw 5vh 0vw;
+            background: #07182E;
+            position: relative;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            overflow: hidden;
+            border-radius: 20px;
+
+            &::before {
+                content: '';
+                position: absolute;
+                width: 100px;
+                background-image: linear-gradient(180deg, rgb(0, 183, 255), rgb(255, 48, 255));
+                height: 100vh;
+                animation: rotBGimg 3s linear infinite;
+                transition: all 0.2s linear;
+            }
+
+            @keyframes rotBGimg {
+                from {
+                    transform: rotate(0deg);
+                }
+
+                to {
+                    transform: rotate(360deg);
+                }
+            }
+
+           
+
+            .column {
+                display: flex;
+                flex-direction: column;
+                z-index: 1;
+
+                .row {
+                    p {
+                        color: aliceblue;
+                        
+                    }
+
+                    .right {
+                        font-size: medium;
+                        font-family: "PingFang SC";
+                        font-weight: bolder;
+                    }
+                }
+            }
+            &::after {
+                content: '';
+                position: absolute;
+                background: #07182E;
+                inset: 5px;
+                border-radius: 15px;
+            }
+        }
+        
+    }
+    
+}

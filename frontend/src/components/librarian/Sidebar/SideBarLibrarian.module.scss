@@ -1,10 +1,13 @@
 .Nav {
     background-color: #ffffff;
-    height: 70px;
+    height: 65px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     border-bottom: 2px solid #E4E7E9;
+    position: fixed;
+    z-index: 3;
+    width: 100%;
 
     .SearchContainer {
         display: flex;
@@ -104,6 +107,7 @@
 
     &:active {
         background-color: #8B8E99;
+        color:  #eeeeee;
     }
 
     .sidebarlabel {

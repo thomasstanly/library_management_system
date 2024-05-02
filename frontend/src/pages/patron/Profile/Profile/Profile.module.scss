@@ -1,0 +1,34 @@
+.container {
+    display: flex;
+    justify-content: space-between;
+
+    .profile_menu {
+        margin-left:32px;
+        
+        flex: 0 0 auto;
+    }
+    .content {
+        margin-left: 10vw;
+        margin-right: 20vw;
+        flex-grow: 1;
+      }
+}
+
+@media (max-width:768px) {
+    .container {
+        flex-direction: column;
+        align-items: stretch;
+
+        .profile_menu{
+            margin-left: 20px;
+            margin-right: 20px;
+            margin-bottom: 20px;
+        }
+        .content {
+            margin-left: 20px;
+            margin-right: 20px;
+            flex-grow: 1;
+          }
+    }
+   
+}

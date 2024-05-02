@@ -1,0 +1,74 @@
+.header {
+    display: flex;
+    margin-left: 20vw;
+    padding: 80px 20px 20px 0px;
+
+}
+
+@import '../../../style/variable.scss';
+
+.container {
+    margin: 5vh 10vw 0vh 20vw;
+    
+    border: 2px solid $profileborderColor;
+
+    .checkout {
+        background-color: #E0E2E7;
+        width: 50%;
+        margin: 2vh 0vw 5vh 1vw;
+        padding: 5vh 0vw 5vh 3vw;
+        border-radius: 5px;
+
+        p {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        form {
+            padding-top: 2vh;
+
+            input {
+                border: none;
+                outline: none;
+                text-indent: 5px;
+                padding: 2px;
+            }
+
+            button {
+                margin: 0vh 5vw 0vh 2vw;
+                border-radius: 5px;
+                background-image: linear-gradient(to bottom, #F2F2F2, #C3C3C3);
+            }
+        }
+    }
+
+    .table {
+        margin: 0vh 1vw 2vh 1vw;
+    }
+}
+
+@media screen and (max-width: 1320px) {
+    .container {
+        margin-top: 20vh;
+        border: 2px solid $profileborderColor;
+
+        .checkout {
+            width: 75%;
+
+            form {
+                input {
+                    border: none;
+                    outline: none;
+                    text-indent: 5px;
+                    padding: 2px;
+                }
+
+                button {
+                    margin: 0vh 5vw 0vh 2vw;
+                    border-radius: 5px;
+                    background-image: linear-gradient(to bottom, #F2F2F2, #C3C3C3);
+                }
+            }
+        }
+    }
+}

@@ -1,4 +1,3 @@
-from rest_framework.mixins import ListModelMixin,CreateModelMixin,UpdateModelMixin,RetrieveModelMixin,DestroyModelMixin
 from rest_framework.generics import GenericAPIView,ListCreateAPIView,RetrieveUpdateDestroyAPIView
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404

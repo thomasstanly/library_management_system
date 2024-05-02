@@ -1,14 +1,15 @@
+@import '../../../style/variable.scss';
+
 .sidebar {
    display: flex;
    flex-direction: column;
-   margin-top: 16vh;
-   position: fixed;
+   margin-top: 23vh;
 
    .row {
       margin-bottom: 8vh;
       .column {
-         background-color: #ffffff;
-         border: 2px solid #E4E7E9;
+         background-color: $profileBacgroundColor;
+         border: 2px solid $profileborderColor;
          display: flex;
          justify-content: center;
          
@@ -52,7 +53,7 @@
       display: flex;
       justify-content: center;
       top: 0;
-      z-index: 10;
+      z-index: 1;
 
       .sidebarlink {
          display: flex;
@@ -71,6 +72,7 @@
 
          &:active {
             background-color: #8B8E99;
+            color: #ffffff;
          }
 
          .sidebarlabel {

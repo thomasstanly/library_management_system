@@ -1,11 +1,89 @@
+@import '../../../../style/variable.scss';
+
 .profile {
-    margin-top: 16vh;
-    margin-right: 10vw;
-    padding: 3vh 20vw 3vh 20vw;
-    background-color: aqua;
+    margin-top: 23vh;
+    padding: 3vh 10vw;
+    border: 2px solid $profileborderColor;
+    
+
     div {
+
+        h5 {
+            text-align: center;
+        }
+
         display: flex;
         flex-direction: column;
         padding-bottom: 4vh;
+
+        label {
+            margin-bottom: 5px;
+        }
+
+        input {
+            width: 40vw;
+            height: 40px;
+            border: none;
+            background-color: rgb(226, 236, 236);
+            color: black;
+            border-radius: 7px;
+            text-indent: 5px;
+        }
+
+        button {
+            margin: 0 auto;
+            border: none;
+            display: block;
+            position: relative;
+            padding: 0.7em 2.4em;
+            font-size: 18px;
+            background: transparent;
+            cursor: pointer;
+            user-select: none;
+            overflow: hidden;
+            color: royalblue;
+            z-index: 1;
+            font-family: inherit;
+            font-weight: 500;
+
+            span {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                background: transparent;
+                z-index: -1;
+                border: 4px solid royalblue;
+
+                &::before {
+                    content: "";
+                    display: block;
+                    position: absolute;
+                    width: 8%;
+                    height: 500%;
+                    background: #ffffff;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%) rotate(-60deg);
+                    transition: all 0.3s;
+                }
+            }
+
+            &:hover span::before {
+                transform: translate(-50%, -50%) rotate(-90deg);
+                width: 100%;
+                background: royalblue;
+            }
+
+            &:hover {
+                color: white;
+            }
+
+            &:active span::before {
+                background: #2751cd;
+            }
+        }
+
     }
 }

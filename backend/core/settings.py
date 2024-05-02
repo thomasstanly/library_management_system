@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'book',
+    'borrow',
     'librarian',
     'membership',
     'razorpay_backend',

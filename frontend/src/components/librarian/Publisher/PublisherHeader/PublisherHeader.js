@@ -32,7 +32,7 @@ const PublisherHeader = () => {
                         </Breadcrumbs>
                     </Stack>
                 </div>
-                <div>
+                <div className={style.button}>
                     <Link className={style.link} to='/library/publisher/add_publisher'><button>+ Add New Publisher</button></Link>
                 </div>
             </div>

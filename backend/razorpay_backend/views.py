@@ -63,17 +63,16 @@ class TransactionAPIView(APIView):
                 plan_status = Membership_payment.objects.get(id=id)
                 plan_status.status = 'PAID'
                 plan_status.save()
-                patron = Patron.objects.get(email=plan_status.patron)
-                patron.membership_id=plan_status.membership_plan
-                patron.save()
                 payment_id = request.data.get('payment_id')
                 payment_status = Transaction.objects.get(payment_id=payment_id)
                 payment_status.status = "SUCCESS"
                 payment_status.save()
+                patron = Patron.objects.get(email=plan_status.patron)
+                patron.membership_id=plan_status.membership_plan
+                patron.save()
 
                 response ={
-                    "status_code":status.HTTP_201_CREATED
-                    ,'message':"successfull transaction"
+                    'message':"successfull transaction"
                     ,"data":serializer.data
                 }
                 return Response(response,status=status.HTTP_201_CREATED)
@@ -83,14 +82,12 @@ class TransactionAPIView(APIView):
                 payment_status.status = "FAILURE"
                 payment_status.save()
                 response ={
-                    "status_code":status.HTTP_400_BAD_REQUEST
-                    ,'message':"Signature mismatch"
+                    'message':"Signature mismatch"
                 }
                 return Response(response,status=status.HTTP_400_BAD_REQUEST)
         else:
             response ={
-                    "status_code":status.HTTP_400_BAD_REQUEST
-                    ,'message':"Bad Request"
+                    'message':"Bad Request"
                     ,"error":serializer.errors
                 }
             return Response(response,status=status.HTTP_400_BAD_REQUEST)

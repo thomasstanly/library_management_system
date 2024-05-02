@@ -34,11 +34,28 @@ class BookVariantSerializer(serializers.ModelSerializer):
     class Meta:
         model = Book_variant
         fields = "__all__"
+        
+
+class BookVariantListSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Book_variant
+        fields = "__all__"
         depth = 1
         
+        
 class Bookserializer(serializers.ModelSerializer):
-    
+   
+    class Meta:
+        model = Book
+        fields = ['id', 'title', 'call_number', 'category', 'genre', 'description', 'author', 'cover']
+
+class BookListserializer(serializers.ModelSerializer):
+   
     class Meta:
         model = Book
         fields = ['id', 'title', 'call_number', 'category', 'genre', 'description', 'author', 'cover']
         depth = 1
+
+
+       

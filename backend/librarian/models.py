@@ -33,7 +33,7 @@ class Patron(AbstractBaseUser,PermissionsMixin):
     date_joined = models.DateTimeField(auto_now_add=True)
     last_login = models.DateTimeField(auto_now_add=True)
     phone_number = models.BigIntegerField(unique=True,null=True)
-    membership_id = models.OneToOneField(Membership_plan,null=True,on_delete=models.SET_NULL,related_name='membership')
+    membership_id = models.ForeignKey(Membership_plan,null=True,on_delete=models.SET_NULL,related_name='membership')
     mebership_date = models.DateField(null=True)
     otp = models.IntegerField(null=True)
     otp_expire = models.DateTimeField(null=True)

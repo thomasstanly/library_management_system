@@ -117,7 +117,7 @@ const MembershipList = () => {
                   </Breadcrumbs>
                </Stack>
             </div>
-            <div>
+            <div className={style.button}>
                <Link className={style.link} to='/library/membership/add_plan'><button>+ Add New Plan</button></Link>
             </div>
          </div>

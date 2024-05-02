@@ -31,7 +31,7 @@ const LanguageHeader = () => {
                         </Breadcrumbs>
                     </Stack>
                 </div>
-                <div>
+                <div className={style.button}>
                     <Link className={style.link} to='/library/language/add_language'><button>+ Add New Language</button></Link>
                 </div>
             </div>

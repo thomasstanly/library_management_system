@@ -11,9 +11,11 @@ import PatronLogin from '../../pages/patron/PatronLogin'
 import MembershipPlanPage from '../../pages/patron/MembershipPlanPage'
 import PaymentPage from '../../pages/patron/PaymentPage'
 import PaymentConfirmPage from '../../pages/patron/PaymentConfirm'
-import ProfilePage from '../../pages/patron/Profile/ProfilePage'
+import ProfilePage from '../../pages/patron/Profile/Profile/ProfilePage'
 import { set_Authenticate } from '../../Redux/Auth/LibrarySlice'
 import { get_UserDetails } from '../../Redux/Patron/PatronSlice'
+import ChangePasswordPage from '../../pages/patron/Profile/ChangePassword/ChangePasswordPage'
+import SubscriptionPage from '../../pages/patron/Profile/Subscription/SubscriptionPage'
 
 
 
@@ -30,6 +32,7 @@ function PatronWrapper() {
         }
       })
       console.log(res)
+      const profilePic = res.data.Profile ? res.data.Profile.profile_pic : null;
       dispatch(
         get_UserDetails({
           patron_id: res.data.id,
@@ -37,7 +40,7 @@ function PatronWrapper() {
           phone: res.data.phone_number,
           first_name: res.data.first_name,
           last_name: res.data.last_name,
-          profile_pic: res.data.Profile.profile_pic,
+          profile_pic: profilePic,
           plan: res.data.membership_id,
         })
       )
@@ -61,12 +64,12 @@ function PatronWrapper() {
     }
   }, [])
 
-  useEffect(()=>{
-    if(isAuthenticated){
+  useEffect(() => {
+    if (isAuthenticated) {
       fetch()
     }
-  },[isAuthenticated])
-  
+  }, [isAuthenticated])
+
   return (
     <div>
       <Routes>
@@ -77,6 +80,8 @@ function PatronWrapper() {
         <Route path='/plan/payment/:id' element={<PatronRouter><PaymentPage /></PatronRouter>} />
         <Route path='/plan/payment/confirm/:id' element={<PatronRouter><PaymentConfirmPage /></PatronRouter>} />
         <Route path='/profile' element={<PatronRouter><ProfilePage /></PatronRouter>} />
+        <Route path='/profile/change_password' element={<PatronRouter><ChangePasswordPage /></PatronRouter>} />
+        <Route path='/profile/subscription' element={<PatronRouter><SubscriptionPage /></PatronRouter>} />
       </Routes>
     </div>
   )

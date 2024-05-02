@@ -1,0 +1,11 @@
+@import '../../../style/variable.scss';
+
+.header {
+    position: fixed;
+    z-index: 5;
+    width: 96%;
+    background-color: $profileBacgroundColor;
+    margin:0vh 0vw 5vh 2vw;
+    padding: 12vh 0vw 3vh 2vw;
+    border-bottom: 2px solid $profileborderColor;
+}

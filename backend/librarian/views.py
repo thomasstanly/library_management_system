@@ -1,11 +1,12 @@
 from django.shortcuts import render
 import random
-from datetime import datetime, timedelta
+from datetime import timedelta
+from django.contrib.auth import update_session_auth_hash
 from django.utils import timezone
 from .tasks import emial_verification
 from rest_framework import status
 from rest_framework.views import APIView
-from rest_framework.generics import GenericAPIView, ListCreateAPIView, RetrieveAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.generics import GenericAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView, UpdateAPIView
 from rest_framework.parsers import MultiPartParser,FormParser
 from rest_framework.response import Response
 from rest_framework.exceptions import NotFound
@@ -16,7 +17,8 @@ from rest_framework_simplejwt.tokens import RefreshToken, TokenError
 from rest_framework.parsers import MultiPartParser, FormParser
 from .models import Patron,UserProfile
 
-from .serializer import UserRegisterSerializer,LoginSerializer,PtronListCreateSerializer,UserProfileSerializer,PatronUpdateSerializer
+from .serializer import UserRegisterSerializer,LoginSerializer,PtronListCreateSerializer
+from .serializer import UserProfileSerializer,PatronUpdateSerializer,PasswordChangeSerializer
 
 
 class SignUp(GenericAPIView):
@@ -102,8 +104,7 @@ class PatronRetrive(GenericAPIView):
         serializer = self.serializer_class(patron)
         return Response(serializer.data)
 
-class PatronUpdate(RetrieveUpdateDestroyAPIView):
-    
+class PatronRetriveUpdateAPIViews(RetrieveUpdateDestroyAPIView):
     queryset = Patron.objects.all()
     serializer_class = PatronUpdateSerializer
     lookup_field='id'
@@ -122,7 +123,6 @@ class PatronStatus(APIView):
             patron.save()
             return Response({'message':'Activated'})
         
-        
 
 class PatronProfileUpdateView(APIView):
     permission_classes = [IsAuthenticated]
@@ -137,3 +137,17 @@ class PatronProfileUpdateView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class PasswordChangeAPIView(GenericAPIView):
+    serializer_class = PasswordChangeSerializer
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        serializer = self.get_serializer(data=request.data)
+        if serializer.is_valid():
+            user = request.user
+            user.set_password(serializer.validated_data['new_password'])
+            user.save()
+            update_session_auth_hash(request, user)
+            return Response({"message": "Password has been successfully changed."}, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

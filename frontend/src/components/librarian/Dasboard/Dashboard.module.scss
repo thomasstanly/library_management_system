@@ -1,4 +1,25 @@
-.first_row{
+@import '../../../style/variable.scss';
+
+.first_row {
+    padding-top: 20vh;
     display: flex;
-    
+
+    .chart {
+        margin-left: 20vw !important;
+        padding: 2vh 1vw 2vh 2vw;
+        width: 50%;
+        margin-left: 500px;
+        box-shadow: 0 3px 9px rgba(73, 73, 73, 0.3);
+    }
+
+    .board {
+        margin: 5vw;
+        border: 2px solid $profileborderColor;
+        box-shadow: 0 3px 9px rgba(73, 73, 73, 0.3);
+    }
+
+}
+.second_row{
+    margin: 5vh 5vw 10vh 20vw ;
+    box-shadow: 0 3px 9px rgba(73, 73, 73, 0.3);
 }

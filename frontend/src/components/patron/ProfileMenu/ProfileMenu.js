@@ -1,7 +1,8 @@
 import React, { useState, } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { siderbarData } from './siderbarData';
-import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { get_UserDetails } from '../../../Redux/Patron/PatronSlice'
 import Swal from 'sweetalert2';
 import { toast } from 'react-toastify';
 import Box from '@mui/material/Box';
@@ -10,12 +11,15 @@ import axios from '../../../Axios'
 import style from './ProfileMenu.module.scss';
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 
-const SideBarLibrarian = () => {
+const ProfileMenu = ({details}) => {
 
-   const { first_name, last_name, profile_pic } = useSelector((state) => state.patron_detils)
+   const last_name = details.last_name
+   const first_name = details.first_name
+   const profile_pic = details.profile_pic
+  
    const url = `http://127.0.0.1:8000${profile_pic}`
+   const dispatch = useDispatch()
 
-   const navigate = useNavigate()
    const [proPic, setProPic] = useState({ image: null })
    const handleImageChange = (event) => {
       setProPic({ image: event.target.files[0] })
@@ -39,6 +43,11 @@ const SideBarLibrarian = () => {
          })
          console.log(res.data)
          handleClose()
+         dispatch(
+            get_UserDetails({
+              profile_pic: res.data.profile_pic,
+            })
+          )
          if (res.status === 201) {
             Swal.fire({
                position: "center",
@@ -48,7 +57,6 @@ const SideBarLibrarian = () => {
                timer: 1200
             })
          }
-         window.location.reload();
       } catch (error) {
          console.log(error)
          handleClose()
@@ -96,7 +104,7 @@ const SideBarLibrarian = () => {
             <div className={style.row}>
                <div className={style.column}>
                   <div className={style.content}>
-                     <img className={style.profile} src={(url ? url : null) || "/images/user.png"}
+                     <img className={style.profile} src={(profile_pic ? url : null) || "/images/user.png"}
                         alt="profile logo" />
                      <div className={style.addphoto} >
                         <AddAPhotoIcon className={style.photo} onClick={handleOpen} />
@@ -129,7 +137,7 @@ const SideBarLibrarian = () => {
                <Box sx={modal}>
                   <div className="card-body text-center">
                      <img
-                        src={(proPic.image instanceof Blob ? URL.createObjectURL(proPic.image) : url) || "/images/user.png"}
+                        src={(proPic.image ? URL.createObjectURL(proPic.image) : url) || "/images/user.png"}
                         alt="avatar"
                         className=" img-fluid"
                         style={{ width: '150px', borderRadius: '50%' }}
@@ -151,5 +159,4 @@ const SideBarLibrarian = () => {
    )
 };
 
-export default SideBarLibrarian;
-
+export default ProfileMenu;

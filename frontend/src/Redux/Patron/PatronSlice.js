@@ -13,16 +13,10 @@ const UserDetails = createSlice({
     },
     reducers:{
         get_UserDetails:(state,action)=>{
-            state.patron_id=action.payload.patron_id
-            state.email=action.payload.email
-            state.phone=action.payload.phone
-            state.first_name=action.payload.first_name
-            state.last_name=action.payload.last_name
-            state.profile_pic=action.payload.profile_pic
-            state.plan = action.payload.plan
+            Object.assign(state, action.payload);
         }
     }
 })
 
-export const   {get_UserDetails} = UserDetails.actions
+export const {get_UserDetails} = UserDetails.actions
 export default UserDetails.reducer

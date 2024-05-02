@@ -144,7 +144,7 @@ class BookListCreate(GenericAPIView):
 
     def get(self, request, format=None):
         books = Book.objects.all()
-        serializer = Bookserializer(books, many=True)
+        serializer = BookListserializer(books, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def post(self, request, *args, **kwargs):
@@ -171,8 +171,8 @@ class BookListCreate(GenericAPIView):
         return Response(serlizer.data ,status=status.HTTP_201_CREATED)
 
 
-class BookRetriveUpdate(GenericAPIView):
-    permission_classes = [IsAdminUser]
+class BookRetriveUpdate(RetrieveUpdateDestroyAPIView,GenericAPIView):
+    permission_classes=[IsAdminUser]
     serializer_class= Bookserializer
     queryset = Book.objects.all()
     lookup_field='id'
@@ -180,7 +180,7 @@ class BookRetriveUpdate(GenericAPIView):
     def get(self, request, *args, **kwargs):
         try:
             book = self.get_object()
-            serializer = Bookserializer(book)
+            serializer = BookListserializer(book)
             return Response(serializer.data, status=status.HTTP_200_OK)
         except Book.DoesNotExist:
             return Response({'error': 'Book not found'}, status=status.HTTP_404_NOT_FOUND)
@@ -223,14 +223,18 @@ class BookRetriveUpdate(GenericAPIView):
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-class BookVariantListCreate(ListCreateAPIView):
-    permission_classes = [IsAdminUser]
-    serializer_class = BookVariantSerializer
-    queryset = Book_variant.objects.all()
+class BookVariantListCreate(GenericAPIView):
+
+    def post(self, request, *args, **kwargs):
+        serializer = BookVariantSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class BookVariantRetriveUpdate(GenericAPIView):
-    permission_classes = [IsAdminUser]
-    serializer_class = BookVariantSerializer
+    
+    serializer_class = BookVariantListSerializer
     
     def get(self, request, book):
         book_variant = Book_variant.objects.filter(book=book)

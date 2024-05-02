@@ -5,6 +5,11 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from .models import Patron,UserProfile
 from membership.serializers import MemberSerializer
+from django.contrib.auth.password_validation import validate_password
+from razorpay_backend.serializers import MembershipPaymentSerializer
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 
@@ -91,16 +96,24 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
 class PtronListCreateSerializer(serializers.ModelSerializer):
     Profile = UserProfileSerializer(required=True)
+    
 
     class Meta:
         model = Patron
         fields =['id','first_name','last_name','email','password','Profile','is_active','date_joined','phone_number','membership_id']
         depth = 1
 
+        def get_profile_pic_url(self, obj):
+            if obj.Profile.profile_pic:
+                return self.context['request'].build_absolute_uri(obj.Profile.profile_pic.url)
+            return None
+
 class PatronUpdateSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Patron
-        fields =['first_name','last_name','email','is_active','phone_number']
+        fields =['id','first_name','last_name','email','is_active','phone_number','membership_id','Profile','user_id']
+        depth = 1
         
         def validate_first_name(self, value):
             if not value.isalpha():
@@ -127,3 +140,16 @@ class PatronUpdateSerializer(serializers.ModelSerializer):
                 setattr(instance, attr, value)
             instance.save()
             return instance   
+
+class PasswordChangeSerializer(serializers.Serializer):
+    password = serializers.CharField(required=True)
+    new_password = serializers.CharField(required=True)
+    confirm_password = serializers.CharField(required=True)
+
+    def validate(self, data):
+        if data['new_password'] != data['confirm_password']:
+            raise serializers.ValidationError("The new passwords do not match.")
+        user = self.context['request'].user
+        if not user.check_password(data['password']):
+            raise serializers.ValidationError("Incorrect old password.")
+        return data

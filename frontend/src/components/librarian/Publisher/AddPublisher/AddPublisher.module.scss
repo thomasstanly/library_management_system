@@ -4,9 +4,11 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin: 20px;
 
         div {
+            margin-top: 70px;
+            margin-right: 20px;
+
             .link {
                 button {
                     border: none;
