@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import axios from '../../../Axios';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
@@ -23,14 +25,68 @@ const breadcrumbs = [
    </Typography>,
 ];
 const columns = [
-   { id: 1, label: 'Due Date ', minWidth: 100, align: 'center' },
+   { id: 1, label: 'stock', minWidth: 20, align: 'left' },
    { id: 2, label: 'Book Name', minWidth: 50, align: 'left' },
-   { id: 3, label: 'Call number', minWidth: 50, align: 'center' },
-   { id: 4, label: 'Category', minWidth: 50, align: 'left' },
-   { id: 5, label: 'Checked out on', minWidth: 50, align: 'center' },
-   { id: 6, label: 'Fine', minWidth: 50, align: 'center' },
-] 
+   { id: 3, label: 'patron', minWidth: 50, align: 'center' },
+   { id: 4, label: 'Checked Date', minWidth: 50, align: 'left' },
+   { id: 5, label: 'Due Date ', minWidth: 100, align: 'left' },
+   { id: 6, label: 'Return Date', minWidth: 50, align: 'center' },
+
+]
 const CheckIn = () => {
+   const [formData, setFormData] = useState({
+      "stock": ''
+   })
+
+   const [borrower, setBorrower] = useState([])
+
+   const handleOnChage = (event) => {
+      setFormData({ "stock": event.target.value })
+
+   }
+
+   const handleOnSubmit = async (event) => {
+      event.preventDefault()
+      if (!isNaN(formData.stock)) {
+         try {
+            const access_token = JSON.parse(localStorage.getItem('access'))
+            const res = await axios.post('borrow/check_in/', formData,
+               {
+                  headers: {
+                     Authorization: `Bearer ${access_token}`
+                  }
+               }
+            )
+            console.log(res.data)
+            setFormData({
+               "stock": ''
+            })
+            const data = res.data
+            setBorrower(prevBorrowers => [...prevBorrowers, {
+               stock: data.book.stock_no,
+               due_date: data.due_date,
+               book_name: data.book.book.title,
+               patron: `${data.patron.first_name} ${data.patron.last_name} (${data.patron.membership_id.plan_code}${data.patron.id})`,
+               language: data.book.language.language,
+               checked_out_on: data.borrowed_date,
+               return_date: data.return_date
+            }]);
+         } catch (error) {
+            toast(error.response.data.error, {
+               position: "top-right",
+               autoClose: 5000,
+               hideProgressBar: false,
+               closeOnClick: true,
+               pauseOnHover: true,
+               draggable: true,
+               progress: undefined,
+               theme: "dark",
+            })
+         }
+      } else {
+         toast.warning('enter a number')
+      }
+   }
 
    return (
       <div>
@@ -46,10 +102,10 @@ const CheckIn = () => {
          </div>
          <div className={style.container}>
             <div className={style.checkout}>
-               <p>checking out to thomas stanly (pm2)</p>
-               <form action="">
-                  <input type="text" placeholder='Stock number' />
-                  <button>Check Out</button>
+               <form onSubmit={handleOnSubmit}>
+                  <input type="text" placeholder='Stock number' value={formData.stock}
+                     onChange={handleOnChage} />
+                  <button>Check In</button>
                </form>
             </div>
             <div className={style.table}>
@@ -73,14 +129,18 @@ const CheckIn = () => {
                            </TableRow>
                         </TableHead>
                         <TableBody>
-                           <TableRow hover role="checkbox" tabIndex={-1}>
-                              <TableCell align="left" ></TableCell>
-                              <TableCell align="left"></TableCell>
-                              <TableCell align="left"></TableCell>
-                              <TableCell align="left"></TableCell>
-                              <TableCell align="center"></TableCell>
-                              <TableCell align="center">  </TableCell>
-                           </TableRow>
+                           {borrower.map((borrow, index) => {
+                              return (
+                                 <TableRow key={index} hover role="checkbox" tabIndex={-1}>
+                                    <TableCell align="left">{borrow.stock}</TableCell>
+                                    <TableCell align="left">{borrow.book_name}({borrow.language})</TableCell>
+                                    <TableCell align="left">{borrow.patron}</TableCell>
+                                    <TableCell align="left">{new Date(borrow.checked_out_on).toLocaleDateString('en-US')}</TableCell>
+                                    <TableCell align="left" >{new Date(borrow.due_date).toLocaleDateString('en-US')}</TableCell>
+                                    <TableCell align="center">{new Date(borrow.return_date).toLocaleDateString('en-US')}</TableCell>
+                                 </TableRow>
+                              )
+                           })}
                         </TableBody>
                      </Table>
                   </TableContainer>

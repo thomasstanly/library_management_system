@@ -22,12 +22,13 @@ function PatronHomePage() {
   }, [])
 
   return (
-    <div>
-      {isSmallScreen ? <PatronMobileHeader header={patronDetails} /> : <PatronHeader header={patronDetails} />}
-
-      <Banner />
-      <HomePage />
-    </div>
+    <>
+      <div>
+        {isSmallScreen ? <PatronMobileHeader header={patronDetails} /> : <PatronHeader header={patronDetails} />}
+        <Banner />
+        <HomePage patron={patronDetails}/>
+      </div>
+    </>
   )
 }
 

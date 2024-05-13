@@ -76,7 +76,7 @@ const PatronCheckoutPage = () => {
                     <PatronNav id={id} name={name} card={patron.card} pic={patron.profile_pic}/>
                 </div>
                 <div className={style.content}>
-                    <PatronCheckout />
+                    <PatronCheckout patron_id={id}/>
                 </div>
             </div>
 

@@ -111,11 +111,10 @@ const BookList = () => {
                      {rows
                         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                         .map((row, index) => {
-                           let image = `http://127.0.0.1:8000${row.cover}`;
                            return (
                               <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
                                  <TableCell align="left" onClick={() => navigate(`/library/books/${row.id}/`)}>
-                                    <img src={image} alt={row.title} style={{ width: '70px' }} />
+                                    <img src={row.cover} alt={row.title} style={{ width: '70px' }} />
                                     <span style={{ marginLeft: '2vw' }}>{row.title}</span>
                                  </TableCell>
                                  <TableCell align="left">

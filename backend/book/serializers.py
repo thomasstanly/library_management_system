@@ -49,13 +49,32 @@ class Bookserializer(serializers.ModelSerializer):
     class Meta:
         model = Book
         fields = ['id', 'title', 'call_number', 'category', 'genre', 'description', 'author', 'cover']
+    
+    def to_representation(self,instance):
+        data = super().to_representation(instance)
+        if 'cover' in data and data['cover']:
+            request = self.context.get('request',None)
+            if request is not None:
+                data['cover'] = request.build_absolute_uri(data['cover'])
+        return data
 
 class BookListserializer(serializers.ModelSerializer):
+    author = AuthorSerializer(many=True)
+    category = CategorySerializer()
    
     class Meta:
         model = Book
         fields = ['id', 'title', 'call_number', 'category', 'genre', 'description', 'author', 'cover']
-        depth = 1
+        
+    
+    def to_representation(self,instance):
+        data = super().to_representation(instance)
+        if 'cover' in data and data['cover']:
+            request = self.context.get('request',None)
+            if request is not None:
+                data['cover'] = request.build_absolute_uri(data['cover'])
+        return data
+    
 
 
        

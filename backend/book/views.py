@@ -144,7 +144,7 @@ class BookListCreate(GenericAPIView):
 
     def get(self, request, format=None):
         books = Book.objects.all()
-        serializer = BookListserializer(books, many=True)
+        serializer = BookListserializer(books, many=True, context= {'request':request})
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def post(self, request, *args, **kwargs):
@@ -172,7 +172,7 @@ class BookListCreate(GenericAPIView):
 
 
 class BookRetriveUpdate(RetrieveUpdateDestroyAPIView,GenericAPIView):
-    permission_classes=[IsAdminUser]
+    # permission_classes=[IsAdminUser]
     serializer_class= Bookserializer
     queryset = Book.objects.all()
     lookup_field='id'
@@ -180,7 +180,7 @@ class BookRetriveUpdate(RetrieveUpdateDestroyAPIView,GenericAPIView):
     def get(self, request, *args, **kwargs):
         try:
             book = self.get_object()
-            serializer = BookListserializer(book)
+            serializer = BookListserializer(book,context= {'request':request})
             return Response(serializer.data, status=status.HTTP_200_OK)
         except Book.DoesNotExist:
             return Response({'error': 'Book not found'}, status=status.HTTP_404_NOT_FOUND)

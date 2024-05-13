@@ -1,7 +1,9 @@
 from rest_framework import serializers
 from .models import Transaction,Membership_payment
+from membership.serializers import MemberSerializer
 
 class MembershipPaymentSerializer(serializers.ModelSerializer):
+    membership_plan = MemberSerializer()
 
     class Meta:
         model = Membership_payment

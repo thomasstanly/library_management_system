@@ -29,6 +29,8 @@ import LibraryRouter from '../../Router/Library/LibraryRouter'
 import LibraryLoginRouter from '../../Router/Library/LibraryLoginRouter'
 import PatronDetailsPage from '../../pages/librarian/Patron/PatronDetailsPage/PatronDetailsPage'
 import PatronCheckoutPage from '../../pages/librarian/Patron/PatronCheckoutPage/PatronCheckoutPage'
+import PatronCirculationHistory from '../../pages/librarian/Patron/PatronCirculationHistory/PatronCirculationHistory'
+import PatronPaymentHistory from '../../pages/librarian/Patron/PatronPaymentHistory/PatronPaymentHistory'
 import CheckInPages from '../../pages/librarian/CheckIn/CheckInPages'
 
 
@@ -84,8 +86,10 @@ function LibrarianWrapper() {
             <Route path='/membership/add_plan' element={<LibraryRouter><MembershipAddPage /></LibraryRouter>} />
             <Route path='/patron' element={<LibraryRouter><PatronListPage /></LibraryRouter>} />
             <Route path='/patron/:id' element={<LibraryRouter><PatronDetailsPage /></LibraryRouter>} />
-            <Route path='/patron/:id/checkout' element={<LibraryRouter><PatronCheckoutPage /></LibraryRouter>} />
             <Route path='/checkin' element={<LibraryRouter><CheckInPages /></LibraryRouter>} />
+            <Route path='/patron/:id/checkout' element={<LibraryRouter><PatronCheckoutPage /></LibraryRouter>} />
+            <Route path='/patron/:id/circulation_history' element={<LibraryRouter><PatronCirculationHistory /></LibraryRouter>} />
+            <Route path='/patron/:id/payment_history' element={<LibraryRouter><PatronPaymentHistory /></LibraryRouter>} />
          </Routes>
       </SidebarProvider>
 

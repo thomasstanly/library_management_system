@@ -12,11 +12,14 @@ import MembershipPlanPage from '../../pages/patron/MembershipPlanPage'
 import PaymentPage from '../../pages/patron/PaymentPage'
 import PaymentConfirmPage from '../../pages/patron/PaymentConfirm'
 import ProfilePage from '../../pages/patron/Profile/Profile/ProfilePage'
+import PatronBookListPage from '../../pages/patron/PatronBookList/PatronBookListPage'
+import PatronBookDetailsPage from '../../pages/patron/PatronBookDetailsPage'
 import { set_Authenticate } from '../../Redux/Auth/LibrarySlice'
 import { get_UserDetails } from '../../Redux/Patron/PatronSlice'
 import ChangePasswordPage from '../../pages/patron/Profile/ChangePassword/ChangePasswordPage'
 import SubscriptionPage from '../../pages/patron/Profile/Subscription/SubscriptionPage'
-
+import CirculationHistoryPage from '../../pages/patron/Profile/CirculationHistory/CirculationHistoryPage'
+import PaymentHistoryPage from '../../pages/patron/Profile/PaymentHistory/PaymentHistoryPage'
 
 
 function PatronWrapper() {
@@ -77,11 +80,15 @@ function PatronWrapper() {
         <Route path='/signup' element={<PatronLoginRouter><PatronSingUp /></PatronLoginRouter>} />
         <Route path='/login' element={<PatronLoginRouter><PatronLogin /></PatronLoginRouter>} />
         <Route path='/plan' element={<PatronRouter><MembershipPlanPage /></PatronRouter>} />
+        <Route path='/Book_list' element={<PatronRouter><PatronBookListPage /></PatronRouter>} />
+        <Route path='/Book_list/:id' element={<PatronRouter><PatronBookDetailsPage /></PatronRouter>} />
         <Route path='/plan/payment/:id' element={<PatronRouter><PaymentPage /></PatronRouter>} />
         <Route path='/plan/payment/confirm/:id' element={<PatronRouter><PaymentConfirmPage /></PatronRouter>} />
         <Route path='/profile' element={<PatronRouter><ProfilePage /></PatronRouter>} />
         <Route path='/profile/change_password' element={<PatronRouter><ChangePasswordPage /></PatronRouter>} />
         <Route path='/profile/subscription' element={<PatronRouter><SubscriptionPage /></PatronRouter>} />
+        <Route path='/profile/circulation_history' element={<PatronRouter><CirculationHistoryPage /></PatronRouter>} />
+        <Route path='/profile/payment' element={<PatronRouter><PaymentHistoryPage /></PatronRouter>} />
       </Routes>
     </div>
   )

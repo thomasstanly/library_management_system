@@ -1,0 +1,22 @@
+@import '../../../../style/variable.scss';
+
+.subscription {
+    margin-top: 23vh;
+    border: 2px solid $profileborderColor;
+
+    h4 {
+        text-align: center;
+        margin: 5vh 10vh;
+    }
+    .list {
+       
+        .scroller::-webkit-scrollbar {
+            display: none;
+        }
+    
+        .scroller {
+            overflow-y: auto;
+            
+        }
+    }
+}

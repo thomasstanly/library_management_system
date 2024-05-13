@@ -6,6 +6,7 @@
     div {
         margin-top: 70px;
         margin-right: 20px;
+
         .link {
             button {
                 border: none;
@@ -32,64 +33,84 @@
     }
 }
 
-.body{
-    
+.body {
+
     margin: 0px 7vw;
-    margin-top: 50px;
+    margin-top: 90px;
     display: flex;
-    .right{
-        background-color: #e4e7e900;
+
+    .right {
         border-radius: 20px;
+        width: 15vw;
     }
-    .left{
-        width: 75vw;
+
+    .content {
+        display: flex;
+        flex-direction: column;
         margin-left: 50px;
         background-color: #E4E7E9;
         border-radius: 20px;
         padding: 3vh 4vw;
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
-        .sub_right{
-            .title{
-                font-weight: 500;
+        flex-grow: 1;
+
+        .left {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            
+
+            .sub_right {
+                width: 40%;
+            }
+
+            .sub_left {
+                margin-left: 3vw;
+                
             }
         }
-        .sub_left{
-            margin-left: 50px;
-        }
-
     }
 }
 
 @media (max-width: 768px) {
-   .header {
-       flex-direction: column;
-       align-items: stretch;
-       margin-left: 20px;
+    .header {
+        display: flex;
+        align-items: stretch;
 
-       .title {
-           width: auto;
-       }
-   }
+        div {
+            margin-top: 80px;
+            margin-right: 0px;
+        }
 
-   .body {
-       flex-direction: column;
-       align-items: center;
-       margin: 0px;
-       
+        .title {
+            width: 50vw;
+        }
+    }
 
-       .left {
-           width: 90vw;
-           border-radius: 20px;
-           margin-left: 0px;
-           padding: auto;
-           flex-direction: column;
-           align-items: center;
+    .body {
+        flex-direction: column;
+        align-items: center;
+        margin-top: 80px;
 
-           .sub_left {
-               margin-left: 0px;
-           }
-       }
-   }
+        .right {
+            margin: 0px 0px 30px 0px;
+            border-radius: 10px;
+            width: 150px;
+        }
+
+        .content {
+            margin-left: 0px;
+
+            .left {
+                border-radius: 20px;
+                margin-left: 0px;
+                padding: auto;
+                flex-direction: column;
+                align-items: center;
+
+                .sub_left {
+                    margin-left: 0vw;
+                }
+            }
+        }
+    }
 }

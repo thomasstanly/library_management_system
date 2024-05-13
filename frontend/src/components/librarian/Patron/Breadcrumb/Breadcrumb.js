@@ -10,8 +10,6 @@ const Breadcrumb = ({breadcrumbs}) => {
   return (
     <>
       <div className={style.header}>
-        <div>
-        </div>
         <div className={style.title}>
           <h3>Books</h3>
           <Stack spacing={2}>

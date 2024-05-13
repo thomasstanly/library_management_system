@@ -1,6 +1,6 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.generics import CreateAPIView,RetrieveAPIView
+from rest_framework.generics import CreateAPIView,RetrieveAPIView,ListAPIView,GenericAPIView
 from rest_framework import status
 from .models import Membership_payment, Transaction
 from librarian.models import Patron
@@ -9,10 +9,19 @@ from razorpay_backend.razorpay_conf.main import  RazorpayClient
 
 rz_client = RazorpayClient()
 
-class PaymentRetrieveAPIView(RetrieveAPIView):
-    queryset = Membership_payment.objects.all()
+class PaymentRetrieveAPIView(GenericAPIView):
     serializer_class = MembershipPaymentSerializer
-    lookup_field = 'id' 
+    lookup_field = 'patron'
+
+    def get(self, request, *args, **kwargs):
+       
+        try:
+            patron_id = self.kwargs.get('patron')
+            queryset = Membership_payment.objects.filter(patron_id=patron_id).order_by('-expiry_date')
+            serializer = self.serializer_class(queryset, many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except Membership_payment.DoesNotExist:
+            return Response({"error": "No Membership_payment matches the given query."}, status=status.HTTP_404_NOT_FOUND)
     
 class PaymentCreateAPIView(CreateAPIView):
     serializer_class = MembershipPaymentSerializer

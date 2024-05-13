@@ -1,0 +1,50 @@
+.conatainer {
+    margin: 10rem 5rem 5rem 2rem;
+    display: flex;
+    .filter{
+        margin: 0rem 5rem 5rem 2rem;
+    }
+
+    .posters {
+        flex: 1;
+        display: grid;
+        gap: 2rem;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+
+        .inside {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+
+            .poster {
+                object-fit: cover;
+                width: 100%;
+                height: 100%;
+                transition: 0.5s ease-in-out;
+            }
+
+            &:hover .poster {
+                filter: blur(5px);
+                cursor: pointer;
+            }
+
+            .textOverlay {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%) scale(0.8);
+                color: rgb(255, 255, 255);
+                font-size: 1.5rem;
+                text-align: center;
+                opacity: 0;
+                transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+            }
+
+            &:hover .textOverlay {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+                cursor: pointer;
+            }
+        }
+    }
+}

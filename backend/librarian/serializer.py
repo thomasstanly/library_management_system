@@ -100,13 +100,8 @@ class PtronListCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Patron
-        fields =['id','first_name','last_name','email','password','Profile','is_active','date_joined','phone_number','membership_id']
+        fields =['id','first_name','last_name','email','Profile','is_active','date_joined','phone_number','membership_id']
         depth = 1
-
-        def get_profile_pic_url(self, obj):
-            if obj.Profile.profile_pic:
-                return self.context['request'].build_absolute_uri(obj.Profile.profile_pic.url)
-            return None
 
 class PatronUpdateSerializer(serializers.ModelSerializer):
 
