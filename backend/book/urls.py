@@ -11,7 +11,8 @@ urlpatterns = [
     path('publisher_edit/<int:id>/',views.PublisherRetriveUpdate.as_view(),name='publisher_edit'),
 
     path('book/',views.BookListCreate.as_view(),name='book'),
+    path('book/filter/',views.FilterAPIView.as_view(),name='book_filter'),
     path('book/<int:id>/',views.BookRetriveUpdate.as_view(),name='book_edit'),
     path('book_variant/',views.BookVariantListCreate.as_view(),name='book_count'),
-    path('book_variant/<int:book>/',views.BookVariantRetriveUpdate.as_view(),name='book_retrive '),
+    path('book_variant/<int:stock>/',views.BookVariantRetriveUpdate.as_view(),name='book_retrive '),
 ]

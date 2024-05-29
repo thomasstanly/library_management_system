@@ -2,6 +2,8 @@
     margin: 10rem 5rem 5rem 2rem;
     display: flex;
     .filter{
+        display: flex;
+        flex-direction: column;
         margin: 0rem 5rem 5rem 2rem;
     }
 

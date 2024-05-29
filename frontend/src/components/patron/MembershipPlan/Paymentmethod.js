@@ -59,10 +59,10 @@ const Pyamentmethod = () => {
    const handleSubmit = async (e) => {
       e.preventDefault()
       if (amount < plan.plan_rate) {
-         toast.warning("Please enter valid date")
+         toast.warning("min 30 days should select")
          return
       }
-      console.log(user_id)
+      console.log(user_id, plan.plan_id)
       const formData = new FormData()
       formData.append('amount_paid', amount)
       formData.append('from_date', currentMonth)

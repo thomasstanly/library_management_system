@@ -1,6 +1,7 @@
 from django.db import models
 from librarian.models import Patron
 from membership.models import Membership_plan
+from borrow.models import FinePayment
 
 class Membership_payment(models.Model):
     STATUS_CHOICE=(
@@ -22,6 +23,7 @@ class Transaction(models.Model):
     )
     payment_id = models.CharField(max_length=100,verbose_name="Payment_ID")
     membership_payment = models.OneToOneField(Membership_payment,on_delete=models.CASCADE,related_name="payment",null=True)
+    fine_payment = models.OneToOneField(FinePayment,on_delete=models.CASCADE,related_name="fine_payment",null=True)
     order_id = models.CharField(max_length=100,verbose_name="Order_ID")
     signature = models.CharField(max_length=100,verbose_name="Signature")
     amount = models.IntegerField(verbose_name="Amount")

@@ -8,15 +8,28 @@
         text-align: center;
         margin: 5vh 10vh;
     }
+
     .list {
-       
+
         .scroller::-webkit-scrollbar {
             display: none;
         }
-    
+
         .scroller {
             overflow-y: auto;
+
+        }
+
+        .fine {
             
+            background: #3498db;
+            color: white;
+            border: none;
+            outline: none;
+            border-radius: 6px;
+            padding: 6px 10px;
+            font-size: .8rem;
+            font-weight: 750;
         }
     }
 }

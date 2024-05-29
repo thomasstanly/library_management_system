@@ -31,6 +31,7 @@ const BookDetails = () => {
    let { id } = useParams();
    const [bookdata, setBookData] = useState({})
    const [rows, setRows] = useState([]);
+   const navigate = useNavigate()
 
    useEffect(() => {
       const fetchBook = async () => {
@@ -151,7 +152,7 @@ const BookDetails = () => {
                                  <span>{row.publisher.name}</span> <br />
                                  <span>{row.publisher.year}</span> <br />
                               </TableCell>
-                              <TableCell align="center"><EditIcon style={{ color: 'blue' }} /><DeleteIcon style={{ color: 'red' }} /></TableCell>
+                              <TableCell align="center"><EditIcon onClick={() => navigate(`/library/books/${id}/edit/${row.stock_no}`)} style={{ color: 'blue' }}/><DeleteIcon style={{ color: 'red' }} /></TableCell>
                            </TableRow>
                         );
                      })}

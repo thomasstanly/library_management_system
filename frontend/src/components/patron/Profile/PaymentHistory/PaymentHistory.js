@@ -38,7 +38,7 @@ const PaymentHistory = ({ user_details }) => {
       try {
          console.log(patron_id)
          const access_token = JSON.parse(localStorage.getItem('access'))
-         const res = await axios.get(`razorpay/order/${patron_id}/`,
+         const res = await axios.get(`razorpay/patron/${patron_id}/`,
             {
                headers:
                {

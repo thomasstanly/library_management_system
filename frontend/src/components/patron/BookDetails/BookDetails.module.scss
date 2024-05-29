@@ -1,8 +1,19 @@
 .body {
 
-    margin: 0px 7vw;
-    margin-top: 90px;
+    margin-top: 58px;
+    background-color: rgb(168, 123, 236);
+    padding: 50px 50px 150px 50px;
     display: flex;
+    position: relative;
+
+    .shade{
+        background-image: linear-gradient(180deg,transparent,#ffffff00,#ffffff);
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0px;
+        left:0px;
+    }
 
     .right {
         border-radius: 20px;

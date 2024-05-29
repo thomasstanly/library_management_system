@@ -41,21 +41,28 @@ const PatronSignUp = () => {
    const handleOnchange = (e) => {
       setFormdata({ ...formdata, [e.target.name]: e.target.value })
    }
-
+   const phoneNumberString = formdata.phone_number.toString();
    const handleSubmit = async (e) => {
       e.preventDefault()
 
       if (!formdata.email.trim() || !formdata.first_name.trim() || !formdata.last_name.trim() || !formdata.password.trim() || !formdata.password2.trim()) {
-         toast.success('all fields are required')
+         return toast.success('all fields are required')
+
       } else if (formdata.password !== formdata.password2) {
-         toast.warning('password not matching')
+         return toast.warning('password not matching')
 
       } else if (formdata.password.length < 6) {
          console.log(formdata.password.length)
-         toast.warning('password min length 6')
+         return toast.warning('password min length 6')
 
+      } else if (!formdata.email.trim().match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+         return toast.error("Invalid email format.");
+
+      } else if (phoneNumberString.length !== 10 || !phoneNumberString.match(/^\d+$/)) {
+         return toast.error("Phone number should be exactly 10 digits.");
       } else {
          try {
+            toast.warn("please wait for the otp")
             const res = await axios.post("signup/", formdata, { withCredentials: true })
 
             if (res.status === 200) {
@@ -63,29 +70,25 @@ const PatronSignUp = () => {
                console.log(otp)
                console.log(res.data)
                toast.warning(res.data.message)
-               
-            }
-            if (res.status === 201){
-               toast.warning(res.data.message)
-               navigate('/login')
+
             }
          } catch (error) {
             if (error.response.status === 400) {
                console.log(error.response.data)
-               if (error.response.data.email?.[0] && error.response.data.phone_number?.[0]){
+               if (error.response.data.email?.[0] && error.response.data.phone_number?.[0]) {
                   toast.warning(error.response.data.email[0])
                   toast.warning(error.response.data.phone_number[0])
-               }else if(error.response.data.email?.[0] && error.response.data.non_field_errors?.[0]){
+               } else if (error.response.data.email?.[0] && error.response.data.non_field_errors?.[0]) {
                   toast.warning(error.response.data.email[0])
                   toast.warning(error.response.data.non_field_error[0])
-               }else if(error.response.data.email?.[0]){
+               } else if (error.response.data.email?.[0]) {
                   toast.warning(error.response.data.email[0])
-               }else if(error.response.data.phone_number?.[0]){
+               } else if (error.response.data.phone_number?.[0]) {
                   toast.warning(error.response.data.phone_number[0])
-               }else{
+               } else {
                   toast.warning(error.response.data.non_field_errors[0])
                }
-              
+
             }
             else {
                console.log(error);
@@ -107,7 +110,15 @@ const PatronSignUp = () => {
             setOtp({ ...otp, status: false })
             console.log(res.data.message)
             toast.success(res.data.message)
-
+            setFormdata({
+               email: "",
+               first_name: "",
+               last_name: "",
+               password: "",
+               password2: "",
+               phone_number: ""
+            })
+            navigate('/login')
 
          }
       } catch (error) {

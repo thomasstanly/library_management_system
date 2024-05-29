@@ -59,6 +59,11 @@ class CaltegoryRetriveUpdate(RetrieveUpdateDestroyAPIView,GenericAPIView):
     
     def delete(self, request, *args, **kwargs):
         return self.destroy(request, *args, **kwargs)
+
+# class CategoryBookCount(GenericAPIView):
+
+#     def get(self,request,*args,**kwargs):
+
     
 class LanguageListCreate(ListModelMixin,CreateModelMixin,GenericAPIView):
 
@@ -136,11 +141,22 @@ class PublisherRetriveUpdate(RetrieveUpdateDestroyAPIView,GenericAPIView):
             serializer.validated_data['publisher_place'] = publisher_place.capitalize() 
 
         return super().perform_update(serializer)
-    
+
+class FilterAPIView(GenericAPIView):
+
+    def get(self,request,*args,**kwargs):
+        category = Category.objects.all()
+        cat_serialzer = CategorySerializer(category,many=True)
+        publisher = Publisher.objects.all()
+        pub_serializer = PublisherSerializer(publisher,many=True)
+        language = Language.objects.all()
+        lang_serializer = LanguageSerializer(language,many=True)
+        
+        return Response({'category':cat_serialzer.data,'publisher':pub_serializer.data,'language':lang_serializer.data},status=status.HTTP_200_OK)
+
 
 class BookListCreate(GenericAPIView):
     queryset = Book.objects.all()
-    serializer_class = Bookserializer
 
     def get(self, request, format=None):
         books = Book.objects.all()
@@ -225,6 +241,18 @@ class BookRetriveUpdate(RetrieveUpdateDestroyAPIView,GenericAPIView):
 
 class BookVariantListCreate(GenericAPIView):
 
+    def get(self,request,*args,**kwargs):
+        stock = request.GET.get('stock')
+        try:
+            if stock:
+                book_variant = Book_variant.objects.get(stock_no=stock)
+                serializer = BookVariantListSerializer(book_variant)
+                return Response(serializer.data,status=status.HTTP_200_OK)
+            else:
+                return Response({'error':'stock not found'},status=status.HTTP_404_NOT_FOUND)
+        except Book_variant.DoesNotExist:
+            return Response({'error':'Book not found'},status=status.HTTP_404_NOT_FOUND)
+
     def post(self, request, *args, **kwargs):
         serializer = BookVariantSerializer(data=request.data)
         if serializer.is_valid():
@@ -234,9 +262,22 @@ class BookVariantListCreate(GenericAPIView):
 
 class BookVariantRetriveUpdate(GenericAPIView):
     
-    serializer_class = BookVariantListSerializer
-    
-    def get(self, request, book):
-        book_variant = Book_variant.objects.filter(book=book)
-        serializer = self.serializer_class(book_variant, many=True)
+    def get(self, request, stock):
+        book_variant = Book_variant.objects.get(stock_no=stock)
+        serializer = BookVariantListSerializer(book_variant)
         return Response(serializer.data)
+    
+    def patch(self,request,*args,**kwargs):
+        stock = self.kwargs.get('stock')
+        print(stock)
+        try:
+            book_variant = Book_variant.objects.get(stock_no=stock)
+        except Book_variant.DoesNotExist:
+            return Response({'error':'not found'},status=status.HTTP_400_BAD_REQUEST)
+        serializer = BookVariantSerializer(book_variant,data=request.data,partial=True)
+        
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data,status=status.HTTP_200_OK)
+        
+        return Response(serializer.error,status=status.HTTP_400_BAD_REQUEST)

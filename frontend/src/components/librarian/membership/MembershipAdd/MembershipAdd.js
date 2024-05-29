@@ -38,7 +38,8 @@ const MembershipAdd = () => {
       plan_code: '',
       no_books: '',
       return_period: '',
-      plan_rate: ''
+      plan_rate: '',
+      fine_amount:''
    })
 
    const navigate = useNavigate()
@@ -120,18 +121,23 @@ const MembershipAdd = () => {
                   </div>
                   <div>
                      <label className='label mt-2' htmlFor="">No of books</label>
-                     <input className='form-control mt-1' type="number" min={1} placeholder='Type plan genre here. . .'
+                     <input className='form-control mt-1' type="number" min={1} placeholder='Type No of books here. . .'
                         value={plan.no_books} name='no_books' onChange={handleOnchange} />
                   </div>
                   <div>
                      <label className='label mt-2' htmlFor="">Return period</label>
-                     <input className='form-control mt-1' type="number" placeholder='Type plan genre here. . .'
+                     <input className='form-control mt-1' type="number" placeholder='Type Return period here. . .'
                         value={plan.return_period} name='return_period' onChange={handleOnchange} />
                   </div>
                   <div>
                      <label className='label mt-2' htmlFor="">Plan rate</label>
-                     <input className='form-control mt-1' type="number" min={1} placeholder='Type plan genre here. . .'
+                     <input className='form-control mt-1' type="number" min={1} placeholder='Type Plan rate here. . .'
                         value={plan.plan_rate} name='plan_rate' onChange={handleOnchange} />
+                  </div>
+                  <div>
+                     <label className='label mt-2' htmlFor="">Fine amount</label>
+                     <input className='form-control mt-1' type="number" min={1} placeholder='Type Fine amount here. . .'
+                        value={plan.fine_amount} name='fine_amount' onChange={handleOnchange} />
                   </div>
                </div>
             </div>

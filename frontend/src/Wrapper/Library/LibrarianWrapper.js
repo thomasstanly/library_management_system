@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, lazy } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { set_Authenticate } from '../../Redux/Auth/LibrarySlice'
@@ -32,6 +32,12 @@ import PatronCheckoutPage from '../../pages/librarian/Patron/PatronCheckoutPage/
 import PatronCirculationHistory from '../../pages/librarian/Patron/PatronCirculationHistory/PatronCirculationHistory'
 import PatronPaymentHistory from '../../pages/librarian/Patron/PatronPaymentHistory/PatronPaymentHistory'
 import CheckInPages from '../../pages/librarian/CheckIn/CheckInPages'
+import CirculationReportPage from '../../pages/librarian/Report/CirculationReportPage/CirculationReportPage'
+import FineReportPage from '../../pages/librarian/Report/FineReportPage/FineReportPage'
+import TransactionPage from '../../pages/librarian/TransactionPage/TransactionPage'
+import BookEditCountPage from '../../pages/librarian/book/BookEditCountPage'
+import SearchResultPage from '../../pages/librarian/SearchResult/SearchResultPage'
+const NotFoundPage = lazy(() => import('../../pages/404Page'))
 
 
 function LibrarianWrapper() {
@@ -65,7 +71,9 @@ function LibrarianWrapper() {
 
       <SidebarProvider>
          <Routes>
+            <Route path='/*' element={<NotFoundPage />} />
             <Route path='/' element={<LibraryLoginRouter><LibrarianLogin /></LibraryLoginRouter>} />
+            <Route path='/search' element={<LibraryRouter><SearchResultPage /></LibraryRouter>} />
             <Route path='/dashboard' element={<LibraryRouter><LibrarainLanding /></LibraryRouter>} />
             <Route path='/category' element={<LibraryRouter><CategoryListPage /></LibraryRouter>} />
             <Route path='/category/:id' element={<LibraryRouter><EditCategoryPage /></LibraryRouter>} />
@@ -81,15 +89,19 @@ function LibrarianWrapper() {
             <Route path='/books/edit/:id' element={<LibraryRouter><EditBookpage /></LibraryRouter>} />
             <Route path='/books/:id' element={<LibraryRouter><BookDetailsPage /></LibraryRouter>} />
             <Route path='/books/:id/add' element={<LibraryRouter><BookAddCountPage /></LibraryRouter>} />
+            <Route path='/books/:id/edit/:stock_no' element={<LibraryRouter><BookEditCountPage /></LibraryRouter>} />
             <Route path='/membership' element={<LibraryRouter><MembershipListPage /></LibraryRouter>} />
             <Route path='/membership/:id' element={<LibraryRouter><MembershipEditPage /></LibraryRouter>} />
             <Route path='/membership/add_plan' element={<LibraryRouter><MembershipAddPage /></LibraryRouter>} />
             <Route path='/patron' element={<LibraryRouter><PatronListPage /></LibraryRouter>} />
             <Route path='/patron/:id' element={<LibraryRouter><PatronDetailsPage /></LibraryRouter>} />
             <Route path='/checkin' element={<LibraryRouter><CheckInPages /></LibraryRouter>} />
+            <Route path='/transaction' element={<LibraryRouter><TransactionPage /></LibraryRouter>} />
             <Route path='/patron/:id/checkout' element={<LibraryRouter><PatronCheckoutPage /></LibraryRouter>} />
             <Route path='/patron/:id/circulation_history' element={<LibraryRouter><PatronCirculationHistory /></LibraryRouter>} />
             <Route path='/patron/:id/payment_history' element={<LibraryRouter><PatronPaymentHistory /></LibraryRouter>} />
+            <Route path='/report/circulation_report' element={<LibraryRouter><CirculationReportPage /></LibraryRouter>} />
+            <Route path='/report/fine_report' element={<LibraryRouter><FineReportPage /></LibraryRouter>} />
          </Routes>
       </SidebarProvider>
 

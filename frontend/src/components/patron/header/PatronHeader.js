@@ -1,15 +1,17 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import axios from '../../../Axios'
 import './PatronHeader.scss'
 
-const PatronHeader = ({header}) => {
-  const { name, isAuthenticated } = useSelector((state) => state.Auth_store)
+const PatronHeader = ({ header }) => {
+  const { name, isAuthenticated, isAdmin } = useSelector((state) => state.Auth_store)
+  const [query, setQuery] = useState()
+  const [results, setResults] = useState([])
   const profile_pic = header.profile_pic
   const plan = header.plan
   const url = `http://127.0.0.1:8000${profile_pic}`
-  console.log('header', name,profile_pic,plan)
+  console.log('header', name, isAdmin, isAuthenticated)
   const navigate = useNavigate()
 
   const logout = async () => {
@@ -31,22 +33,48 @@ const PatronHeader = ({header}) => {
       console.log('logout not working', e)
     }
   }
-  
+
+  const handleChange = async (e) => {
+    const token = JSON.parse(localStorage.getItem('access'));
+
+    try {
+      const res = await axios.get(`patron_search/?query=${e.target.value}`, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      console.log(res.data.success)
+      if (Array.isArray(res.data.success)) {
+        setResults(res.data.success);
+      } else {
+        setResults([]);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const searchedBook = (id) => {
+    setResults([])
+    navigate(`/Book_list/${id}`)
+  }
+
   return (
     <div className='header'>
       <div className='left'>
-        {isAuthenticated ? <div className="dropdown" style={{ marginLeft: '10px'}}>
+        {isAuthenticated ? <div className="dropdown" style={{ marginLeft: '10px' }}>
           <button className='profile dropdown-toggle' type="button" data-bs-toggle="dropdown" aria-expanded="false">
             <img className='profile' src={(profile_pic ? url : null) || "/images/user.png"} alt="netflix logo" />
           </button>
           <ul className="dropdown-menu">
+            {isAdmin ? <li><a className="dropdown-item" href="/library/dashboard">Admin</a></li> : null}
             <li><a className="dropdown-item" href='/profile'>profile</a></li>
             <li><a className="dropdown-item" href="#" onClick={logout}>logout</a></li>
           </ul>
         </div> :
           <img className='profile' src="/images/user.png" alt="netflix logo" />}
 
-        {isAuthenticated  ? plan ? '' :<button className='btn btn-primary' style={{ marginLeft: '20px' }} onClick={()=>{navigate('/plan')}}>Buy Plan</button>:
+        {isAuthenticated ? plan ? '' : <button className='btn btn-primary' style={{ marginLeft: '20px' }} onClick={() => { navigate('/plan') }}>Buy Plan</button> :
           <p onClick={() => { navigate('/login') }} style={{ cursor: 'pointer', marginLeft: '20px' }}>Login</p>}
       </div>
       <div className='right'>
@@ -54,9 +82,18 @@ const PatronHeader = ({header}) => {
           <input type="text" placeholder='Search for book, author' style={{
             backgroundImage: `url(${'/images/search.png'})`,
             backgroundSize: 'contain', backgroundRepeat: 'no-repeat'
-          }} />
-          <button type='submit'>submit</button>
+          }}
+            onChange={handleChange} />
         </form>
+        {results.length > 0 &&
+          <ul className='search-results'>
+            {results.map((result, index) => (
+              <li key={index} onClick={() => searchedBook(result.book.id)}>
+                {result.book.title}
+              </li>
+            ))}
+          </ul>
+        }
       </div>
     </div>
   )

@@ -59,6 +59,7 @@ class Book_variant(models.Model):
     publisher = models.ForeignKey(Publisher,related_name="related_publisher",on_delete=models.SET_NULL, null=True,blank=True)
     publishing_year = models.DateField(null=True)
     created_at = models.DateTimeField(auto_now_add=True,null=True)
+    price = models.BigIntegerField(null=True,default=100)
     isbn = models.BigIntegerField(null=True)
     slug = models.SlugField(unique=True, blank=True)
 

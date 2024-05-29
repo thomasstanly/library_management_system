@@ -29,7 +29,7 @@ class SignUp(GenericAPIView):
         if serializer.is_valid(raise_exception=True):
             patron = serializer.save()
             otp = random.randint(10000,99999)
-            emial_verification(user_data['email'],otp)
+            emial_verification.delay(user_data['email'],otp)
             patron.otp = otp
             patron.otp_expire = timezone.now() + timedelta(seconds=20)
             patron.save()
@@ -61,7 +61,7 @@ class OTPverfication(GenericAPIView):
         recived_email = request.data.get('email')
         patron = Patron.objects.get(email=recived_email)
         new_otp = random.randint(10000, 99999)
-        emial_verification(recived_email, new_otp)  
+        emial_verification.delay(recived_email, new_otp)  
         patron.otp = new_otp
         patron.otp_expire = timezone.now() + timedelta(seconds=20)  
         patron.save()

@@ -63,14 +63,15 @@ const BookDetails = () => {
 
       fetchBook()
       fetchVariant()
-   }, [])
+   }, [id])
 
    return (
       <>
          <div className={style.body}>
+            <div className={style.shade}></div>
             <img className={style.right} src={bookdata.cover} alt={bookdata.title} />
             <div className={style.content}>
-               <h3 className={style.title}>{bookdata.title}</h3>
+               <h3 className={style.title}>{bookdata.title}</h3   >
                <div className={style.left}>
                   <div className={style.sub_right}>
                      <div>Authors:
@@ -88,7 +89,7 @@ const BookDetails = () => {
                </div>
             </div>
          </div>
-         <Paper sx={{ width: '100%', overflow: 'hidden', padding: '50px' }}>
+         <Paper sx={{ width: '100%', overflow: 'hidden', paddingLeft: '50px',paddingRight: '50px'  }}>
             <TableContainer className={style.scroller} sx={{ maxHeight: 440 }}>
                <Table stickyHeader aria-label="sticky table">
                   <TableHead>

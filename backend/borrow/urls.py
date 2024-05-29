@@ -8,4 +8,5 @@ urlpatterns = [
     path('renew/',Check_in_and_Renew.as_view(),name='renew'),
     path('patron/',Patron_Checkout.as_view(),name='patron_borrow'),
     path('book/',Book_complete_list.as_view(),name='book_borrow'),
+    path('fine/',FinePAymentRetriveAPIViews.as_view(),name='fine_list'),
 ]

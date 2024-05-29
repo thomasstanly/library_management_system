@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, lazy } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import axios from '../../Axios'
@@ -20,7 +20,7 @@ import ChangePasswordPage from '../../pages/patron/Profile/ChangePassword/Change
 import SubscriptionPage from '../../pages/patron/Profile/Subscription/SubscriptionPage'
 import CirculationHistoryPage from '../../pages/patron/Profile/CirculationHistory/CirculationHistoryPage'
 import PaymentHistoryPage from '../../pages/patron/Profile/PaymentHistory/PaymentHistoryPage'
-
+const NotFoundPage = lazy(() => import('../../pages/404Page'))
 
 function PatronWrapper() {
   const { name, isAuthenticated, user_id } = useSelector((state) => state.Auth_store)
@@ -45,6 +45,7 @@ function PatronWrapper() {
           last_name: res.data.last_name,
           profile_pic: profilePic,
           plan: res.data.membership_id,
+          plan_expiry:res.data.mebership_date
         })
       )
     } catch (error) {
@@ -53,11 +54,13 @@ function PatronWrapper() {
   }
   const check = async () => {
     const result = await PatronAuth()
+    console.log(result.isAdmin)
     dispatch(
       set_Authenticate({
         user_id: result.user_id,
         first_name: result.name,
-        isAuth: result.isAuthenticated
+        isAuth: result.isAuthenticated,
+        isAdmin: result.isAdmin
       })
     )
   }
@@ -76,6 +79,7 @@ function PatronWrapper() {
   return (
     <div>
       <Routes>
+      <Route path='/*' element={<NotFoundPage />} />
         <Route path='/' element={<PatronHomePage />} />
         <Route path='/signup' element={<PatronLoginRouter><PatronSingUp /></PatronLoginRouter>} />
         <Route path='/login' element={<PatronLoginRouter><PatronLogin /></PatronLoginRouter>} />

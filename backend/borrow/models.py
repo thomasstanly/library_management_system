@@ -27,5 +27,16 @@ class Borrow(models.Model):
             self.due_date = self.borrowed_date.date() + timedelta(days=days)
             print(self.due_date)
         except AttributeError: 
-            return 
+            pass
+
+class FinePayment(models.Model):
+    STATUS_CHOICES = (
+        ('SUCCESS', 'Success'),
+        ('FAILURE', 'Failure'),
+        ('PENDING', 'Pending')
+    )
+    borrow = models.OneToOneField(Borrow,null=True,on_delete=models.SET_NULL,related_name="fine_payment")
+    amount = models.BigIntegerField()
+    date_assessed = models.DateField()
+    fine_status = models.CharField(choices=STATUS_CHOICES,default='PENDING')
         

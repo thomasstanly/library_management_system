@@ -25,6 +25,7 @@ const columns = [
 const HomePage = ({ patron }) => {
    const patron_id = patron.patron_id
    const plan = patron.plan
+   const expiry = patron.plan_expiry
    const navigate = useNavigate()
    const [rows, setRows] = useState([]);
    const [borrower, setBorrower] = useState([])
@@ -57,7 +58,8 @@ const HomePage = ({ patron }) => {
                remaining_days: daysDifference,
                renew: data.renewal,
                cover: data.book.book.cover,
-               plan: data.patron.membership_id
+               plan: data.patron.membership_id,
+               fine: data.fine_payment
             };
          });
          setBorrower(updatedBorrower)
@@ -80,7 +82,7 @@ const HomePage = ({ patron }) => {
    const membsership = async () => {
       try {
          const access_token = JSON.parse(localStorage.getItem('access'))
-         const res = await axios.get(`razorpay/order/${patron_id}/`,
+         const res = await axios.get(`razorpay/patron/${patron_id}/`,
             {
                headers:
                {
@@ -89,7 +91,7 @@ const HomePage = ({ patron }) => {
             }
          )
          const lastPaidPayment = res.data.find(user => user.status === 'PAID');
-         const status = new Date(lastPaidPayment.expiry_date) > new Date()
+         const status =  new Date().setHours(0,0,0,0) <= new Date(lastPaidPayment.expiry_date).setHours(0,0,0,0)
          setMember({
             membership_plan: lastPaidPayment.membership_plan.plan_name,
             status: status,
@@ -117,17 +119,39 @@ const HomePage = ({ patron }) => {
                   Authorization: `Bearer ${access_token}`
                }
             })
-         console.log(res.data)
+         console.log(res.data.message)
          Swal.fire({
             position: "center",
             icon: "success",
-            title: ` renwed`,
+            title: `${res.data.message}`,
             showConfirmButton: false,
             timer: 1200
          })
          fetch()
       } catch (error) {
-         console.log(error)
+         Swal.fire({
+            position: "center",
+            icon: "error",
+            title: `${error.response.data.error}`,
+            showConfirmButton: false,
+            timer: 1200
+         })
+      }
+   }
+
+   const handleExpiry = () => {
+      const today = new Date().setHours(0, 0, 0, 0);
+      const expiry_date = new Date(expiry).setHours(0, 0, 0, 0);
+      if (today > expiry_date) {
+         navigate('/plan')
+      }else{
+         Swal.fire({
+            position: "center",
+            icon: "success",
+            title: 'Membership plan Active',
+            showConfirmButton: false,
+            timer: 1200
+         })
       }
    }
 
@@ -204,12 +228,16 @@ const HomePage = ({ patron }) => {
                                           </TableCell>
                                           <TableCell align="left">{borrow.checked_out_on}</TableCell>
                                           <TableCell align="left" >{borrow.due_date}</TableCell>
-                                          <TableCell align="center">{borrow.remaining_days}</TableCell>
+                                          <TableCell align="center">{borrow.remaining_days < 0 ? 0 : borrow.remaining_days}</TableCell>
                                           <TableCell align="center">
-                                             <button disabled={borrow.renew ? true : false}
-                                                onClick={() => handleRenew(borrow.stock)} >
-                                                {borrow.renew ? 'Renewed' : 'renew'}
-                                             </button>
+                                             {
+                                                borrow.fine ?
+                                                   <Link to='/profile/circulation_history' >You have a fine of ₹ {borrow.fine.amount}</Link>
+                                                   : <button disabled={borrow.renew ? true : false}
+                                                      onClick={() => handleRenew(borrow.stock)} >
+                                                      {borrow.renew ? 'Renewed' : 'renew'}
+                                                   </button>
+                                             }
                                           </TableCell>
                                        </TableRow>
                                     )
@@ -232,14 +260,14 @@ const HomePage = ({ patron }) => {
                      </div>
                      <div className={style.member_row}>
                         <p>Status</p>
-                        <p>{member.status?'Active': 'Inactive'}</p>
+                        <p>{member.status ? 'Active' : 'Inactive'}</p>
                      </div>
                      <div className={style.member_row}>
                         <p>Expiry date</p>
                         <p>{member.expiry}</p>
                      </div>
                      <div className={style.member_row}>
-                        <button disabled={member.status?true:false} >Renew Membership<span></span></button>
+                        <button onClick={handleExpiry}>Renew Membership<span></span></button>
                      </div>
                   </div>
                }

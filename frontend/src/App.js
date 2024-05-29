@@ -12,10 +12,10 @@ const LibrarianWrapper = lazy(() => import('./Wrapper/Library/LibrarianWrapper')
 
 function App() {
   return (
-    <div>
-      <ToastContainer />
+    <>
       <Provider store={store}>
-        <Suspense fallback={<Loader/>}>
+        <ToastContainer />
+        <Suspense fallback={<Loader />}>
           <Routes>
             <Route path='/*' element={<PatronWrapper />} />
             <Route path='/library/*' element={<LibrarianWrapper />} />
@@ -23,7 +23,7 @@ function App() {
         </Suspense>
       </Provider>
 
-    </div>
+    </>
   )
 }
 

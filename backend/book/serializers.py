@@ -41,7 +41,7 @@ class BookVariantListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Book_variant
         fields = "__all__"
-        depth = 1
+        depth = 2
         
         
 class Bookserializer(serializers.ModelSerializer):

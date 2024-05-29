@@ -44,7 +44,7 @@ export const siderbarData = [
     {
         title: "Transaction",
         icon: <AccountBalanceIcon />,
-        link: '/transaction'
+        link: '/library/transaction'
     },
     {
         title: "Report",
@@ -62,7 +62,7 @@ export const siderbarData = [
                 link: '/library/report/fine_report',
             },
             {
-                title: "category reportt",
+                title: "category report",
                 link: '/library/report/category_report',
             }
         ]

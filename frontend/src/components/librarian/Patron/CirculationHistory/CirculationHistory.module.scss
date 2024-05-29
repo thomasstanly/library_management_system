@@ -20,6 +20,26 @@
             overflow-y: auto;
 
         }
+        .pending{
+            background: #3498db;
+            width: 5rem;
+            color: white;
+            border: none;
+            outline: none;
+            border-radius: 6px;
+            padding: 6px 10px;
+            font-size: .8rem;
+        }
+        .success{
+            background: #3498db;
+            width: 5rem;
+            color: white;
+            border: none;
+            outline: none;
+            border-radius: 6px;
+            padding: 6px 10px;
+            font-size: .8rem;
+        }
     }
 }
 

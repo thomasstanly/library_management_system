@@ -1,0 +1,38 @@
+.header{
+    display: flex;
+    justify-content: space-between;
+    padding: 80px 20px 20px 0px;
+
+    .button {
+        .link {
+            button {
+                border: none;
+                border-radius: .5em;
+                padding: .5em 1em;
+                background-color: #362727;
+                color: white;
+            }
+        }
+    }
+
+    .title {
+        width: 50vw;
+    }
+}
+
+
+
+.list {
+    margin-top: 15vh;
+    margin-right: 5vw;
+    margin-left: 19vw;
+ 
+     .scroller::-webkit-scrollbar {
+         display: none;
+     }
+ 
+     .scroller {
+         overflow-y: auto;
+         
+     }
+ }

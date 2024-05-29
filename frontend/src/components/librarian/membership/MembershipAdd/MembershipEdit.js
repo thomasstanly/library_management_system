@@ -31,6 +31,7 @@ const MembershipEdit = () => {
       "no_books": "",
       "return_period": "",
       "plan_rate": "",
+
    })
 
    const navigate = useNavigate()
@@ -97,6 +98,8 @@ const MembershipEdit = () => {
             "no_books": res.data.no_books,
             "return_period": res.data.return_period,
             "plan_rate": res.data.plan_rate,
+            "fine_amount":res.data.fine_amount
+            
          })
       } catch (error) {
          console.log(error)
@@ -152,6 +155,11 @@ const MembershipEdit = () => {
                      <label className='label mt-2' htmlFor="">Plan rate</label>
                      <input className='form-control mt-1' type="number" min={1} placeholder='Type plan genre here. . .'
                         value={plan.plan_rate} name='plan_rate' onChange={handleOnchange} />
+                  </div>
+                  <div>
+                     <label className='label mt-2' htmlFor="">Fine amount</label>
+                     <input className='form-control mt-1' type="number" min={1} placeholder='Type Fine amount here. . .'
+                        value={plan.fine_amount} name='fine_amount' onChange={handleOnchange} />
                   </div>
                </div>
             </div>

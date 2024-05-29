@@ -10,6 +10,7 @@ const UserDetails = createSlice({
         last_name:null,
         profile_pic:null,
         plan:null,
+        plan_expiry:null,
     },
     reducers:{
         get_UserDetails:(state,action)=>{

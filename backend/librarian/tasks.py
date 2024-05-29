@@ -10,3 +10,5 @@ def emial_verification(self,email, otp_value):
         [email],
         fail_silently=False
     )
+    print('yes celery working')
+    return "Done"

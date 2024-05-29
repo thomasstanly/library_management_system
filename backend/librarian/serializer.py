@@ -6,7 +6,6 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from .models import Patron,UserProfile
 from membership.serializers import MemberSerializer
 from django.contrib.auth.password_validation import validate_password
-from razorpay_backend.serializers import MembershipPaymentSerializer
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
@@ -100,7 +99,7 @@ class PtronListCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Patron
-        fields =['id','first_name','last_name','email','Profile','is_active','date_joined','phone_number','membership_id']
+        fields =['id','first_name','last_name','email','Profile','is_active','date_joined','phone_number','membership_id','mebership_date']
         depth = 1
 
 class PatronUpdateSerializer(serializers.ModelSerializer):

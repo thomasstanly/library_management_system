@@ -13,6 +13,7 @@ urlpatterns = [
     path('',include('membership.urls')),
     path('razorpay/',include('razorpay_backend.urls')),
     path('borrow/',include('borrow.urls')),
+    path("chat/", include("chat.urls")),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

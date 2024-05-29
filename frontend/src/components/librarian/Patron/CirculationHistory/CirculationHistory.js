@@ -17,6 +17,7 @@ const columns = [
   { id: 4, label: 'Checked Date', minWidth: 50, align: 'left' },
   { id: 5, label: 'Due Date ', minWidth: 100, align: 'left' }, ,
   { id: 6, label: 'Renew Satus', minWidth: 50, align: 'center' },
+  { id: 7, label: 'Fine', minWidth: 50, align: 'center' },
 ]
 const CirculationHistory = ({ patron_id }) => {
 
@@ -25,12 +26,12 @@ const CirculationHistory = ({ patron_id }) => {
   const [rows, setRows] = React.useState([]);
 
   const handleChangePage = (event, newPage) => {
-     setPage(newPage);
+    setPage(newPage);
   };
 
   const handleChangeRowsPerPage = (event) => {
-     setRowsPerPage(+event.target.value);
-     setPage(0);
+    setRowsPerPage(+event.target.value);
+    setPage(0);
   };
 
   const fetch = async () => {
@@ -55,6 +56,7 @@ const CirculationHistory = ({ patron_id }) => {
           check_out: new Date(data.borrowed_date).toLocaleDateString('en-US'),
           return_date: data.return_date ? new Date(data.return_date).toLocaleDateString('en-US') : 'N/A',
           renew: data.renewal,
+          fine: data.fine_payment
         };
       });
       setRows(updatedBorrower)
@@ -95,19 +97,23 @@ const CirculationHistory = ({ patron_id }) => {
                 <TableBody>
 
                   {rows
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((row, index) => {
-                    return (
-                      <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
-                        <TableCell align="left">{row.stock}</TableCell>
-                        <TableCell align="left">{row.book_name}</TableCell>
-                        <TableCell align="left">{row.check_out}</TableCell>
-                        <TableCell align="left">{row.check_in}</TableCell>
-                        <TableCell align="left">{row.return_date}</TableCell>
-                        <TableCell align="left">{row.renew ? 'yes' : 'no'}</TableCell>
-                      </TableRow>
-                    )
-                  })}
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .map((row, index) => {
+                      return (
+                        <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
+                          <TableCell align="left">{row.stock}</TableCell>
+                          <TableCell align="left">{row.book_name}</TableCell>
+                          <TableCell align="left">{row.check_out}</TableCell>
+                          <TableCell align="left">{row.check_in}</TableCell>
+                          <TableCell align="left">{row.return_date}</TableCell>
+                          <TableCell align="left">{row.renew ? 'yes' : 'no'}</TableCell>
+                          <TableCell align="center">
+                            {row.fine ? row.fine.fine_status == 'PENDING' ? <span className={style.pending}>{row.fine.fine_status}</span> :
+                              <span className={style.success}>{row.fine.fine_status}</span> : 'No fine'}
+                          </TableCell>
+                        </TableRow>
+                      )
+                    })}
 
                 </TableBody>
               </Table>

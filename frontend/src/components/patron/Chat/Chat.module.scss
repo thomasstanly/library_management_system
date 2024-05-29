@@ -1,0 +1,111 @@
+.modalbutton {
+    padding: 15px;
+    background-color: rgb(88, 88, 235);
+    border: none;
+    box-shadow: 4px 4px 8px 4px rgba(133, 123, 230, 0.3);
+    border-radius: 50%;
+}
+
+.chat {
+
+    display: flex;
+    flex-direction: column;
+
+
+    .chat_header {
+        background-color: rgb(46, 46, 46);
+        color: white;
+        height: 50px;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+
+        p {
+            margin-top: 10px;
+            margin-left: 10px;
+        }
+    }
+
+    .chat_area::-webkit-scrollbar {
+        display: none;
+    }
+
+    .chat_area {
+        background-image: url('../../../../public/images/download.jpeg');
+        background-size: cover;
+        padding: 15px;
+        height: 300px;
+        overflow-y: auto;
+    }
+}
+
+.sent {
+    display: flex;
+    justify-content: end;
+
+    .message_bubble {
+        background-color: rgb(88, 88, 235);
+        padding: 0px 12px 0px 12px;
+        margin: 5px;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+        border-bottom-left-radius: 5px;
+        color: white;
+        .user{
+            color: rgb(234, 252, 35);
+            font-size: 11px;
+            text-align: end;
+            font-weight: bold;
+            margin: 2px 2px 2px 0px;
+        }
+    }
+}
+
+.recieved {
+    display: flex;
+    justify-content: start;
+
+    .message_bubble {
+        background-color: rgb(88, 88, 235);
+        padding: 0px 12px 0px 12px;
+        margin: 5px;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+        color: white;
+        .user{
+            color: rgb(234, 252, 35);
+            font-size: 11px;
+            font-weight: bold;
+            margin: 2px 2px 2px 1px;
+        }
+    }
+}
+
+.message_input {
+    display: flex;
+    align-items: center;
+    background-color: rgb(46, 46, 46);
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+
+    textarea {
+        background-color: rgb(46, 46, 46);
+        color: white;
+        flex: 1;
+        border: none;
+        outline: none;
+        resize: none;
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+        text-indent: 10px;
+        line-height: 40px;
+        height: 50px;
+    }
+
+
+    button {
+        background-color: rgb(46, 46, 46);
+        border: none;
+        outline: none;
+    }
+}

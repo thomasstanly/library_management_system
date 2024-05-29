@@ -26,7 +26,8 @@ const columns = [
    { id: 3, label: 'number of books', minWidth: 50, align: 'left' },
    { id: 4, label: 'return period', minWidth: 50, align: 'left' },
    { id: 5, label: 'Rate/month', minWidth: 50, align: 'left' },
-   { id: 6, label: 'Action', minWidth: 50, align: 'center' },
+   { id: 6, label: 'Fine/day', minWidth: 50, align: 'left' },
+   { id: 7, label: 'Action', minWidth: 50, align: 'center' },
 
 ];
 const breadcrumbs = [
@@ -149,6 +150,7 @@ const MembershipList = () => {
                                     <TableCell align="left">{row.no_books}</TableCell>
                                     <TableCell align="left">{row.return_period} days</TableCell>
                                     <TableCell align="left">{row.plan_rate}</TableCell>
+                                    <TableCell align="left">{row.fine_amount}</TableCell>
                                     <TableCell align="center"><EditIcon style={{ color: 'blue' }} onClick={() => navigate(`/library/membership/${row.id}`)} />
                                        <DeleteIcon style={{ color: 'red' }} onClick={() => handleDelete(row.id)} />
                                     </TableCell>

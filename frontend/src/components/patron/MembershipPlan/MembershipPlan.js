@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import Lottie from 'lottie-react'
 import axios from '../../../Axios';
+import animationData from '../../../Assets/Animation - 1716553241579.json'
 import style from './MembershipPlan.module.scss';
 
 const MembershipPlan = () => {
@@ -33,6 +35,10 @@ const MembershipPlan = () => {
    return (
       <>
          <div className={style.body}>
+            <div className={style.lottieBackground}>
+               <Lottie animationData={animationData} 
+               speed={2.5}/>
+            </div>
             <div className={style.body_container}>
                {plans.map((plan) => (
                   <div key={plan.id} className={style.plan}>
@@ -41,16 +47,19 @@ const MembershipPlan = () => {
                      </div>
                      <div>
                         <div>
-                           <p>{plan.no_books}</p>
+                           <p>Number of books user can take at a time {plan.no_books}</p>
                         </div>
                         <div>
-                           <p>{plan.return_period}</p>
+                           <p>Time to keep the book {plan.return_period} days</p>
                         </div>
                         <div>
-                           <p>Membership for 1 month.</p>
+                           <p>Membership for minimum 1 month.</p>
                         </div>
                         <div>
-                           <p>{plan.plan_rate}</p>
+                           <p>Membership fee per month ₹ {plan.plan_rate}</p>
+                        </div>
+                        <div>
+                           <p>Membership fee per month ₹ {plan.plan_rate}</p>
                         </div>
                      </div>
                      <button onClick={() => handlePaymentClick(plan)}>
@@ -61,6 +70,7 @@ const MembershipPlan = () => {
                   </div>
                ))}
             </div>
+
          </div>
 
       </>

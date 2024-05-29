@@ -14,6 +14,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import style from './CheckIn.module.scss'
+import Swal from 'sweetalert2';
 
 
 const breadcrumbs = [
@@ -50,27 +51,65 @@ const CheckIn = () => {
       if (!isNaN(formData.stock)) {
          try {
             const access_token = JSON.parse(localStorage.getItem('access'))
-            const res = await axios.post('borrow/check_in/', formData,
+            const res = await axios.get('book_variant/',
                {
                   headers: {
                      Authorization: `Bearer ${access_token}`
+                  },
+                  params: {
+                     stock: formData.stock
                   }
                }
             )
-            console.log(res.data)
-            setFormData({
-               "stock": ''
+            Swal.fire({
+               title: "Check In",
+               text: `${res.data.book.title}`,
+               icon: "success",
+               showCancelButton: true,
+               confirmButtonColor: "#3085d6",
+               cancelButtonColor: "#d33",
+               confirmButtonText: "Yes, check In!"
+            }).then(async (result) => {
+               if (result.isConfirmed) {
+                  try {
+                     console.log(formData)
+                     const access_token = JSON.parse(localStorage.getItem('access'))
+                     const res = await axios.post('borrow/check_in/', formData,
+                        {
+                           headers: {
+                              Authorization: `Bearer ${access_token}`
+                           }
+                        }
+                     )
+                     console.log(res.data)
+                     setFormData({
+                        "stock": ''
+                     })
+                     const data = res.data
+                     setBorrower(prevBorrowers => [...prevBorrowers, {
+                        stock: data.book.stock_no,
+                        due_date: data.due_date,
+                        book_name: data.book.book.title,
+                        patron: `${data.patron.first_name} ${data.patron.last_name} (${data.patron.membership_id.plan_code}${data.patron.id})`,
+                        language: data.book.language.language,
+                        checked_out_on: data.borrowed_date,
+                        return_date: data.return_date
+                     }]);
+                  } catch (error) {
+                     console.log(error)
+                     toast(error.response.data.error, {
+                        position: "top-right",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "dark",
+                     })
+                  }
+               }
             })
-            const data = res.data
-            setBorrower(prevBorrowers => [...prevBorrowers, {
-               stock: data.book.stock_no,
-               due_date: data.due_date,
-               book_name: data.book.book.title,
-               patron: `${data.patron.first_name} ${data.patron.last_name} (${data.patron.membership_id.plan_code}${data.patron.id})`,
-               language: data.book.language.language,
-               checked_out_on: data.borrowed_date,
-               return_date: data.return_date
-            }]);
          } catch (error) {
             toast(error.response.data.error, {
                position: "top-right",
@@ -83,8 +122,9 @@ const CheckIn = () => {
                theme: "dark",
             })
          }
+
       } else {
-         toast.warning('enter a number')
+         toast.warning('enter a Stock number')
       }
    }
 

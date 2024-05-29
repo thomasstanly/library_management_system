@@ -32,37 +32,93 @@ const ListBooks = () => {
             console.log(error.response.data)
          }
       }
+
+      const fetchData = async () => {
+         try {
+            const access_token = JSON.parse(localStorage.getItem('access'));
+            const response = await axios.get('book/filter/', {
+               headers: {
+                  Authorization: `Bearer ${access_token}`
+               }
+            })
+            const categories = response.data.category.map((cat) => ({
+               ...cat,
+               type: 'Category',
+            }));
+            const publishers = response.data.publisher.map((pub) => ({
+               ...pub,
+               type: 'Publisher',
+            }));
+            const languages = response.data.language.map((lang) => ({
+               ...lang,
+               type: 'Language',
+            }));
+
+            setData([...categories, ...publishers, ...languages]);
+         } catch (error) {
+            console.error('Error fetching data:', error);
+         }
+      };
+
       fetchBook()
+      fetchData();
+
    }, [])
 
    return (
       <>
          <div className={style.conatainer}>
             <div className={style.filter}>
-               <p>filter</p>
-               <Box sx={{ minWidth: 120 }}>
-                  <FormControl fullWidth>
-                     <InputLabel id="demo-simple-select-label">Category</InputLabel>
-                     <Select
-                        labelId="demo-simple-select-label"
-                        id="demo-simple-select"
-                        value={category}
-                        label="Category"
-                        onChange={handleChange}
-                     >
-                        <MenuItem value={10}>Ten</MenuItem>
-                        <MenuItem value={20}>Twenty</MenuItem>
-                        <MenuItem value={30}>Thirty</MenuItem>
-                     </Select>
-                  </FormControl>
-               </Box>
+               <h3>Filter</h3>
+               <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+                  <InputLabel id="demo-simple-select-label">Category</InputLabel>
+                  <Select
+                     labelId="demo-simple-select-label"
+                     id="demo-simple-select"
+                     value={category}
+                     label="Category"
+                     onChange={handleChange}
+                  >
+                     <MenuItem value={10}>Ten</MenuItem>
+                     <MenuItem value={20}>Twenty</MenuItem>
+                     <MenuItem value={30}>Thirty</MenuItem>
+                  </Select>
+               </FormControl>
+               <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+                  <InputLabel id="demo-simple-select-label">Category</InputLabel>
+                  <Select
+                     labelId="demo-simple-select-label"
+                     id="demo-simple-select"
+                     value={category}
+                     label="Category"
+                     onChange={handleChange}
+                  >
+                     <MenuItem value={10}>Ten</MenuItem>
+                     <MenuItem value={20}>Twenty</MenuItem>
+                     <MenuItem value={30}>Thirty</MenuItem>
+                  </Select>
+               </FormControl>
+               <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+                  <InputLabel id="demo-simple-select-label">Category</InputLabel>
+                  <Select
+                     labelId="demo-simple-select-label"
+                     id="demo-simple-select"
+                     value={category}
+                     label="Category"
+                     onChange={handleChange}
+                  >
+                     <MenuItem value={10}>Ten</MenuItem>
+                     <MenuItem value={20}>Twenty</MenuItem>
+                     <MenuItem value={30}>Thirty</MenuItem>
+                  </Select>
+               </FormControl>
             </div>
             <div className={`${style.posters} posters`} >
                {rows.map((row) => {
                   return (
                      <div key={row.id} className={style.inside} >
-                        <img className={style.poster} src={row.cover} alt="poster" onClick={()=>navigate(`/book_list/${row.id}`)}/>
-                        <h2 className={style.textOverlay} onClick={()=>navigate(`/book_list/${row.id}`)}>{row.title}</h2>
+                        <img className={style.poster} src={row.cover} alt="poster" onClick={() => navigate(`/book_list/${row.id}`)} />
+                        <h2 className={style.textOverlay} onClick={() => navigate(`/book_list/${row.id}`)}>{row.title}</h2>
                      </div>
                   );
                })}

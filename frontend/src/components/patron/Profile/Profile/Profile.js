@@ -42,7 +42,7 @@ const Profile = ({ user_details }) => {
     const phoneNumberString = details.phone_number.toString();
 
     if (phoneNumberString.length !== 10 || !phoneNumberString.match(/^\d+$/)) {
-      console.log()
+      
       return toast.error("Phone number should be exactly 10 digits.");
     }
 
