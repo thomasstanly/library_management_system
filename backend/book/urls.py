@@ -12,7 +12,9 @@ urlpatterns = [
 
     path('book/',views.BookListCreate.as_view(),name='book'),
     path('book/filter/',views.FilterAPIView.as_view(),name='book_filter'),
+    path('book/after_filter/',views.FilteredDataAPIView.as_view(),name='filter_result'),
     path('book/<int:id>/',views.BookRetriveUpdate.as_view(),name='book_edit'),
-    path('book_variant/',views.BookVariantListCreate.as_view(),name='book_count'),
+    path('book_variant/',views.BookVariantStockCreate.as_view(),name='book_count'),
+     path('book_variant_list/',views.BookVariantList.as_view(),name='all_books'),
     path('book_variant/<int:stock>/',views.BookVariantRetriveUpdate.as_view(),name='book_retrive '),
 ]

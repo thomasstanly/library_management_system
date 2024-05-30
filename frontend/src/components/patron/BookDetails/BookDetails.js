@@ -7,18 +7,12 @@ import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
 import TableRow from '@mui/material/TableRow';
-import Breadcrumbs from '@mui/material/Breadcrumbs';
-import Typography from '@mui/material/Typography';
-import Stack from '@mui/material/Stack';
-import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import style from './BookDetails.module.scss'
 
 const columns = [
-   { id: 1, label: ' ', minWidth: 100, align: 'center' },
-   { id: 2, label: 'Book Name', minWidth: 100, align: 'center' },
+   { id: 1, label: ' ', minWidth: 10, align: 'center' },
+   { id: 2, label: 'Book Name', minWidth: 50, align: 'center' },
    { id: 3, label: 'Call Number', minWidth: 50, align: 'center' },
    { id: 4, label: 'Status', minWidth: 50, align: 'center' },
    { id: 5, label: 'Publisher', minWidth: 50, align: 'center' },
@@ -89,8 +83,8 @@ const BookDetails = () => {
                </div>
             </div>
          </div>
-         <Paper sx={{ width: '100%', overflow: 'hidden', paddingLeft: '50px',paddingRight: '50px'  }}>
-            <TableContainer className={style.scroller} sx={{ maxHeight: 440 }}>
+         <Paper sx={{m:6, overflow: 'hidden',borderRadius: 4}}>
+            <TableContainer className={style.scroller} sx={{ maxHeight: 768 }}>
                <Table stickyHeader aria-label="sticky table">
                   <TableHead>
                      <TableRow>
@@ -98,7 +92,11 @@ const BookDetails = () => {
                            <TableCell
                               key={column.id}
                               align={column.align}
-                              style={{ minWidth: column.minWidth }}
+                              style={{ minWidth: column.minWidth,
+                                 backgroundColor: '#E0E2E7',
+                                 fontWeight:'600'
+                               }}
+                              
                            >
                               {column.label}
                            </TableCell>
@@ -110,16 +108,16 @@ const BookDetails = () => {
                         return (
                            <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
                               <TableCell align='left'>{index + 1}</TableCell>
-                              <TableCell align="left" > {row.title} ({row.language})</TableCell>
-                              <TableCell align='left'>{row.call_number}</TableCell>
-                              <TableCell align="left">
+                              <TableCell align="center" > {row.title} ({row.language})</TableCell>
+                              <TableCell align='center'>{row.call_number}</TableCell>
+                              <TableCell align="center">
                                  {row.patron ?
                                     <span>
                                        `<i>Checked out, due on </i> {new Date(row.due_date).toLocaleDateString('en-US')}`
                                     </span>
                                     : "Available"}
                               </TableCell>
-                              <TableCell align="left">
+                              <TableCell align="center">
                                  <span>{row.publisher.name}</span> <br />
                                  <span>{row.publisher.year}</span> <br />
                               </TableCell>

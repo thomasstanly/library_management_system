@@ -42,7 +42,14 @@ class BookVariantListSerializer(serializers.ModelSerializer):
         model = Book_variant
         fields = "__all__"
         depth = 2
-        
+    
+    def to_representation(self,instance):
+        data = super().to_representation(instance)
+        if 'cover' in data['book'] and data['book']['cover']:
+            request = self.context.get('request',None)
+            if request is not None:
+                data['book']['cover'] = request.build_absolute_uri(data['book']['cover'])
+        return data
         
 class Bookserializer(serializers.ModelSerializer):
    

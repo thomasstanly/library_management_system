@@ -1,10 +1,58 @@
 .conatainer {
     margin: 10rem 5rem 5rem 2rem;
     display: flex;
-    .filter{
+
+    .filter {
         display: flex;
         flex-direction: column;
+        align-items: center;
         margin: 0rem 5rem 5rem 2rem;
+
+        h4 {
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+            font-size: larger;
+        }
+
+        .filter_button {
+            margin-top: 1rem;
+            padding: 0.3rem 1rem 0.3rem 1rem;
+            background-color: aqua;
+            border-radius: 5px;
+            border: none;
+            outline: none;
+            color: white;
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+            font-weight: 500;
+            font-size: larger;
+        }
+    }
+
+    .loading {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        flex-grow: 1;
+    }
+
+    .error {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        flex-grow: 1;
+        font-size: larger;
+        font-weight: 700;
+    }
+
+    .noResult {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        flex-grow: 1;
+        font-size: larger;
+        font-weight: 700;
     }
 
     .posters {
@@ -14,9 +62,13 @@
         grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
 
         .inside {
+            display: flex;
+            flex-direction: column;
             position: relative;
             width: 100%;
             overflow: hidden;
+
+
 
             .poster {
                 object-fit: cover;
@@ -46,6 +98,13 @@
                 opacity: 1;
                 transform: translate(-50%, -50%) scale(1);
                 cursor: pointer;
+            }
+
+            p {
+                margin-top: 0.5rem;
+                text-align: center;
+                font-weight: 700;
+                font-size: 1.2rem;
             }
         }
     }
