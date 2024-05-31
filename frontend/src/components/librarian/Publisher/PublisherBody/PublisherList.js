@@ -76,7 +76,7 @@ const PublisherList = () => {
                   Authorization: `Bearer ${access_token}`
                }
             })
-         console.log(res)
+        
          setRows(res.data)
       } catch (error) {
          console.log(error.response)
@@ -129,6 +129,18 @@ const PublisherList = () => {
                page={page}
                onPageChange={handleChangePage}
                onRowsPerPageChange={handleChangeRowsPerPage}
+               sx={{
+                  '& .MuiTablePagination-selectLabel': {
+                     marginBottom: '0px',
+                     color:'Blue',
+                     fontWeight: 'bold',
+                  },
+                  '& .MuiTablePagination-displayedRows': {
+                     marginBottom: '0px',
+                     color:'Blue',
+                     fontWeight: 'bold',
+                  }
+               }}
             />
          </Paper>
       </div>

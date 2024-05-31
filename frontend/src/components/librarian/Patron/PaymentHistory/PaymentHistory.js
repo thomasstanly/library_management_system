@@ -11,7 +11,7 @@ import TablePagination from '@mui/material/TablePagination';
 import style from './PaymentHistory.module.scss';
 
 const columns = [
-  { id: 1, label: 'Plan Name', minWidth: 100, align: 'center' },
+  { id: 1, label: 'Plan Name', minWidth: 10, align: 'center' },
   { id: 2, label: 'Plan Rate', minWidth: 100, align: 'center' },
   { id: 3, label: 'Purchase Date', minWidth: 50, align: 'center' },
   { id: 4, label: 'Expiry Date', minWidth: 50, align: 'center' },
@@ -34,7 +34,7 @@ const PaymentHistory = ({ patron_id }) => {
 
   const fetch = async () => {
      try {
-        console.log(patron_id)
+        
         const access_token = JSON.parse(localStorage.getItem('access'))
         const res = await axios.get(`razorpay/patron/${patron_id}/`,
            {
@@ -117,6 +117,18 @@ const PaymentHistory = ({ patron_id }) => {
               page={page}
               onPageChange={handleChangePage}
               onRowsPerPageChange={handleChangeRowsPerPage}
+              sx={{
+                '& .MuiTablePagination-selectLabel': {
+                   marginBottom: '0px',
+                   color:'Blue',
+                   fontWeight: 'bold',
+                },
+                '& .MuiTablePagination-displayedRows': {
+                   marginBottom: '0px',
+                   color:'Blue',
+                   fontWeight: 'bold',
+                }
+             }}
             />
           </Paper>
         </div>

@@ -22,7 +22,6 @@ const PatronLogin = () => {
       password: "",
    })
 
-   const [error, setError] = useState('')
    const navigate = useNavigate()
    const dispatch = useDispatch()
 
@@ -35,8 +34,7 @@ const PatronLogin = () => {
       e.preventDefault()
 
       if (!loginData.email || !loginData.password) {
-         setError('All fields required')
-         console.log(loginData)
+         toast.error('All fields required')
       } else {
          try {
             const res = await axios.post("login/", loginData)

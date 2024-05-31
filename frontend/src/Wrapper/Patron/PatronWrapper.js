@@ -34,7 +34,6 @@ function PatronWrapper() {
           Authorization: `Bearer ${access_token}`
         }
       })
-      console.log(res)
       const profilePic = res.data.Profile ? res.data.Profile.profile_pic : null;
       dispatch(
         get_UserDetails({
@@ -54,7 +53,6 @@ function PatronWrapper() {
   }
   const check = async () => {
     const result = await PatronAuth()
-    console.log(result.isAdmin)
     dispatch(
       set_Authenticate({
         user_id: result.user_id,

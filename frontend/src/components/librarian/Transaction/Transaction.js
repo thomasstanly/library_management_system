@@ -71,7 +71,6 @@ const Transaction = () => {
             },
             params: params,
          });
-         console.log(res.data.result);
          setRows(res.data.result);
          setAllRows(res.data.result);
          setCount(res.data.count)
@@ -82,7 +81,6 @@ const Transaction = () => {
 
    const handleSort = async () => {
       let result = allRows;
-      console.log(filterOption)
       if (filterOption) {
          result = allRows.filter(row => row.membership_plan.plan_name === filterOption || row.status === filterOption )
       }

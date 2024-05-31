@@ -71,7 +71,6 @@ const CirculationReport = () => {
             },
             params: params,
          });
-         console.log(res.data.result);
          setRows(res.data.result);
          setCount(res.data.count)
       } catch (error) {

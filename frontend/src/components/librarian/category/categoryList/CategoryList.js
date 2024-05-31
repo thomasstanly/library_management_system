@@ -132,6 +132,18 @@ const CategoryList = () => {
                page={page}
                onPageChange={handleChangePage}
                onRowsPerPageChange={handleChangeRowsPerPage}
+               sx={{
+                  '& .MuiTablePagination-selectLabel': {
+                     marginBottom: '0px',
+                     color:'Blue',
+                     fontWeight: 'bold',
+                  },
+                  '& .MuiTablePagination-displayedRows': {
+                     marginBottom: '0px',
+                     color:'Blue',
+                     fontWeight: 'bold',
+                  }
+               }}
             />
          </Paper>
       </div>

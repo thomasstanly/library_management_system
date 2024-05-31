@@ -21,7 +21,6 @@ const MembershipPlan = () => {
                Authorization: `Bearer ${access_token}`,
             },
          });
-         console.log(res.data);
          setPlans(res.data);
       } catch (error) {
          console.error(error.response);

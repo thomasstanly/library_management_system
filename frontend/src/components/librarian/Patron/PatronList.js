@@ -90,7 +90,7 @@ const PatronList = () => {
                   Authorization: `Bearer ${access_token}`
                }
             })
-         console.log(res.data)
+        
          setRows(res.data)
       } catch (error) {
          console.log(error)

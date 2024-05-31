@@ -32,7 +32,6 @@ const ListBooks = () => {
                Authorization: `Bearer ${access_token}`
             }
          })
-         console.log(res.data)
          setRows(res.data)
       } catch (error) {
          setError(error.response?.data?.error || 'An error occurred');
@@ -43,7 +42,6 @@ const ListBooks = () => {
 
    const handlePublisherChange = async (event) => {
       setPublisher(event.target.value);
-      console.log()
       try {
          const access_token = JSON.parse(localStorage.getItem('access'));
          const res = await axios.get(`book/after_filter/?category=${category}&publisher=${event.target.value}&language=${language}`, {
@@ -51,7 +49,6 @@ const ListBooks = () => {
                Authorization: `Bearer ${access_token}`
             }
          })
-         console.log(res.data)
          setRows(res.data)
       } catch (error) {
          setError(error.response?.data?.error || 'An error occurred');
@@ -69,7 +66,6 @@ const ListBooks = () => {
                Authorization: `Bearer ${access_token}`
             }
          })
-         console.log(res.data)
          setRows(res.data)
       } catch (error) {
          setError(error.response?.data?.error || 'An error occurred');
@@ -85,7 +81,7 @@ const ListBooks = () => {
                Authorization: `Bearer ${access_token}`
             }
          })
-         console.log(res.data)
+         
          setRows(res.data)
       } catch (error) {
          setError(error.response?.data?.error || 'An error occurred');

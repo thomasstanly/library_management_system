@@ -47,7 +47,6 @@ function LibrarianWrapper() {
    const check = async () => {
       try {
          const result = await LibraryAuth()
-         console.log(result)
          dispatch(
             set_Authenticate({
                first_name: result.first_name,

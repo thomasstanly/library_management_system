@@ -42,7 +42,7 @@ const BookDetails = () => {
                   Authorization: `Bearer ${access_token}`
                }
             })
-            console.log(res.data)
+           
             setBookData(res.data)
 
          } catch (error) {
@@ -57,7 +57,7 @@ const BookDetails = () => {
                   Authorization: `Bearer ${access_token}`
                }
             })
-            console.log(res.data.data)
+            
             setRows(res.data.data)
 
          } catch (error) {

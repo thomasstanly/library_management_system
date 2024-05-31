@@ -33,7 +33,6 @@ const HomePage = ({ patron }) => {
 
    const fetch = async () => {
       try {
-         console.log(patron_id)
          const access_token = JSON.parse(localStorage.getItem('access'))
          const res = await axios.get(`borrow/patron/?patron_id=${patron_id}`,
             {
@@ -71,7 +70,6 @@ const HomePage = ({ patron }) => {
    const fetchBook = async () => {
       try {
          const res = await axios.get(`book/`)
-         console.log(res.data)
          setRows(res.data)
 
       } catch (error) {
@@ -119,7 +117,6 @@ const HomePage = ({ patron }) => {
                   Authorization: `Bearer ${access_token}`
                }
             })
-         console.log(res.data.message)
          Swal.fire({
             position: "center",
             icon: "success",

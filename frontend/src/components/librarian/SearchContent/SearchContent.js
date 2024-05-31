@@ -1,20 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { Link } from 'react-router-dom'
 import axios from '../../../Axios'
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
-import EditIcon from '@mui/icons-material/Edit';
-import Breadcrumbs from '@mui/material/Breadcrumbs';
-import Stack from '@mui/material/Stack';
-import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import style from './SearchContent.module.scss'
 
 const SearchContent = () => {
@@ -75,9 +68,9 @@ const SearchContent = () => {
                               <TableCell colSpan={3}>
                                  <p>{error}</p>
                               </TableCell>
-                           </TableRow> : search && search.map((row) => {
+                           </TableRow> : search && search.map((row,index) => {
                               return (
-                                 <TableRow hover role="checkbox" tabIndex={-1} key={row.id}
+                                 <TableRow hover role="checkbox" tabIndex={-1} key={index}
                                     onClick={() => row.bookId ?
                                        navigate(`/library/books/${row.bookId}`) :
                                        navigate(`/library/patron/${row.patronId}`)}

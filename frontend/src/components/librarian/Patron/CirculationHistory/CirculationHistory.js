@@ -36,7 +36,7 @@ const CirculationHistory = ({ patron_id }) => {
 
   const fetch = async () => {
     try {
-      console.log(patron_id)
+      
       const access_token = JSON.parse(localStorage.getItem('access'))
       const res = await axios.get(`borrow/patron/?patron_id=${patron_id}`,
         {
@@ -126,6 +126,18 @@ const CirculationHistory = ({ patron_id }) => {
               page={page}
               onPageChange={handleChangePage}
               onRowsPerPageChange={handleChangeRowsPerPage}
+              sx={{
+                '& .MuiTablePagination-selectLabel': {
+                  marginBottom: '0px',
+                  color: 'Blue',
+                  fontWeight: 'bold',
+                },
+                '& .MuiTablePagination-displayedRows': {
+                  marginBottom: '0px',
+                  color: 'Blue',
+                  fontWeight: 'bold',
+                }
+              }}
             />
           </Paper>
         </div>

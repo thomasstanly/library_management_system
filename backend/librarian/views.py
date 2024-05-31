@@ -101,7 +101,7 @@ class PatronRetrive(GenericAPIView):
     
     def get(self,request):
         patron = Patron.objects.get(email=request.user)
-        serializer = self.serializer_class(patron)
+        serializer = self.serializer_class(patron,context={'request': request})
         return Response(serializer.data)
 
 class PatronRetriveUpdateAPIViews(RetrieveUpdateDestroyAPIView):

@@ -5,13 +5,10 @@ import axios from '../../../Axios'
 import './PatronHeader.scss'
 
 const PatronHeader = ({ header }) => {
-  const { name, isAuthenticated, isAdmin } = useSelector((state) => state.Auth_store)
-  const [query, setQuery] = useState()
+  const {  isAuthenticated, isAdmin } = useSelector((state) => state.Auth_store)
   const [results, setResults] = useState([])
   const profile_pic = header.profile_pic
   const plan = header.plan
-  const url = `http://127.0.0.1:8000${profile_pic}`
-  console.log('header', name, isAdmin, isAuthenticated)
   const navigate = useNavigate()
 
   const logout = async () => {
@@ -64,7 +61,7 @@ const PatronHeader = ({ header }) => {
       <div className='left'>
         {isAuthenticated ? <div className="dropdown" style={{ marginLeft: '10px' }}>
           <button className='profile dropdown-toggle' type="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <img className='profile' src={(profile_pic ? url : null) || "/images/user.png"} alt="netflix logo" />
+            <img className='profile' src={(profile_pic ? profile_pic : null) || "/images/user.png"} alt="netflix logo" />
           </button>
           <ul className="dropdown-menu">
             {isAdmin ? <li><a className="dropdown-item" href="/library/dashboard">Admin</a></li> : null}

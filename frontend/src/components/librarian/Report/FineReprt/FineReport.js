@@ -71,7 +71,6 @@ const FineReport = () => {
             },
             params: params,
          });
-         console.log(res.data.result);
          setRows(res.data.result);
          setAllRows(res.data.result);
          setCount(res.data.count)

@@ -132,7 +132,7 @@ const PatronCheckout = ({ patron_id }) => {
                }
             }
          )
-         console.log(res)
+         
          const result = res.data.filter((data) => data.return_date === null);
          setBorrower(result.map((data) => ({
             stock: data.book.stock_no,
@@ -143,7 +143,6 @@ const PatronCheckout = ({ patron_id }) => {
             checked_out_on: data.borrowed_date,
             renewal_status: data.renewal,
          })));
-         console.log(result)
       } catch (error) {
          console.log(error)
       }

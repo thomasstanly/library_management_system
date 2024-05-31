@@ -31,8 +31,9 @@ const Chat = () => {
   let chatSocket = useRef(null);
 
   useEffect(() => {
+  
     chatSocket.current = new WebSocket(
-      'ws://127.0.0.1:8000/ws/chat/community/'
+      `${process.env.REACT_APP_CHAT_KEY}ws/chat/community/`
     );
 
     chatSocket.current.onmessage = (e) => {

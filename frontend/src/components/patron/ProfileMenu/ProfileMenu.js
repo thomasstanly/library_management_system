@@ -17,7 +17,6 @@ const ProfileMenu = ({details}) => {
    const first_name = details.first_name
    const profile_pic = details.profile_pic
   
-   const url = `http://127.0.0.1:8000${profile_pic}`
    const dispatch = useDispatch()
 
    const [proPic, setProPic] = useState({ image: null })
@@ -33,7 +32,6 @@ const ProfileMenu = ({details}) => {
       e.preventDefault()
       const formData = new FormData()
       formData.append('profile_pic', proPic.image)
-      console.log(proPic)
       try {
          const access_token = JSON.parse(localStorage.getItem('access'))
          const res = await axios.post('patron/profile_pic/', formData, {
@@ -104,7 +102,7 @@ const ProfileMenu = ({details}) => {
             <div className={style.row}>
                <div className={style.column}>
                   <div className={style.content}>
-                     <img className={style.profile} src={(profile_pic ? url : null) || "/images/user.png"}
+                     <img className={style.profile} src={(profile_pic ? profile_pic : null) || "/images/user.png"}
                         alt="profile logo" />
                      <div className={style.addphoto} >
                         <AddAPhotoIcon className={style.photo} onClick={handleOpen} />
@@ -137,7 +135,7 @@ const ProfileMenu = ({details}) => {
                <Box sx={modal}>
                   <div className="card-body text-center">
                      <img
-                        src={(proPic.image ? URL.createObjectURL(proPic.image) : url) || "/images/user.png"}
+                        src={(proPic.image ? URL.createObjectURL(proPic.image) : profile_pic) || "/images/user.png"}
                         alt="avatar"
                         className=" img-fluid"
                         style={{ width: '150px', borderRadius: '50%' }}

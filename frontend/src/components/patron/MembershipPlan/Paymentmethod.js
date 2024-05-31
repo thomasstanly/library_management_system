@@ -9,7 +9,7 @@ import style from './Paymentmethod.module.scss'
 const Pyamentmethod = () => {
    const { id } = useParams()
    const { user_id } = useSelector((state) => state.Auth_store)
-   console.log(user_id)
+  
    const [plan, setPlan] = useState({
       "plan_id": '',
       'plan_name': '',
@@ -62,16 +62,12 @@ const Pyamentmethod = () => {
          toast.warning("min 30 days should select")
          return
       }
-      console.log(user_id, plan.plan_id)
       const formData = new FormData()
       formData.append('amount_paid', amount)
       formData.append('from_date', currentMonth)
       formData.append('expiry_date', nextMonth)
       formData.append('membership_plan', plan.plan_id)
       formData.append('patron', user_id)
-      for (const pair of formData.entries()) {
-         console.log(pair[0], pair[1]);
-      }
 
       try {
          const access_token = JSON.parse(localStorage.getItem('access'))

@@ -10,7 +10,6 @@ import style from './PatronCheckoutPage.module.scss'
 
 const PatronCheckoutPage = () => {
     const { id } = useParams()
-    console.log(id)
     const [patron, setPatron] = useState({
         "id": '',
         "first_name": "",
@@ -24,38 +23,39 @@ const PatronCheckoutPage = () => {
 
     })
     const name = `${patron.first_name + ' ' + patron.last_name}`
-    const fetch = async () => {
-        try {
-            const access_token = JSON.parse(localStorage.getItem('access'))
-            const res = await axios.get(`patron/${id}/`, {
-                headers: {
-                    Authorization: `Bearer ${access_token}`
-                }
-            })
-            const lastPaidPayment = res.data.user_id.find(user => user.status === 'PAID');
-            const expiryDate = lastPaidPayment ? lastPaidPayment.expiry_date : '';
-            const card = res.data.membership_id ? `${res.data.membership_id.plan_code}${res.data.membership_id.id}` : '';
-            const pic = res.data.Profile ? `${res.data.Profile.profile_pic}` : '';
-            console.log(res.data)
-            setPatron({
-                "id": res.data.id,
-                "first_name": res.data.first_name,
-                "last_name": res.data.last_name,
-                "email": res.data.email,
-                "phone_number": res.data.phone_number,
-                "expiry_date": expiryDate,
-                "card": card,
-                "profile_pic": pic,
-                "plan": res.data.membership_id || {}
-
-            })
-        } catch (error) {
-            console.error(error)
-        }
-    }
+    
     useEffect(() => {
+        const fetch = async () => {
+            try {
+                const access_token = JSON.parse(localStorage.getItem('access'))
+                const res = await axios.get(`patron/${id}/`, {
+                    headers: {
+                        Authorization: `Bearer ${access_token}`
+                    }
+                })
+                const lastPaidPayment = res.data.user_id.find(user => user.status === 'PAID');
+                const expiryDate = lastPaidPayment ? lastPaidPayment.expiry_date : '';
+                const card = res.data.membership_id ? `${res.data.membership_id.plan_code}${res.data.membership_id.id}` : '';
+                const pic = res.data.Profile ? `${res.data.Profile.profile_pic}` : '';
+                
+                setPatron({
+                    "id": res.data.id,
+                    "first_name": res.data.first_name,
+                    "last_name": res.data.last_name,
+                    "email": res.data.email,
+                    "phone_number": res.data.phone_number,
+                    "expiry_date": expiryDate,
+                    "card": card,
+                    "profile_pic": pic,
+                    "plan": res.data.membership_id || {}
+    
+                })
+            } catch (error) {
+                console.error(error)
+            }
+        }
         fetch()
-    }, [])
+    }, [id])
     const breadcrumbs = [
         <Link underline="hover" key="1" color="inherit" to="/library/dashboard">
             Dashboard
@@ -86,5 +86,3 @@ const PatronCheckoutPage = () => {
 }
 
 export default PatronCheckoutPage
-
-//name={name} card={patron.card} pic={patron.profile_pic}

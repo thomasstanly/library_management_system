@@ -13,13 +13,13 @@ import TableRow from '@mui/material/TableRow';
 import style from './CirculatioReport.module.scss'
 
 const columns = [
-   { id: 1, label: 'stock', minWidth: 100, align: 'center' },
+   { id: 1, label: 'stock', minWidth: 5, align: 'center' },
    { id: 2, label: 'Book Name', minWidth: 100, align: 'center' },
    { id: 3, label: 'Check Out', minWidth: 50, align: 'center' },
    { id: 4, label: 'Check In', minWidth: 50, align: 'center' },
    { id: 5, label: 'Return date', minWidth: 50, align: 'center' },
-   { id: 6, label: 'Renewed', minWidth: 50, align: 'center' },
-   { id: 7, label: 'Fine', minWidth: 50, align: 'center' },
+   { id: 6, label: 'Renewed', minWidth: 20, align: 'center' },
+   { id: 7, label: 'Fine', minWidth: 100, align: 'center' },
 ]
 
 const CirculatioReport = ({ user_details }) => {
@@ -108,7 +108,7 @@ const CirculatioReport = ({ user_details }) => {
          currency: 'INR'
       }).then(function (response) {
          const options = {
-            key: "rzp_test_DadhvgCTL7p70u",
+            key: process.env.REACT_APP_RAZORPAY_KEY,
             amount: "50000",
             currency: "INR",
             name: "Acme Corp",
@@ -171,8 +171,8 @@ const CirculatioReport = ({ user_details }) => {
          <div className={style.subscription}>
             <h4>Circulation History</h4>
             <div className={style.list}>
-               <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-                  <TableContainer className={style.scroller} sx={{ maxHeight: 440 }}>
+               <Paper sx={{overflow: 'hidden' }}>
+                  <TableContainer className={style.scroller} sx={{ maxHeight: 786 }}>
                      <Table stickyHeader aria-label="sticky table">
                         <TableHead>
                            <TableRow>
@@ -180,7 +180,7 @@ const CirculatioReport = ({ user_details }) => {
                                  <TableCell
                                     key={column.id}
                                     align={column.align}
-                                    style={{ minWidth: column.minWidth }}
+                                    sx={{ minWidth: column.minWidth, backgroundColor: '#E0E2E7', }}
                                  >
                                     {column.label}
                                  </TableCell>
@@ -219,6 +219,18 @@ const CirculatioReport = ({ user_details }) => {
                      page={page}
                      onPageChange={handleChangePage}
                      onRowsPerPageChange={handleChangeRowsPerPage}
+                     sx={{
+                        '& .MuiTablePagination-selectLabel': {
+                           marginBottom: '0px',
+                           color:'Blue',
+                           fontWeight: 'bold',
+                        },
+                        '& .MuiTablePagination-displayedRows': {
+                           marginBottom: '0px',
+                           color:'Blue',
+                           fontWeight: 'bold',
+                        }
+                     }}
                   />
                </Paper>
             </div>

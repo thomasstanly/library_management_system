@@ -27,7 +27,6 @@ const PaymentConfirm = () => {
             order_id: order_id,
             signature: signature,
          });
-         console.log(response.data);
 
          await Swal.fire({
             position: "center",
@@ -108,7 +107,6 @@ const PaymentConfirm = () => {
                Authorization: `Bearer ${access_token}`,
             },
          });
-         console.log(res.data);
          setPlan({
             'id': res.data.id,
             'plan_name': res.data.membership_plan.plan_name,
@@ -122,7 +120,7 @@ const PaymentConfirm = () => {
    };
 
    useEffect(() => {
-      console.log(id)
+      
       fetch()
    }, [])
 
