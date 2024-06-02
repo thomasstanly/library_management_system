@@ -7,7 +7,9 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE','core.settings')
 
 app = Celery('core')
 app.conf.enable_utc = False
-app.conf.update(timezone = 'Asia/Kolkata')
+app.conf.update(timezone = 'Asia/Kolkata',
+                 broker_connection_retry_on_startup=True,
+                )
 app.config_from_object(settings,namespace='CELERY')
 app.autodiscover_tasks()
 
