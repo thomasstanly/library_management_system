@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { useNavigate, Link, useParams } from 'react-router-dom'
 import Swal from 'sweetalert2'
+import {toast} from 'react-toastify'
 import axios from '../../../../Axios'
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Typography from '@mui/material/Typography';
@@ -109,6 +110,7 @@ const EditBook = () => {
          navigate('/library/books')
       } catch (err) {
          console.log(err.response)
+         toast.warning(err.response.data.error);
       }
    }
 

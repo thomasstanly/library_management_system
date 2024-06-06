@@ -19,21 +19,26 @@
         width: 50vw;
     }
 }
-
-@media (max-width: 768px) {
-    .header {
-        flex-direction: column;
-        align-items: stretch;
-        div{
-            .link button{
-                margin-top: 10px;
-            }
-        }
-        .title {
-            width: auto;
+.header {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 80px;
+    padding: 20px;
+    
+    .button {
+        margin-top: 10px;
+        
+        .link button {
+            margin-top: 10px;
         }
     }
+
+    .title {
+        width: 100%;
+        margin-bottom: 10px;
+    }
 }
+
 
 .list {
     display: flex;
@@ -51,3 +56,23 @@
          
      }
  }
+
+ @media only screen and (max-width: 768px) {
+    .list {
+        margin-left: 5vw;
+        margin-right: 5vw;
+
+        .scroller {
+            max-height: 300px;
+        }
+
+        img {
+            width: 50px;
+        }
+
+        span {
+            display: block;
+            margin-top: 5px;
+        }
+    }
+}

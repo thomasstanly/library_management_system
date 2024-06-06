@@ -61,10 +61,6 @@ export const siderbarData = [
                 title: "fine report",
                 link: '/library/report/fine_report',
             },
-            {
-                title: "category report",
-                link: '/library/report/category_report',
-            }
         ]
     },
     {

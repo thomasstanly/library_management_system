@@ -13,12 +13,12 @@ import TableRow from '@mui/material/TableRow';
 import style from './CirculatioReport.module.scss'
 
 const columns = [
-   { id: 1, label: 'stock', minWidth: 5, align: 'center' },
+   { id: 1, label: 'stock', minWidth: 100, align: 'center' },
    { id: 2, label: 'Book Name', minWidth: 100, align: 'center' },
-   { id: 3, label: 'Check Out', minWidth: 50, align: 'center' },
-   { id: 4, label: 'Check In', minWidth: 50, align: 'center' },
-   { id: 5, label: 'Return date', minWidth: 50, align: 'center' },
-   { id: 6, label: 'Renewed', minWidth: 20, align: 'center' },
+   { id: 3, label: 'Check Out', minWidth: 100, align: 'center' },
+   { id: 4, label: 'Check In', minWidth: 100, align: 'center' },
+   { id: 5, label: 'Return date', minWidth: 100, align: 'center' },
+   { id: 6, label: 'Renewed', minWidth: 100, align: 'center' },
    { id: 7, label: 'Fine', minWidth: 100, align: 'center' },
 ]
 

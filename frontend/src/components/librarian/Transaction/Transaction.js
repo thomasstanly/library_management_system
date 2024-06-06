@@ -82,7 +82,7 @@ const Transaction = () => {
    const handleSort = async () => {
       let result = allRows;
       if (filterOption) {
-         result = allRows.filter(row => row.membership_plan.plan_name === filterOption || row.status === filterOption )
+         result = allRows.filter(row => row.membership_plan.plan_name === filterOption || row.status === filterOption)
       }
       setRows(result)
    }
@@ -143,7 +143,7 @@ const Transaction = () => {
             </div>
          </div>
          <div className={style.filter}>
-            <div>
+            <div className={style.option}>
                <Select
                   value={filterOption}
                   onChange={(e) => setFilterOption(e.target.value)}
@@ -181,7 +181,7 @@ const Transaction = () => {
                   size={'small'}
                />
             </div>
-            <div>
+            <div className={style.button}>
                <Button variant="contained" onClick={handleFilter}
                   size={'small'}>
                   Filter
@@ -209,7 +209,7 @@ const Transaction = () => {
                                     key={column.id}
                                     align={column.align}
                                     style={{ minWidth: column.minWidth }}
-                                    sx={{ minWidth: column.minWidth, fontWeight:'bold', fontSize:'1rem',backgroundColor: '#E0E2E7', }}
+                                    sx={{ minWidth: column.minWidth, fontWeight: 'bold', fontSize: '1rem', backgroundColor: '#E0E2E7', }}
                                  >
                                     {column.label}
                                  </TableCell>
@@ -244,12 +244,12 @@ const Transaction = () => {
                      sx={{
                         '& .MuiTablePagination-selectLabel': {
                            marginBottom: '0px',
-                           color:'Blue',
+                           color: 'Blue',
                            fontWeight: 'bold',
                         },
                         '& .MuiTablePagination-displayedRows': {
                            marginBottom: '0px',
-                           color:'Blue',
+                           color: 'Blue',
                            fontWeight: 'bold',
                         }
                      }}

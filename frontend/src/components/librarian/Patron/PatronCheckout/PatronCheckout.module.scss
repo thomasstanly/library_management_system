@@ -41,12 +41,11 @@
 
 @media screen and (max-width: 1320px) {
     .container {
-        margin-top: 20vh;
+        margin-top: 5vh;
         border: 2px solid $profileborderColor;
 
         .checkout {
-            width: 75%;
-
+            width: 98%;
             form {
                 input {
                     border: none;

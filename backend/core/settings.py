@@ -16,6 +16,9 @@ from dotenv import load_dotenv
 from celery.schedules import crontab
 load_dotenv()
 
+def str_to_bool(value):
+    return value.lower() in ('true', '1', 't', 'y', 'yes')
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -24,7 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv("SECRET_KEY")
+SECRET_KEY = str_to_bool(os.getenv("SECRET_KEY",'False'))
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DEBUG")
@@ -58,10 +61,10 @@ INSTALLED_APPS = [
     'django_celery_beat'
 ]
 
-CORS_ORIGIN_ALLOW_ALL = True
-CORS_ALLOWED_ORIGINS = ["http://localhost:3000"]
-CORS_ALLOW_CREDENTIALS = True
-SESSION_COOKIE_SECURE = False
+CORS_ORIGIN_ALLOW_ALL = str_to_bool(os.getenv("CORS_ORIGIN_ALLOW_ALL", "False"))
+CORS_ALLOWED_ORIGINS = os.getenv("CORS_ALLOWED_ORIGINS", "").split(",")
+CORS_ALLOW_CREDENTIALS = str_to_bool(os.getenv("CORS_ALLOW_CREDENTIALS", "False"))
+SESSION_COOKIE_SECURE = str_to_bool(os.getenv("SESSION_COOKIE_SECURE", "False"))
 
 CSRF_TRUSTED_ORIGINS = [os.getenv("CSRF_TRUSTED_ORIGINS")]
 

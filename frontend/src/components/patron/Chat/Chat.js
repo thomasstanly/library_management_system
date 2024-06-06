@@ -12,7 +12,7 @@ const styleModal = {
   position: 'absolute',
   top: '30%',
   right: '5%',
-  width: 400,
+  width: 350,
   bgcolor: 'background.paper',
   borderRadius: '10px',
   boxShadow: 24,

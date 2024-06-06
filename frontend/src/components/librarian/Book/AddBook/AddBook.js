@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { useNavigate,Link } from 'react-router-dom'
+import {toast} from 'react-toastify'
 import Swal from 'sweetalert2'
 import axios from '../../../../Axios'
 import Breadcrumbs from '@mui/material/Breadcrumbs';
@@ -107,7 +108,8 @@ const AddBook = () => {
          }
          navigate('/library/books')
       } catch (err) {
-         console.log(err.response)
+         console.log(err.response.data)
+         toast.warning(err.response.data.error);
       }
    }
 
@@ -124,7 +126,7 @@ const AddBook = () => {
             console.log(res.data)
             setCategoryies(res.data)
          } catch (error) {
-            console.log(error.response)
+            console.log(error.response.data)
          }
       }
       fetch()

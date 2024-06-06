@@ -7,12 +7,13 @@
 
    .row {
       margin-bottom: 8vh;
+
       .column {
          background-color: $profileBacgroundColor;
          border: 2px solid $profileborderColor;
          display: flex;
          justify-content: center;
-         
+
 
          .content {
             display: flex;
@@ -21,7 +22,6 @@
             position: relative;
 
             .profile {
-               border-radius: 50%;
                margin: 5px;
                height: 70px;
             }
@@ -29,19 +29,20 @@
             .addphoto {
                background-color: rgba(0, 0, 0, 0.637);
                border-radius: 50%;
-               padding: 0px 7px 5px 5px;
+               padding: 0px 6px 4px 4px;
                position: absolute;
                color: #eeeeee;
                top: 50px;
                left: 40px;
 
                .photo {
-                  font-size: 15px;
+                  font-size: 1rem;
                }
             }
 
             p {
                margin: 0 auto;
+               font-weight: 600;
             }
          }
       }
@@ -55,28 +56,82 @@
       top: 0;
       z-index: 1;
 
-      .sidebarlink {
-         display: flex;
-         color: #8B8E99;
-         justify-content: space-between;
-         align-items: center;
-         padding: 20px;
-         height: 60px;
-         list-style: none;
-         text-decoration: none;
-         font-size: 18px;
-
-         &:hover {
-            background-color: #eeeeee;
+      div{
+         width: 100%;
+         .sidebarlink {
+            display: flex;
+            color: #8B8E99;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            height: 60px;
+            list-style: none;
+            text-decoration: none;
+            font-size: 18px;
+   
+            &:hover {
+               background-color: #eeeeee;
+            }
+   
+            &:active {
+               background-color: #8B8E99;
+               color: #ffffff;
+            }
+   
+            .sidebarlabel {
+               margin-left: 16px;
+            }
          }
+      }
+   }
+}
 
-         &:active {
-            background-color: #8B8E99;
-            color: #ffffff;
+
+@media only screen and (max-width: 768px) {
+   .sidebar {
+
+      .row {
+         margin-bottom: 5vh;
+
+         .column {
+            .content {
+               width: 100%;
+
+               .profile {
+                  height: 50px;
+               }
+
+               .addphoto {
+                  top: 35px;
+                  left: 30px;
+
+                  .photo {
+                     font-size: 12px;
+                  }
+               }
+
+               p {
+                  font-size: 14px;
+               }
+            }
          }
+      }
 
-         .sidebarlabel {
-            margin-left: 16px;
+      .sidebarnav {
+         flex-direction: column;
+         align-items: flex-start;
+
+         div{
+            
+            .sidebarlink {
+               padding: 15px;
+               height: auto;
+               font-size: 16px;
+   
+               .sidebarlabel {
+                  margin-left: 10px;
+               }
+            }
          }
       }
    }

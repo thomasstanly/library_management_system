@@ -75,6 +75,7 @@ const Profile = ({ user_details }) => {
       });
     } catch (error) {
       console.error(error.response);
+        
     }
   }
 

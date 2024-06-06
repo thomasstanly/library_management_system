@@ -143,7 +143,7 @@ const FineReport = () => {
             </div>
          </div>
          <div className={style.filter}>
-            <div>
+         <div className={style.option}>
                <Select
                   value={filterOption}
                   onChange={(e) => setFilterOption(e.target.value)}
@@ -179,7 +179,7 @@ const FineReport = () => {
                   size={'small'}
                />
             </div>
-            <div>
+            <div className={style.button}>
                <Button variant="contained" onClick={handleFilter}
                   size={'small'}>
                   Filter

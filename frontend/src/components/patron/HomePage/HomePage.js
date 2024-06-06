@@ -14,11 +14,11 @@ import ChevronLeftRoundedIcon from '@mui/icons-material/ChevronLeftRounded';
 import style from './HomePage.module.scss'
 
 const columns = [
-   { id: 1, label: 'stock', minWidth: 20, align: 'left' },
+   { id: 1, label: 'stock', minWidth: 10, align: 'left' },
    { id: 2, label: 'Book Name', minWidth: 50, align: 'left' },
-   { id: 3, label: 'Checked Date', minWidth: 50, align: 'left' },
-   { id: 4, label: 'Due Date ', minWidth: 100, align: 'left' }, ,
-   { id: 5, label: 'Remaing days', minWidth: 50, align: 'center' },
+   { id: 3, label: 'Checked Date', minWidth: 150, align: 'left' },
+   { id: 4, label: 'Due Date ', minWidth: 50, align: 'left' }, ,
+   { id: 5, label: 'Remaing days', minWidth: 150, align: 'center' },
    { id: 6, label: '', minWidth: 50, align: 'center' },
 ]
 
@@ -89,7 +89,7 @@ const HomePage = ({ patron }) => {
             }
          )
          const lastPaidPayment = res.data.find(user => user.status === 'PAID');
-         const status =  new Date().setHours(0,0,0,0) <= new Date(lastPaidPayment.expiry_date).setHours(0,0,0,0)
+         const status = new Date().setHours(0, 0, 0, 0) <= new Date(lastPaidPayment.expiry_date).setHours(0, 0, 0, 0)
          setMember({
             membership_plan: lastPaidPayment.membership_plan.plan_name,
             status: status,
@@ -141,7 +141,7 @@ const HomePage = ({ patron }) => {
       const expiry_date = new Date(expiry).setHours(0, 0, 0, 0);
       if (today > expiry_date) {
          navigate('/plan')
-      }else{
+      } else {
          Swal.fire({
             position: "center",
             icon: "success",
@@ -190,10 +190,32 @@ const HomePage = ({ patron }) => {
       <>
          <div>
             <div className={style.table}>
+               {plan &&
+                  <div className={style.member}>
+                     <div className={style.member_header}>
+                        <p>Membership Details</p>
+                     </div>
+                     <div className={style.member_row}>
+                        <p>Membership</p>
+                        <p>{member.membership_plan}</p>
+                     </div>
+                     <div className={style.member_row}>
+                        <p>Status</p>
+                        <p>{member.status ? 'Active' : 'Inactive'}</p>
+                     </div>
+                     <div className={style.member_row}>
+                        <p>Expiry date</p>
+                        <p>{member.expiry}</p>
+                     </div>
+                     <div className={style.member_row}>
+                        <button onClick={handleExpiry}>Renew Membership<span></span></button>
+                     </div>
+                  </div>
+               }
                {borrower.length > 0 &&
                   <div className={style.borrow}>
                      <Paper>
-                        <TableContainer sx={{ maxHeight: 440 }}>
+                        <TableContainer sx={{ maxHeight: 440, margin:0 }}>
                            <Table stickyHeader aria-label="sticky table">
                               <TableHead >
                                  <TableRow >
@@ -204,6 +226,7 @@ const HomePage = ({ patron }) => {
                                           style={{
                                              minWidth: column.minWidth,
                                              backgroundColor: '#E0E2E7',
+                                             fontSize:'0.8rem',
                                           }}
                                        >
                                           {column.label}
@@ -244,28 +267,6 @@ const HomePage = ({ patron }) => {
                            </Table>
                         </TableContainer>
                      </Paper>
-                  </div>
-               }
-               {plan &&
-                  <div className={style.member}>
-                     <div className={style.member_header}>
-                        <p>Membership Details</p>
-                     </div>
-                     <div className={style.member_row}>
-                        <p>Membership</p>
-                        <p>{member.membership_plan}</p>
-                     </div>
-                     <div className={style.member_row}>
-                        <p>Status</p>
-                        <p>{member.status ? 'Active' : 'Inactive'}</p>
-                     </div>
-                     <div className={style.member_row}>
-                        <p>Expiry date</p>
-                        <p>{member.expiry}</p>
-                     </div>
-                     <div className={style.member_row}>
-                        <button onClick={handleExpiry}>Renew Membership<span></span></button>
-                     </div>
                   </div>
                }
             </div>

@@ -177,9 +177,9 @@ const PatronSignUp = () => {
 
                </form>
                {
-                  otp.status && <form action="" onSubmit={otpVerfication}>
-                     <div style={{ display: 'flex' }}>
-                        <input className='form-control' type="number" name='phone_number' onChange={(e) => setOtp({ ...otp, otpvalue: e.target.value })} />
+                 otp.status && <form action="" onSubmit={otpVerfication}>
+                     <div className='d-flex justify-content-between'>
+                        <input className='form-control w-50' type="number" name='phone_number' onChange={(e) => setOtp({ ...otp, otpvalue: e.target.value })} />
                         <button className='btn' type='submit' >verify</button>
                      </div>
                      <div>
