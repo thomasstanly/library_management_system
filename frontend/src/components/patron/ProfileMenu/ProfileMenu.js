@@ -1,4 +1,4 @@
-import React, { useState, } from 'react';
+import React, { useEffect, useState, } from 'react';
 import { Link } from 'react-router-dom';
 import { siderbarData } from './siderbarData';
 import { useDispatch } from 'react-redux';
@@ -11,12 +11,13 @@ import axios from '../../../Axios'
 import style from './ProfileMenu.module.scss';
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 
-const ProfileMenu = ({details}) => {
+const ProfileMenu = ({ details }) => {
+   const [profile, setProfile] = useState({
+      last_name: '',
+      first_name: '',
+      profile_pic: '',
+   })
 
-   const last_name = details.last_name
-   const first_name = details.first_name
-   const profile_pic = details.profile_pic
-  
    const dispatch = useDispatch()
 
    const [proPic, setProPic] = useState({ image: null })
@@ -43,9 +44,9 @@ const ProfileMenu = ({details}) => {
          handleClose()
          dispatch(
             get_UserDetails({
-              profile_pic: res.data.profile_pic,
+               profile_pic: res.data.profile_pic,
             })
-          )
+         )
          if (res.status === 201) {
             Swal.fire({
                position: "center",
@@ -55,6 +56,7 @@ const ProfileMenu = ({details}) => {
                timer: 1200
             })
          }
+         window.location.href = '/profile';
       } catch (error) {
          console.log(error)
          handleClose()
@@ -85,6 +87,14 @@ const ProfileMenu = ({details}) => {
          }
       }
    }
+
+   useEffect(() => {
+      setProfile({
+         last_name: details.last_name,
+         first_name: details.first_name,
+         profile_pic: details.profile_pic,
+      })
+   },[details])
    const modal = {
       position: 'absolute',
       top: '50%',
@@ -102,12 +112,12 @@ const ProfileMenu = ({details}) => {
             <div className={style.row}>
                <div className={style.column}>
                   <div className={style.content}>
-                     <img className={style.profile} src={(profile_pic ? profile_pic : null) || "/images/user.png"}
+                     <img className={style.profile} src={(profile.profile_pic ? profile.profile_pic : null) || "/images/user.png"}
                         alt="profile logo" />
                      <div className={style.addphoto} >
                         <AddAPhotoIcon className={style.photo} onClick={handleOpen} />
                      </div>
-                     <p>{first_name + " " + last_name}</p>
+                     <p>{profile.first_name + " " + profile.last_name}</p>
                   </div>
                </div>
             </div>
@@ -135,7 +145,7 @@ const ProfileMenu = ({details}) => {
                <Box sx={modal}>
                   <div className="card-body text-center">
                      <img
-                        src={(proPic.image ? URL.createObjectURL(proPic.image) : profile_pic) || "/images/user.png"}
+                        src={(proPic.image ? URL.createObjectURL(proPic.image) : profile.profile_pic) || "/images/user.png"}
                         alt="avatar"
                         className=" img-fluid"
                         style={{ width: '150px', borderRadius: '50%' }}

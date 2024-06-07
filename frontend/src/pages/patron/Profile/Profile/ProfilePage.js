@@ -31,7 +31,7 @@ const ProfilePage = () => {
       return () => {
          window.removeEventListener('resize', handleResize)
       }
-   }, [])
+   }, [patronDetails])
    return (
       <div >
          {isSmallScreen ? <PatronMobileHeader header={patronDetails} /> : <PatronHeader header={patronDetails} />}
