@@ -36,7 +36,7 @@ const PaymentConfirm = () => {
             timer: 1200
          });
 
-         navigate('/');
+         window.location.href = '/';
 
       } catch (error) {
          console.log(error);
