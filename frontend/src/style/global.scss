@@ -63,6 +63,55 @@ input[type="number"]::-webkit-outer-spin-button {
     cursor: pointer;
 }
 
+@media (max-width: 1200px) {
+    .Container .row {
+        width: 50%;
+        padding: 10px 50px;
+    }
+
+    .Container .row span {
+        font-size: 45px;
+    }
+}
+
+@media (max-width: 992px) {
+    .Container .row {
+        width: 60%;
+        padding: 10px 30px;
+    }
+
+    .Container .row span {
+        font-size: 40px;
+    }
+}
+
+@media (max-width: 768px) {
+    .Container .row {
+        width: 80%;
+        padding: 10px 20px;
+    }
+
+    .Container .row span {
+        font-size: 35px;
+    }
+}
+
+@media (max-width: 576px) {
+    .Container .row {
+        width: 90%;
+        padding: 10px 15px;
+    }
+
+    .Container .row span {
+        font-size: 30px;
+    }
+
+    .eye {
+        top: 35px;
+        right: 10px;
+    }
+}
+
 .chat {
     position: fixed;
     bottom: 20px;

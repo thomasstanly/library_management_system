@@ -21,8 +21,17 @@ const ProfileMenu = ({ details }) => {
    const dispatch = useDispatch()
 
    const [proPic, setProPic] = useState({ image: null })
+
    const handleImageChange = (event) => {
-      setProPic({ image: event.target.files[0] })
+      const file = event.target.files[0]
+      const fileTypes = ['image/jpeg', 'image/png'];
+      if (fileTypes.includes(file.type)) {
+         setProPic({ image: file })
+      }
+      else {
+         toast.error(' Please select an image (JPEG/PNG)')
+      }
+      
    }
 
    const [open, setOpen] = useState(false);
@@ -56,11 +65,10 @@ const ProfileMenu = ({ details }) => {
                timer: 1200
             })
          }
-         window.location.href = '/profile';
       } catch (error) {
          console.log(error)
          handleClose()
-         toast.warning('Something went wrong!')
+         toast.warning('Image not found')
       }
    }
 
@@ -94,7 +102,7 @@ const ProfileMenu = ({ details }) => {
          first_name: details.first_name,
          profile_pic: details.profile_pic,
       })
-   },[details])
+   }, [details])
    const modal = {
       position: 'absolute',
       top: '50%',
@@ -153,7 +161,7 @@ const ProfileMenu = ({ details }) => {
                   </div>
                   <form onSubmit={handleProPic}>
                      <div className="d-flex justify-content-center mb-2">
-                        <input className='form-control btn btn-success btn-md' type="file" accept="image/png, image/jpeg"
+                        <input className='form-control btn btn-success btn-md' type="file"
                            onChange={handleImageChange} />
                      </div>
                      <div className="d-flex justify-content-center mb-2">

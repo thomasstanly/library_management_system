@@ -5,6 +5,7 @@ import PatronHeader from '../../components/patron/header/PatronHeader'
 import PatronMobileHeader from '../../components/patron/header/PatronMobileHeader'
 import HomePage from '../../components/patron/HomePage/HomePage'
 import Chat from '../../components/patron/Chat/Chat'
+import Footer from '../../components/patron/Footer/Footer'
 
 function PatronHomePage() {
   const patronDetails = useSelector((state) => state.patron_detils)
@@ -34,6 +35,7 @@ function PatronHomePage() {
           </div>
         }
         <HomePage patron={patronDetails} />
+        <Footer />
 
       </div>
     </>

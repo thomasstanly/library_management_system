@@ -37,7 +37,7 @@ const PatronLogin = () => {
          toast.error('All fields required')
       } else {
          try {
-            const res = await axios.post("login/", loginData)
+            const res = await axios.post("login/",  loginData)
 
             if (res.status === 200) {
                localStorage.setItem('user', JSON.stringify(res.data.email))

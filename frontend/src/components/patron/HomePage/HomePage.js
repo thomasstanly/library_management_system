@@ -188,7 +188,7 @@ const HomePage = ({ patron }) => {
 
    return (
       <>
-         <div>
+         <div style={{marginBottom:'10vh'}}>
             <div className={style.table}>
                {plan &&
                   <div className={style.member}>

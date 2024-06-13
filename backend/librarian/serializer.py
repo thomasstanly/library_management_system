@@ -40,7 +40,7 @@ class UserRegisterSerializer(serializers.ModelSerializer):
         
         phone_number = attrs.get('phone_number','')
         if len(str(phone_number))!= 10:
-            raise serializers.ValidationError('Phone number should be 10 digits long')
+            raise serializers.ValidationError('Phone number is not valid')
         
         if not str(phone_number).isdigit():
             raise serializers.ValidationError('Phone number should contain only digits')
@@ -92,6 +92,14 @@ class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserProfile
         fields = ['profile_pic']
+
+    def to_representation(self,instance):
+        data = super().to_representation(instance)
+        if 'profile_pic' in data and data['profile_pic']:
+            request = self.context.get('request',None)
+            if request is not None:
+                data['profile_pic'] = request.build_absolute_uri(data['profile_pic'])
+        return data 
 
 class PtronListCreateSerializer(serializers.ModelSerializer):
     Profile = UserProfileSerializer(required=True)

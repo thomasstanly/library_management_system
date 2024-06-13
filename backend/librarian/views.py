@@ -131,7 +131,7 @@ class PatronProfileUpdateView(APIView):
     def post(self, request, *args, **kwargs):
 
         user_profile = UserProfile.objects.get_or_create(user=request.user)[0]
-        serializer = UserProfileSerializer(user_profile, data=request.data, partial=True)
+        serializer = UserProfileSerializer(user_profile, data=request.data, partial=True, context={'request': request})
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)

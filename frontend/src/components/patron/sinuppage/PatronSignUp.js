@@ -45,22 +45,33 @@ const PatronSignUp = () => {
    const handleSubmit = async (e) => {
       e.preventDefault()
 
-      if (!formdata.email.trim() || !formdata.first_name.trim() || !formdata.last_name.trim() || !formdata.password.trim() || !formdata.password2.trim()) {
+      if (!formdata.email.trim() || !formdata.first_name.trim() || !formdata.last_name.trim()) {
          return toast.success('all fields are required')
 
-      } else if (formdata.password !== formdata.password2) {
+      }
+      else if (!formdata.first_name.trim().match(/^[A-Za-z]+$/)) {
+         return toast.warning('First name can only contain letters')
+      } 
+      else if (!formdata.last_name.trim().match(/^[A-Za-z]+$/)) {
+         return toast.warning('Last name can only contain letters')
+      } 
+      else if (!formdata.password.trim() || !formdata.password2.trim()) {
+         return toast.warning('password required')
+      } 
+      else if (formdata.password !== formdata.password2) {
          return toast.warning('password not matching')
-
-      } else if (formdata.password.length < 6) {
+      } 
+      else if (formdata.password.length < 6) {
          console.log(formdata.password.length)
          return toast.warning('password min length 6')
-
-      } else if (!formdata.email.trim().match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+      } 
+      else if (!formdata.email.trim().match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
          return toast.error("Invalid email format.");
-
-      } else if (phoneNumberString.length !== 10 || !phoneNumberString.match(/^\d+$/)) {
+      } 
+      else if (phoneNumberString.length !== 10 || !phoneNumberString.match(/^\d+$/) ||  /^(.)\1{9}$/.test(phoneNumberString)) {
          return toast.error("Phone number should be exactly 10 digits.");
-      } else {
+      } 
+      else {
          try {
             toast.warn("please wait for the otp")
             const res = await axios.post("signup/", formdata, { withCredentials: true })
@@ -177,7 +188,7 @@ const PatronSignUp = () => {
 
                </form>
                {
-                 otp.status && <form action="" onSubmit={otpVerfication}>
+                  otp.status && <form action="" onSubmit={otpVerfication}>
                      <div className='d-flex justify-content-between'>
                         <input className='form-control w-50' type="number" name='phone_number' onChange={(e) => setOtp({ ...otp, otpvalue: e.target.value })} />
                         <button className='btn' type='submit' >verify</button>

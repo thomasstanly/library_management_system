@@ -115,7 +115,7 @@ const Pyamentmethod = () => {
                      <input className={style.date} type="date" value={currentMonth} readOnly />
                   </div>
                   <div className={style.row}>
-                     <input className={style.date} type="date" value={nextMonth} onChange={handleMonth} />
+                     <input className={style.date} type="date" value={nextMonth} onChange={handleMonth} min={currentMonth} />
                   </div>
                   <div className={style.row}>
                      <input className={style.amount} type="text" value={amount} readOnly />

@@ -1,0 +1,35 @@
+.footer {
+    margin-top: 10vh;
+    padding: 4rem 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    justify-content: center;
+    background-color: #04102a;
+  
+    @media (min-width: 768px) {
+      padding: 4rem 7rem;
+      flex-direction: row;
+    }
+  
+    &-column {
+      flex: 1;
+  
+      &-title {
+        color: white;
+        margin-bottom: 1.25rem;
+        font-weight: bold;
+      }
+  
+      &-text {
+        text-align: justify;
+        color: #bfdbfe; 
+      }
+  
+      &-address {
+        color: #bfdbfe;
+        margin: 1rem 0;
+      }
+    }
+  }
+  

@@ -65,7 +65,7 @@ const PatronHeader = ({ header }) => {
           </button>
           <ul className="dropdown-menu">
             {isAdmin ? <li><a className="dropdown-item" href="/library/dashboard">Admin</a></li> : null}
-            <li><a className="dropdown-item" href='/profile'>profile</a></li>
+            <li><a className="dropdown-item" onClick={()=>{navigate('/profile')}} style={{ cursor: 'pointer'}}>profile</a></li>
             <li><a className="dropdown-item" href="#" onClick={logout}>logout</a></li>
           </ul>
         </div> :
