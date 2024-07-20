@@ -22,7 +22,7 @@ const breadcrumbs = [
       Dashboard
    </Link>,
    <Typography key="3" color="text.primary">
-      Add Membership Plan
+      Check In
    </Typography>,
 ];
 const columns = [
@@ -132,7 +132,7 @@ const CheckIn = () => {
       <div>
          <div className={style.header}>
             <div className={style.title}>
-               <h3>Memebership</h3>
+               <h3>Check In</h3>
                <Stack spacing={2}>
                   <Breadcrumbs separator={<ArrowRightIcon />} aria-label="breadcrumb">
                      {breadcrumbs}

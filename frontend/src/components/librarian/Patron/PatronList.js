@@ -112,8 +112,7 @@ const PatronList = () => {
                   </Breadcrumbs>
                </Stack>
             </div>
-            <div className={style.button}>
-               <Link className={style.link} to='/library/membership/add_plan'><button>+ Add New Plan</button></Link>
+            <div>
             </div>
          </div>
          <div className={style.list}>

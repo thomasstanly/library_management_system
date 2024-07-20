@@ -82,7 +82,7 @@ const PatronLogin = () => {
                   </div>
                   <div>
                      <p onClick={()=>navigate('/signup')} style={{ cursor: 'pointer' }}>Din't have an account? Sign up now</p>
-                     <p onClick={()=>navigate('/library/')} style={{ cursor: 'pointer' }}>librarian login</p>
+                     <p onClick={()=>navigate('/library/')} style={{ cursor: 'pointer' }}>Librarian login</p>
                   </div>
                </form>
             </div>
