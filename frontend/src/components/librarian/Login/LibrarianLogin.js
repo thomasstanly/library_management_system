@@ -83,6 +83,9 @@ const LibrarianLogin = () => {
                         </div>
                         <div>
                             <button className='form-control' type='submit'>Login</button>
+                            <center>Demo</center>
+                            <center><p>thomas@gmail.com</p></center>
+                            <center><p>thomas@123</p></center>
                         </div>
                     </form>
                 </div>
